@@ -1,4 +1,4 @@
-package com.tourplanner.tourplanner;
+package com.tourplanner;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

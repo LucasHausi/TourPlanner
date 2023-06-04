@@ -1,4 +1,4 @@
-module com.tourplanner.tourplanner {
+module com.tourplanner {
     requires javafx.controls;
     requires javafx.fxml;
     requires lombok;
@@ -7,6 +7,6 @@ module com.tourplanner.tourplanner {
     requires spring.data.jpa;
 
 
-    opens com.tourplanner.tourplanner to javafx.fxml;
-    exports com.tourplanner.tourplanner;
+    opens com.tourplanner to javafx.fxml;
+    exports com.tourplanner;
 }

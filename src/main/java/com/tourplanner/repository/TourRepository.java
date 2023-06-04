@@ -1,5 +1,5 @@
-package com.tourplanner.tourplanner.repository;
-import com.tourplanner.tourplanner.model.Tour;
+package com.tourplanner.repository;
+import com.tourplanner.model.Tour;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

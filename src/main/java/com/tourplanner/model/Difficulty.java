@@ -1,4 +1,4 @@
-package com.tourplanner.tourplanner.model;
+package com.tourplanner.model;
 
 public enum Difficulty {
     EASY,

@@ -1,4 +1,4 @@
-package com.tourplanner.tourplanner.model;
+package com.tourplanner.model;
 
 import java.util.UUID;
 import lombok.*;

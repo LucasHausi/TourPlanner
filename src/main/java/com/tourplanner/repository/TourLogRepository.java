@@ -1,6 +1,6 @@
-package com.tourplanner.tourplanner.repository;
+package com.tourplanner.repository;
 
-import com.tourplanner.tourplanner.model.TourLog;
+import com.tourplanner.model.TourLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
