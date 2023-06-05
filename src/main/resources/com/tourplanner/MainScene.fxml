@@ -66,7 +66,7 @@
                            <children>
                               <ImageView fitHeight="95.0" fitWidth="401.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="../../pictures/MapsExample.PNG" />
+                                    <Image url="@../../pictures/MapsExample.PNG" />
                                  </image>
                               </ImageView>
                               <ToolBar prefHeight="40.0" prefWidth="400.0">
@@ -131,7 +131,7 @@
                      <graphic>
                         <ImageView fitHeight="17.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="../../pictures/Magnifier.png" />
+                              <Image url="@../../pictures/Magnifier.png" />
                            </image>
                         </ImageView>
                      </graphic>
