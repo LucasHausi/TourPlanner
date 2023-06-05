@@ -1,7 +1,7 @@
 module com.tourplanner {
     requires javafx.controls;
     requires javafx.fxml;
-    requires lombok;
+    requires static lombok;
     requires java.persistence;
     requires spring.context;
     requires spring.data.jpa;
