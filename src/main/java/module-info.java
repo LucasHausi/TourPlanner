@@ -9,4 +9,7 @@ module com.tourplanner {
 
     opens com.tourplanner to javafx.fxml;
     exports com.tourplanner;
+    exports com.tourplanner.views;
+
+
 }
