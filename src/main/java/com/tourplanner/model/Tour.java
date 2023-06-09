@@ -1,8 +1,9 @@
 package com.tourplanner.model;
 
 import java.util.UUID;
+
+import jakarta.persistence.*;
 import lombok.*;
-import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,11 +24,11 @@ public class Tour {
     @Column(name="description")
     private String description;
 
-    @Column(name="from")
-    private String from;
+    @Column(name="startingPoint")
+    private String startingPoint;
 
-    @Column(name="to")
-    private String to;
+    @Column(name="destination")
+    private String destination;
 
     @Column(name="transportType")
     private TransportType transportType;
