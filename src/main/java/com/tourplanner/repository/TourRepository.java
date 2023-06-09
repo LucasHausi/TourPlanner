@@ -8,5 +8,4 @@ import java.util.UUID;
 
 @Repository
 public interface TourRepository extends JpaRepository<Tour, UUID>{
-    Tour findByUUID(UUID id);
 }
