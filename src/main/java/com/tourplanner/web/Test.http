@@ -1,0 +1,12 @@
+###
+POST http://localhost:30019/newTour
+Content-Type: application/json
+
+{
+  "name": "TourOne",
+  "description": "this is my first tour!",
+  "startingPoint": "here",
+  "destination": "there"
+}
+
+###
