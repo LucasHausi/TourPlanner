@@ -24,7 +24,7 @@ class TourRepositoryTest {
 
     @Test
     void findByUUID() {
-        var resultTour = repo.findByUUID(tour1.getId());
+        var resultTour = repo.findById(tour1.getId()).orElse(null);
         assertNotNull(resultTour);
         assertEquals(tour1,resultTour);
     }
