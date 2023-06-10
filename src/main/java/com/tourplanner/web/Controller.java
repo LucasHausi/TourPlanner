@@ -1,10 +1,12 @@
 package com.tourplanner.web;
 import com.tourplanner.model.Tour;
 import com.tourplanner.repository.TourRepository;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.UUID;
 
 @RestController
 public class Controller {
@@ -17,8 +19,13 @@ public class Controller {
     @PostMapping(path = "/newTour")
     public ResponseEntity<Tour> newTour(@RequestBody Tour tour) {
         Tour savedTour = tourRepository.save(tour);
-        //String path = "/newCar";
-        //URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTour);
-        return ResponseEntity.ok().body(savedTour);
+        String path = "/tour/"+savedTour.getId();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTour);
+        return ResponseEntity.created(uri).body(savedTour);
     }
+
+   @GetMapping(path = "/tour/{id}")
+    public Tour getTour(@PathVariable("id") UUID id){
+        return tourRepository.findById(id).orElseThrow();
+   }
 }

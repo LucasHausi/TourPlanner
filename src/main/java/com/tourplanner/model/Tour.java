@@ -5,11 +5,12 @@ import java.util.UUID;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Getter
-@Setter
+@EqualsAndHashCode
 @Entity
 @Table(name="tour")
 public class Tour {
@@ -40,5 +41,4 @@ public class Tour {
     private String estimatedTime;
 
     private String routeInformation; //ToDO soll irgendwie eine Map oder ein Bild einer Map oder so sein
-
 }

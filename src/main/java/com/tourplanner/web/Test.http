@@ -1,12 +1,17 @@
+GET http://localhost:30019/tour/5fb8e358-f108-4f9d-b4f2-674bc2fd6723
+Accept: application/json
+
+###
 ###
 POST http://localhost:30019/newTour
 Content-Type: application/json
 
 {
-  "name": "TourOne",
-  "description": "this is my first tour!",
-  "startingPoint": "here",
-  "destination": "there"
+    "name": "tourOne",
+    "description": "this is my first tour!",
+    "startingPoint": "here",
+    "destination": "there",
+    "distance": 2
 }
 
-###
+
