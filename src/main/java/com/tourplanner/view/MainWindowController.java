@@ -1,4 +1,4 @@
-package com.tourplanner.views;
+package com.tourplanner.view;
 
 import com.tourplanner.Main;
 import com.tourplanner.model.Tour;

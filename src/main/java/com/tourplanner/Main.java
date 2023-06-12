@@ -1,6 +1,6 @@
 package com.tourplanner;
 
-import com.tourplanner.views.MainWindowController;
+import com.tourplanner.view.MainWindowController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
