@@ -1,6 +1,9 @@
 package com.tourplanner.views;
 
 import com.tourplanner.Main;
+import com.tourplanner.model.Tour;
+import com.tourplanner.model.TransportType;
+import com.tourplanner.web.ControllerService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,9 +12,13 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class MainWindowController implements Initializable {
     @FXML
@@ -21,14 +28,28 @@ public class MainWindowController implements Initializable {
 
     Stage primaryStage;
 
+    Retrofit retrofit;
+    ControllerService service;
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         searchField.setText("Find me Nemo!");
         listView.getItems().add("Initial");
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://localhost:30019")
+                .addConverterFactory(JacksonConverterFactory.create())
+                .build();
+
+        service = retrofit.create(ControllerService.class);
     }
 
     public void addItem() throws IOException {
         listView.getItems().add("New");
+
+        service.newTour(new Tour(UUID.randomUUID(), "TestRoute","Go north","Westfield",
+                "Northfield", TransportType.BIKE, 22.0, "22:00", "Image ---")).execute();
 
         final Stage dialog = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("newTour.fxml"));
