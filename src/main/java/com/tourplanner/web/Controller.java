@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,4 +29,9 @@ public class Controller {
     public Tour getTour(@PathVariable("id") UUID id){
         return tourRepository.findById(id).orElseThrow();
    }
+
+    @GetMapping(path = "/allTours")
+    public List<Tour> getAllTours(){
+        return tourRepository.findAll();
+    }
 }

@@ -1,5 +1,7 @@
 package com.tourplanner.web;
 import com.tourplanner.model.Tour;
+
+import java.util.List;
 import java.util.UUID;
 
 import retrofit2.Call;
@@ -13,5 +15,8 @@ public interface ControllerService {
     Call<Tour> newTour(@Body Tour tour);
 
    @GET("/tour/{id}")
-   Tour getTour(@Path("id") UUID id);
+    Call<Tour> getTour(@Path("id") UUID id);
+
+    @GET("/allTours")
+    Call<List<Tour>> getAllTours();
 }

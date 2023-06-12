@@ -2,8 +2,8 @@ package com.tourplanner.views;
 
 import com.tourplanner.Main;
 import com.tourplanner.model.Tour;
-import com.tourplanner.model.TransportType;
 import com.tourplanner.web.ControllerService;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,7 +18,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class MainWindowController implements Initializable {
     @FXML
@@ -31,12 +31,8 @@ public class MainWindowController implements Initializable {
     Retrofit retrofit;
     ControllerService service;
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        searchField.setText("Find me Nemo!");
-        listView.getItems().add("Initial");
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://localhost:30019")
                 .addConverterFactory(JacksonConverterFactory.create())
@@ -46,11 +42,6 @@ public class MainWindowController implements Initializable {
     }
 
     public void addItem() throws IOException {
-        listView.getItems().add("New");
-
-        service.newTour(new Tour(UUID.randomUUID(), "TestRoute","Go north","Westfield",
-                "Northfield", TransportType.BIKE, 22.0, "22:00", "Image ---")).execute();
-
         final Stage dialog = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("newTour.fxml"));
         Scene dialogScene = new Scene(fxmlLoader.load(), 450, 450);
@@ -58,9 +49,9 @@ public class MainWindowController implements Initializable {
         dialog.initOwner(primaryStage);
         dialog.setTitle("New Tour");
         dialog.setScene(dialogScene);
-        dialog.show();
-        fxmlLoader.<NewTourController>getController().test("I am connected");
-
+        fxmlLoader.<NewTourController>getController().setNewTourDialogStage(dialog);
+        dialog.showAndWait();
+        listView.setItems(service.getAllTours().execute().body().stream().map(Tour::getName).collect(Collectors.toCollection(FXCollections::observableArrayList)));
     }
 
     public void setPrimaryStage(Stage primaryStage) {
