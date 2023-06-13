@@ -2,6 +2,7 @@ package com.tourplanner.view;
 
 import com.tourplanner.model.Tour;
 import com.tourplanner.model.TransportType;
+import com.tourplanner.viewmodel.NewTourViewModel;
 import com.tourplanner.web.ControllerService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -44,12 +45,16 @@ public class NewTourController implements Initializable {
     @FXML
     public TextArea tourInfoInput;
 
+    private final NewTourViewModel newTourViewModel;
     Retrofit retrofit;
     ControllerService service;
 
     @Setter
     Stage newTourDialogStage;
 
+    public NewTourController(NewTourViewModel newTourViewModel){
+        this.newTourViewModel =  newTourViewModel;
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -58,9 +63,17 @@ public class NewTourController implements Initializable {
                 .build();
 
         service = retrofit.create(ControllerService.class);
-
+        //Set initial values for the choice box;
         transportTypeInput.setItems(Arrays.stream(TransportType.values())
                 .collect(Collectors.toCollection(FXCollections::observableArrayList)));
+
+        //Property binding
+        nameInput.textProperty().bindBidirectional(newTourViewModel.getName());
+        descriptionInput.textProperty().bindBidirectional(newTourViewModel.getDescription());
+        toInput.textProperty().bindBidirectional(newTourViewModel.getTo());
+        fromInput.textProperty().bindBidirectional(newTourViewModel.getFrom());
+        timeInput.textProperty().bindBidirectional(newTourViewModel.getTime());
+        tourInfoInput.textProperty().bindBidirectional(newTourViewModel.getTourInfo());
     }
 
     public void saveTour() throws IOException {
