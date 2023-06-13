@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
  * based on https://edencoding.com/dependency-injection/
  */
 public class FXMLDependencyInjection {
+
     public static Parent load(String location, Locale locale, ConfigurableApplicationContext context) throws IOException {
         FXMLLoader loader = getLoader(location, locale, context);
         return loader.load();
@@ -24,8 +25,8 @@ public class FXMLDependencyInjection {
                                        Locale locale,
                                        ConfigurableApplicationContext context) {
         return new FXMLLoader(
-                FXMLDependencyInjection.class.getResource("/at/fhtw/medialib/view/" + location),
-                ResourceBundle.getBundle("at.fhtw.medialib.view." + "gui_strings", locale),
+                FXMLDependencyInjection.class.getResource("/com/tourplanner/" + location),
+                ResourceBundle.getBundle("com.tourplanner." + "gui_strings", locale),
                 new JavaFXBuilderFactory(),
                 controllerClass-> ControllerFactory.getInstance(context).create(controllerClass)
         );

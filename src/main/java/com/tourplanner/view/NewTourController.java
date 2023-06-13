@@ -75,11 +75,9 @@ public class NewTourController implements Initializable {
         timeInput.textProperty().bindBidirectional(newTourViewModel.getTime());
         tourInfoInput.textProperty().bindBidirectional(newTourViewModel.getTourInfo());
     }
-
-    public void saveTour() throws IOException {
-        service.newTour(new Tour(UUID.randomUUID(), nameInput.getText(),descriptionInput.getText(),fromInput.getText(),
-                toInput.getText(), transportTypeInput.getValue(), 0.0, timeInput.getText(), tourInfoInput.getText()))
-                .execute();
+    public void saveTour() throws IOException{
+        newTourViewModel.saveTour();
+        //close dialog
         newTourDialogStage.close();
     }
 }

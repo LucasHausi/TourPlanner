@@ -2,7 +2,9 @@ package com.tourplanner.service;
 
 import com.tourplanner.model.Tour;
 import com.tourplanner.repository.TourRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TourService{
     private final TourRepository tourRepository;
 
