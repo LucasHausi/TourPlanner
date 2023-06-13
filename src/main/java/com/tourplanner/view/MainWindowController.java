@@ -1,7 +1,9 @@
 package com.tourplanner.view;
 
+import com.tourplanner.FXMLDependencyInjection;
 import com.tourplanner.Main;
 import com.tourplanner.model.Tour;
+import com.tourplanner.viewmodel.NewTourViewModel;
 import com.tourplanner.web.ControllerService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -44,6 +46,7 @@ public class MainWindowController implements Initializable {
     public void addItem() throws IOException {
         final Stage dialog = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("newTour.fxml"));
+        fxmlLoader.setControllerFactory(e -> new NewTourController(new NewTourViewModel()));
         Scene dialogScene = new Scene(fxmlLoader.load(), 450, 450);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
