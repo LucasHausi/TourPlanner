@@ -26,15 +26,13 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-@Component
+
 public class MainWindowController implements Initializable {
     @FXML
     public TextField searchField;
     @FXML
     ListView<String> listView = new ListView();
 
-    @Autowired
-    ApplicationContext applicationContext;
     Stage primaryStage;
 
     Retrofit retrofit;
@@ -70,7 +68,7 @@ public class MainWindowController implements Initializable {
 
         //ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) getApplicationContext();
 
-        FXMLLoader loader =  FXMLDependencyInjection.getLoader("newTour.fxml", Locale.ENGLISH, (ConfigurableApplicationContext) applicationContext);
+        FXMLLoader loader =  FXMLDependencyInjection.getLoader("newTour.fxml", Locale.ENGLISH, null);
         Parent root  = loader.load();
         Scene dialogScene = new Scene(root);
         dialog.initModality(Modality.APPLICATION_MODAL);
