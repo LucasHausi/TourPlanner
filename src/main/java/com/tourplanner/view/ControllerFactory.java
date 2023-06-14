@@ -1,18 +1,18 @@
 package com.tourplanner.view;
 
-import com.tourplanner.Main;
-import com.tourplanner.repository.TourRepository;
+
 import com.tourplanner.service.TourService;
 import com.tourplanner.viewmodel.MainWindowViewModel;
 import com.tourplanner.viewmodel.NewTourViewModel;
 import org.springframework.context.ConfigurableApplicationContext;
+
 
 public class ControllerFactory {
     private final NewTourViewModel newTourViewModel;
     private final MainWindowViewModel mainWindowViewModel;
 
     public ControllerFactory(ConfigurableApplicationContext applicationContext){
-        newTourViewModel = new NewTourViewModel(new TourService(applicationContext.getBean(TourRepository.class)));
+        newTourViewModel = new NewTourViewModel(new TourService());
         mainWindowViewModel = new MainWindowViewModel();
     }
     public Object create(Class<?> controllerClass){
