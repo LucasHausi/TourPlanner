@@ -1,12 +1,8 @@
 package com.tourplanner.view;
 
 import com.tourplanner.FXMLDependencyInjection;
-import com.tourplanner.Main;
 import com.tourplanner.model.Tour;
-import com.tourplanner.repository.TourRepository;
-import com.tourplanner.service.TourService;
 import com.tourplanner.viewmodel.MainWindowViewModel;
-import com.tourplanner.viewmodel.NewTourViewModel;
 import com.tourplanner.web.ControllerService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -22,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -74,13 +69,15 @@ public class MainWindowController implements Initializable {
         dialog.showAndWait();*/
 
         //ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) getApplicationContext();
-        Parent root  = FXMLDependencyInjection.load("newTour.fxml", Locale.ENGLISH, (ConfigurableApplicationContext) applicationContext);
+
+        FXMLLoader loader =  FXMLDependencyInjection.getLoader("newTour.fxml", Locale.ENGLISH, (ConfigurableApplicationContext) applicationContext);
+        Parent root  = loader.load();
         Scene dialogScene = new Scene(root);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
         dialog.setTitle("New Tour");
         dialog.setScene(dialogScene);
-
+        loader.<NewTourController>getController().setNewTourDialogStage(dialog);
         dialog.showAndWait();
 
         listView.setItems(service.getAllTours().execute().body().stream().map(Tour::getName).collect(Collectors.toCollection(FXCollections::observableArrayList)));
