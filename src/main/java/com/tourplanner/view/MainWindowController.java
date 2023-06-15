@@ -31,8 +31,6 @@ public class MainWindowController implements Initializable {
 
     Stage primaryStage;
 
-    Retrofit retrofit;
-    TourApi service;
     private final MainWindowViewModel mainWindowViewModel;
 
     public MainWindowController(MainWindowViewModel mainWindowViewModel){
@@ -41,28 +39,11 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://localhost:30019")
-                .addConverterFactory(JacksonConverterFactory.create())
-                .build();
 
-        service = retrofit.create(TourApi.class);
     }
 
     public void addItem() throws IOException {
         final Stage dialog = new Stage();
-        /*FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("newTour.fxml"));
-        //ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) getApplicationContext();
-        //fxmlLoader.setControllerFactory(e -> new NewTourController(new NewTourViewModel(new TourServiceImpl(getApplicationContext().getBean(TourRepository.class)))));
-        Scene dialogScene = new Scene(fxmlLoader.load(), 450, 450);
-        dialog.initModality(Modality.APPLICATION_MODAL);
-        dialog.initOwner(primaryStage);
-        dialog.setTitle("New Tour");
-        dialog.setScene(dialogScene);
-        fxmlLoader.<NewTourController>getController().setNewTourDialogStage(dialog);
-        dialog.showAndWait();*/
-
-        //ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) getApplicationContext();
 
         FXMLLoader loader =  FXMLDependencyInjection.getLoader("newTour.fxml", Locale.ENGLISH, null);
         Parent root  = loader.load();
@@ -74,7 +55,7 @@ public class MainWindowController implements Initializable {
         loader.<NewTourController>getController().setNewTourDialogStage(dialog);
         dialog.showAndWait();
 
-        listView.setItems(service.getAllTours().execute().body().stream().map(Tour::getName).collect(Collectors.toCollection(FXCollections::observableArrayList)));
+        listView.setItems(mainWindowViewModel.getTourList());
     }
 
     public void setPrimaryStage(Stage primaryStage) {
