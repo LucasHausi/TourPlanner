@@ -1,5 +1,6 @@
 package com.tourplanner.repository;
 
+import com.tourplanner.dal.repository.TourRepository;
 import com.tourplanner.model.Tour;
 import com.tourplanner.model.TransportType;
 import org.junit.jupiter.api.BeforeEach;

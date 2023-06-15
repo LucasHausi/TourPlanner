@@ -2,7 +2,7 @@ package com.tourplanner.view;
 
 import com.tourplanner.model.TransportType;
 import com.tourplanner.viewmodel.NewTourViewModel;
-import com.tourplanner.repository.TourApi;
+import com.tourplanner.dal.repository.TourApi;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

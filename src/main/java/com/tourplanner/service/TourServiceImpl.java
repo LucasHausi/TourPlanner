@@ -1,7 +1,7 @@
 package com.tourplanner.service;
 
 import com.tourplanner.model.Tour;
-import com.tourplanner.repository.TourApi;
+import com.tourplanner.dal.repository.TourApi;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;

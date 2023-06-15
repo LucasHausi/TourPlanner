@@ -1,11 +1,10 @@
-package com.tourplanner.repository;
+package com.tourplanner.dal.repository;
 import com.tourplanner.model.Tour;
 
 import java.util.List;
 import java.util.UUID;
 
 
-import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -16,7 +15,7 @@ public interface TourApi {
     @POST("/newTour")
     Call<Tour> newTour(@Body Tour tour);
 
-   @GET("/tour/{id}")
+    @GET("/tour/{id}")
     Call<Tour> getTour(@Path("id") UUID id);
 
     @GET("/allTours")

@@ -35,4 +35,8 @@ public class TourLog {
     @Column(name="rating")
     private int rating;
 
+    @ManyToOne
+    @JoinColumn(name="tour_id", nullable=false)
+    private Tour tour;
+
 }

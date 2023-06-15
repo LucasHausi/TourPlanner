@@ -1,7 +1,6 @@
 package com.tourplanner.service;
 
-import com.tourplanner.repository.MapApi;
-import com.tourplanner.repository.TourApi;
+import com.tourplanner.dal.repository.MapApi;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 

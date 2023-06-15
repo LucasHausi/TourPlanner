@@ -1,6 +1,6 @@
 package com.tourplanner.web;
 import com.tourplanner.model.Tour;
-import com.tourplanner.repository.TourRepository;
+import com.tourplanner.dal.repository.TourRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-public class Controller {
+public class TourController {
     public final TourRepository tourRepository;
 
-    public Controller(TourRepository tourRepository) {
+    public TourController(TourRepository tourRepository) {
         this.tourRepository = tourRepository;
     }
 
@@ -25,7 +25,7 @@ public class Controller {
         return ResponseEntity.created(uri).body(savedTour);
     }
 
-   @GetMapping(path = "/tour/{id}")
+    @GetMapping(path = "/tour/{id}")
     public Tour getTour(@PathVariable("id") UUID id){
         return tourRepository.findById(id).orElseThrow();
    }
