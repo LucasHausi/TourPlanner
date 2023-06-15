@@ -2,6 +2,7 @@ package com.tourplanner.viewmodel;
 
 import com.tourplanner.model.Tour;
 import com.tourplanner.model.TransportType;
+import com.tourplanner.service.IService;
 import com.tourplanner.service.TourService;
 import javafx.beans.property.*;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Getter
 public class NewTourViewModel {
 
-    private final TourService service;
+    private final IService service;
 
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty description = new SimpleStringProperty();
