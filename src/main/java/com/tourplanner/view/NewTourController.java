@@ -72,6 +72,7 @@ public class NewTourController implements Initializable {
         descriptionInput.textProperty().bindBidirectional(newTourViewModel.getDescription());
         toInput.textProperty().bindBidirectional(newTourViewModel.getTo());
         fromInput.textProperty().bindBidirectional(newTourViewModel.getFrom());
+        transportTypeInput.valueProperty().bindBidirectional(newTourViewModel.getTransportType());
         timeInput.textProperty().bindBidirectional(newTourViewModel.getTime());
         tourInfoInput.textProperty().bindBidirectional(newTourViewModel.getTourInfo());
     }
