@@ -1,4 +1,4 @@
-package com.tourplanner.web;
+package com.tourplanner.repository;
 import com.tourplanner.model.Tour;
 
 import java.util.List;
@@ -11,8 +11,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-@Service
-public interface ControllerService {
+
+public interface TourApi {
     @POST("/newTour")
     Call<Tour> newTour(@Body Tour tour);
 

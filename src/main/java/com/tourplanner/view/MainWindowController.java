@@ -3,7 +3,7 @@ package com.tourplanner.view;
 import com.tourplanner.FXMLDependencyInjection;
 import com.tourplanner.model.Tour;
 import com.tourplanner.viewmodel.MainWindowViewModel;
-import com.tourplanner.web.ControllerService;
+import com.tourplanner.repository.TourApi;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,10 +14,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -36,7 +32,7 @@ public class MainWindowController implements Initializable {
     Stage primaryStage;
 
     Retrofit retrofit;
-    ControllerService service;
+    TourApi service;
     private final MainWindowViewModel mainWindowViewModel;
 
     public MainWindowController(MainWindowViewModel mainWindowViewModel){
@@ -50,14 +46,14 @@ public class MainWindowController implements Initializable {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
 
-        service = retrofit.create(ControllerService.class);
+        service = retrofit.create(TourApi.class);
     }
 
     public void addItem() throws IOException {
         final Stage dialog = new Stage();
         /*FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("newTour.fxml"));
         //ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) getApplicationContext();
-        //fxmlLoader.setControllerFactory(e -> new NewTourController(new NewTourViewModel(new TourService(getApplicationContext().getBean(TourRepository.class)))));
+        //fxmlLoader.setControllerFactory(e -> new NewTourController(new NewTourViewModel(new TourServiceImpl(getApplicationContext().getBean(TourRepository.class)))));
         Scene dialogScene = new Scene(fxmlLoader.load(), 450, 450);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);

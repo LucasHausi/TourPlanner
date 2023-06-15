@@ -2,8 +2,8 @@ package com.tourplanner.viewmodel;
 
 import com.tourplanner.model.Tour;
 import com.tourplanner.model.TransportType;
-import com.tourplanner.service.IService;
 import com.tourplanner.service.TourService;
+import com.tourplanner.service.TourServiceImpl;
 import javafx.beans.property.*;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Getter
 public class NewTourViewModel {
 
-    private final IService service;
+    private final TourService service;
 
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty description = new SimpleStringProperty();
@@ -25,7 +25,7 @@ public class NewTourViewModel {
     private final StringProperty time = new SimpleStringProperty();
     private final StringProperty tourInfo = new SimpleStringProperty();
 
-    public NewTourViewModel(TourService service){
+    public NewTourViewModel(TourServiceImpl service){
         this.service = service;
     }
 

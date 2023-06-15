@@ -1,9 +1,8 @@
 package com.tourplanner.view;
 
-import com.tourplanner.model.Tour;
 import com.tourplanner.model.TransportType;
 import com.tourplanner.viewmodel.NewTourViewModel;
-import com.tourplanner.web.ControllerService;
+import com.tourplanner.repository.TourApi;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,7 +19,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.ResourceBundle;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +45,7 @@ public class NewTourController implements Initializable {
 
     private final NewTourViewModel newTourViewModel;
     Retrofit retrofit;
-    ControllerService service;
+    TourApi service;
 
     @Setter
     Stage newTourDialogStage;
@@ -62,7 +60,7 @@ public class NewTourController implements Initializable {
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
 
-        service = retrofit.create(ControllerService.class);
+        service = retrofit.create(TourApi.class);
         //Set initial values for the choice box;
         transportTypeInput.setItems(Arrays.stream(TransportType.values())
                 .collect(Collectors.toCollection(FXCollections::observableArrayList)));
