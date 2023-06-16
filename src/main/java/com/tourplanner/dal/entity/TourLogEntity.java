@@ -1,5 +1,6 @@
-package com.tourplanner.model;
+package com.tourplanner.dal.entity;
 
+import com.tourplanner.bl.model.Difficulty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name="tourLog")
-public class TourLog {
+public class TourLogEntity {
     @Id
     @GeneratedValue
     @Column(name="id")
@@ -37,6 +38,5 @@ public class TourLog {
 
     @ManyToOne
     @JoinColumn(name="tour_id", nullable=false)
-    private Tour tour;
-
+    private TourEntity tourEntity;
 }

@@ -1,8 +1,8 @@
 package com.tourplanner.repository;
 
 import com.tourplanner.dal.repository.TourRepository;
-import com.tourplanner.model.Tour;
-import com.tourplanner.model.TransportType;
+import com.tourplanner.dal.entity.TourEntity;
+import com.tourplanner.bl.model.TransportType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,21 +12,21 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
-class TourRepositoryTest {
+class TourEntityRepositoryTest {
     @Autowired
     private TourRepository repo;
-    private Tour tour1;
+    private TourEntity tourEntity1;
     @BeforeEach
     void setUp() {
-        tour1 = new Tour(UUID.randomUUID(), "TestRoute","Go north","Westfield",
+        tourEntity1 = new TourEntity(UUID.randomUUID(), "TestRoute","Go north","Westfield",
                 "Northfield", TransportType.BIKE, 22.0, "22:00", "Image ---");
-        repo.save(tour1);
+        repo.save(tourEntity1);
     }
 
     @Test
     void findByUUID() {
-        var resultTour = repo.findById(tour1.getId()).orElse(null);
+        var resultTour = repo.findById(tourEntity1.getId()).orElse(null);
         assertNotNull(resultTour);
-        assertEquals(tour1,resultTour);
+        assertEquals(tourEntity1,resultTour);
     }
 }

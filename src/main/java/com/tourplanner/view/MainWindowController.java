@@ -1,10 +1,7 @@
 package com.tourplanner.view;
 
 import com.tourplanner.FXMLDependencyInjection;
-import com.tourplanner.model.Tour;
 import com.tourplanner.viewmodel.MainWindowViewModel;
-import com.tourplanner.dal.repository.TourApi;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

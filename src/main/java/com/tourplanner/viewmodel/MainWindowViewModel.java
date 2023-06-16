@@ -1,29 +1,22 @@
 package com.tourplanner.viewmodel;
 
-import com.tourplanner.model.Tour;
-import com.tourplanner.repository.TourApi;
+import com.tourplanner.bl.service.TourService;
+import com.tourplanner.bl.service.TourServiceImpl;
+import com.tourplanner.dal.entity.TourEntity;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.springframework.stereotype.Component;
-import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.util.stream.Collectors;
 
 public class MainWindowViewModel {
-    TourApi service;
+    TourService service;
 
     public MainWindowViewModel() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://localhost:30019")
-                .addConverterFactory(JacksonConverterFactory.create())
-                .build();
-
-        service = retrofit.create(TourApi.class);
+        service = new TourServiceImpl();
     }
 
     public ObservableList<String> getTourList() throws IOException {
-       return service.getAllTours().execute().body().stream().map(Tour::getName).collect(Collectors.toCollection(FXCollections::observableArrayList));
+       return service.getAllTours().stream().map(TourEntity::getName).collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 }

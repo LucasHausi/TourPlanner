@@ -1,9 +1,9 @@
 package com.tourplanner.viewmodel;
 
-import com.tourplanner.model.Tour;
-import com.tourplanner.model.TransportType;
-import com.tourplanner.service.TourService;
-import com.tourplanner.service.TourServiceImpl;
+import com.tourplanner.dal.entity.TourEntity;
+import com.tourplanner.bl.model.TransportType;
+import com.tourplanner.bl.service.TourService;
+import com.tourplanner.bl.service.TourServiceImpl;
 import javafx.beans.property.*;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -16,7 +16,6 @@ import java.util.UUID;
 public class NewTourViewModel {
 
     private final TourService service;
-
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty description = new SimpleStringProperty();
     private final  StringProperty from = new SimpleStringProperty();
@@ -30,8 +29,8 @@ public class NewTourViewModel {
     }
 
     public void saveTour() throws IOException {
-        Tour tour = new Tour(UUID.randomUUID(), name.get(), description.get(), from.get(),
+        TourEntity tourEntity = new TourEntity(UUID.randomUUID(), name.get(), description.get(), from.get(),
                         to.get(), transportType.get(), 0.0, time.get(), tourInfo.get());
-        service.add(tour);
+        service.add(tourEntity);
     }
 }

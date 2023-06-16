@@ -1,7 +1,8 @@
-package com.tourplanner.model;
+package com.tourplanner.dal.entity;
 
 import java.util.UUID;
 
+import com.tourplanner.bl.model.TransportType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import lombok.*;
 @EqualsAndHashCode
 @Entity
 @Table(name="tour")
-public class Tour {
+public class TourEntity {
     @Id
     @GeneratedValue
     @Column(name="id")

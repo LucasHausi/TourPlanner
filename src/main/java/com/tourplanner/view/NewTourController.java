@@ -1,6 +1,6 @@
 package com.tourplanner.view;
 
-import com.tourplanner.model.TransportType;
+import com.tourplanner.bl.model.TransportType;
 import com.tourplanner.viewmodel.NewTourViewModel;
 import com.tourplanner.dal.repository.TourApi;
 import javafx.collections.FXCollections;
@@ -44,8 +44,6 @@ public class NewTourController implements Initializable {
     public TextArea tourInfoInput;
 
     private final NewTourViewModel newTourViewModel;
-    Retrofit retrofit;
-    TourApi service;
 
     @Setter
     Stage newTourDialogStage;
@@ -55,12 +53,6 @@ public class NewTourController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://localhost:30019")
-                .addConverterFactory(JacksonConverterFactory.create())
-                .build();
-
-        service = retrofit.create(TourApi.class);
         //Set initial values for the choice box;
         transportTypeInput.setItems(Arrays.stream(TransportType.values())
                 .collect(Collectors.toCollection(FXCollections::observableArrayList)));

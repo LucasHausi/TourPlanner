@@ -1,5 +1,5 @@
-package com.tourplanner.web;
-import com.tourplanner.model.TourLog;
+package com.tourplanner.bl.web;
+import com.tourplanner.dal.entity.TourLogEntity;
 import com.tourplanner.dal.repository.TourLogRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,25 +18,25 @@ public class TourLogController {
     }
 
     @PostMapping(path = "/tourLog/add")
-    public ResponseEntity<TourLog> addTourLog(@RequestBody TourLog tourLog) {
-        TourLog savedTour = tourLogRepository.save(tourLog);
+    public ResponseEntity<TourLogEntity> addTourLog(@RequestBody TourLogEntity tourLogEntity) {
+        TourLogEntity savedTour = tourLogRepository.save(tourLogEntity);
         String path = "/tour/"+savedTour.getId();
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTour);
         return ResponseEntity.created(uri).body(savedTour);
     }
 
     @GetMapping(path = "/tourLog/{id}")
-    public TourLog getTourLog(@PathVariable("id") UUID id){
+    public TourLogEntity getTourLog(@PathVariable("id") UUID id){
         return tourLogRepository.findById(id).orElseThrow();
    }
 
     @GetMapping(path = "/tour/{tourId}/tourLogs")
-    public List<TourLog> getTourLogs(@PathVariable("tourId") UUID tourId){
+    public List<TourLogEntity> getTourLogs(@PathVariable("tourId") UUID tourId){
         return tourLogRepository.getTourLogByTourId(tourId);
     }
 
     @GetMapping(path = "/tourLogs")
-    public List<TourLog> getAllTourLogs(){
+    public List<TourLogEntity> getAllTourLogs(){
         return tourLogRepository.findAll();
     }
 }
