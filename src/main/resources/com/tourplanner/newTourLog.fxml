@@ -36,13 +36,13 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Label>
-            <DatePicker />
+            <DatePicker fx:id="dateInput"/>
             <Label text="Comment">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="fromInput">
+            <TextField fx:id="commentInput">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -52,7 +52,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
-            <ChoiceBox fx:id="transportTypeInput" prefWidth="150.0">
+            <ChoiceBox fx:id="difficultyChoiceBox" prefWidth="150.0">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -62,7 +62,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="timeInput">
+            <TextField fx:id="durationInput">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
@@ -72,7 +72,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
-            <Slider blockIncrement="1.0" majorTickUnit="1.0" max="5.0" maxWidth="-Infinity" min="1.0" minWidth="-Infinity" minorTickCount="1" prefHeight="33.0" prefWidth="333.0" showTickLabels="true" snapToTicks="true" value="1.0" />
+            <Slider fx:id="ratingSlider" blockIncrement="1.0" majorTickUnit="1.0" max="5.0" maxWidth="-Infinity" min="1.0" minWidth="-Infinity" minorTickCount="1" prefHeight="33.0" prefWidth="333.0" showTickLabels="true" snapToTicks="true" value="1.0" />
             <Button mnemonicParsing="false" onAction="#saveTourLog" text="save">
                <opaqueInsets>
                   <Insets top="1000.0" />

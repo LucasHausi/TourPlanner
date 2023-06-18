@@ -2,6 +2,7 @@ package com.tourplanner.viewmodel;
 
 import com.tourplanner.bl.model.Difficulty;
 import com.tourplanner.bl.service.TourLogService;
+import com.tourplanner.bl.service.TourLogServiceImpl;
 import com.tourplanner.dal.entity.TourEntity;
 import com.tourplanner.dal.entity.TourLogEntity;
 import javafx.beans.property.*;
@@ -26,7 +27,7 @@ public class NewTourLogViewModel {
     private final IntegerProperty rating = new SimpleIntegerProperty();
 
 
-    public NewTourLogViewModel(TourLogService service){
+    public NewTourLogViewModel(TourLogServiceImpl service){
         this.service = service;
     }
 

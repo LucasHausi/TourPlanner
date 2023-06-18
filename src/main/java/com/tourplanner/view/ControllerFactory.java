@@ -1,18 +1,22 @@
 package com.tourplanner.view;
 
 
+import com.tourplanner.bl.service.TourLogServiceImpl;
 import com.tourplanner.bl.service.TourServiceImpl;
 import com.tourplanner.viewmodel.MainWindowViewModel;
+import com.tourplanner.viewmodel.NewTourLogViewModel;
 import com.tourplanner.viewmodel.NewTourViewModel;
 import org.springframework.context.ConfigurableApplicationContext;
 
 
 public class ControllerFactory {
     private final NewTourViewModel newTourViewModel;
+    private final NewTourLogViewModel newTourLogViewModel;
     private final MainWindowViewModel mainWindowViewModel;
 
     public ControllerFactory(ConfigurableApplicationContext applicationContext){
         newTourViewModel = new NewTourViewModel(new TourServiceImpl());
+        newTourLogViewModel = new NewTourLogViewModel(new TourLogServiceImpl());
         mainWindowViewModel = new MainWindowViewModel();
     }
     public Object create(Class<?> controllerClass){
@@ -22,6 +26,9 @@ public class ControllerFactory {
         }
         if(controllerClass == NewTourController.class){
             return new NewTourController(newTourViewModel);
+        }
+        if(controllerClass == NewTourLogController.class){
+            return new NewTourLogController(newTourLogViewModel);
         }
         throw new IllegalArgumentException("Unknown controller class: " + controllerClass);
     }

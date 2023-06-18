@@ -52,6 +52,22 @@ public class MainWindowController implements Initializable {
         listView.setItems(mainWindowViewModel.getTourList());
     }
 
+    public void addTourLog() throws IOException {
+        final Stage dialog = new Stage();
+
+        FXMLLoader loader =  FXMLDependencyInjection.getLoader("newTourLog.fxml", Locale.ENGLISH, null);
+        Parent root  = loader.load();
+        Scene dialogScene = new Scene(root);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(primaryStage);
+        dialog.setTitle("New Tour Log");
+        dialog.setScene(dialogScene);
+        loader.<NewTourLogController>getController().setNewTourLogDialogStage(dialog);
+        dialog.showAndWait();
+
+        listView.setItems(mainWindowViewModel.getTourList());
+    }
+
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }

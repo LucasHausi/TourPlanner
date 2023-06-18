@@ -79,7 +79,7 @@
                               <ToolBar>
                                 <items>
                                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tours Logs" />
-                                    <Button mnemonicParsing="false" text="+" />
+                                    <Button mnemonicParsing="false" onAction="#addTourLog" text="+" />
                                     <Button mnemonicParsing="false" text="-" />
                                     <Button mnemonicParsing="false" text="..." />
                                 </items>

@@ -32,7 +32,7 @@ public class TourLogController {
 
     @GetMapping(path = "/tour/{tourId}/tourLogs")
     public List<TourLogEntity> getTourLogs(@PathVariable("tourId") UUID tourId){
-        return tourLogRepository.getTourLogByTourId(tourId);
+        return tourLogRepository.getTourLogById(tourId);
     }
 
     @GetMapping(path = "/tourLogs")
