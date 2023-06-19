@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages={"com.tourplanner.backend.dal.repository"})
 public class Main extends Application {
     private ConfigurableApplicationContext applicationContext;
     @Override
