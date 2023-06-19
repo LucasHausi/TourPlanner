@@ -1,10 +1,9 @@
-package com.tourplanner.backend.dal.entity;
-
-import java.util.UUID;
+package com.tourplanner.shared.model;
 
 import com.tourplanner.shared.enums.TransportType;
-import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,34 +11,14 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-@Entity
-@Table(name="tour")
-public class TourEntity {
-    @Id
-    @GeneratedValue
-    @Column(name="id")
+public class Tour {
     private UUID id;
-
-    @Column(name="name")
     private String name;
-
-    @Column(name="description")
     private String description;
-
-    @Column(name="startingPoint")
     private String startingPoint;
-
-    @Column(name="destination")
     private String destination;
-
-    @Column(name="transportType")
     private TransportType transportType;
-
-    @Column(name="distance")
     private double distance;
-
-    @Column(name="estimatedTime")
     private String estimatedTime;
-
     private String routeInformation; //ToDO soll irgendwie eine Map oder ein Bild einer Map oder so sein
 }

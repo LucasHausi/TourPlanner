@@ -2,7 +2,7 @@ package com.tourplanner.repository;
 
 import com.tourplanner.backend.dal.repository.TourRepository;
 import com.tourplanner.backend.dal.entity.TourEntity;
-import com.tourplanner.shared.model.TransportType;
+import com.tourplanner.shared.enums.TransportType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

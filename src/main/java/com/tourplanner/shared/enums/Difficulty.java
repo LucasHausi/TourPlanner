@@ -1,4 +1,4 @@
-package com.tourplanner.shared.model;
+package com.tourplanner.shared.enums;
 
 public enum Difficulty {
     EASY,

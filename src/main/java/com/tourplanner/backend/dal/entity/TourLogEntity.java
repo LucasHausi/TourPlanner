@@ -1,6 +1,6 @@
 package com.tourplanner.backend.dal.entity;
 
-import com.tourplanner.shared.model.Difficulty;
+import com.tourplanner.shared.enums.Difficulty;
 import jakarta.persistence.*;
 import lombok.*;
 

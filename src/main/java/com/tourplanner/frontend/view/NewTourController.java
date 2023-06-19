@@ -1,6 +1,6 @@
 package com.tourplanner.frontend.view;
 
-import com.tourplanner.shared.model.TransportType;
+import com.tourplanner.shared.enums.TransportType;
 import com.tourplanner.frontend.viewmodel.NewTourViewModel;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

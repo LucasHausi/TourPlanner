@@ -1,6 +1,6 @@
 package com.tourplanner.frontend.viewmodel;
 
-import com.tourplanner.shared.model.Difficulty;
+import com.tourplanner.shared.enums.Difficulty;
 import com.tourplanner.backend.bl.TourLogService;
 import com.tourplanner.backend.bl.TourLogServiceImpl;
 import com.tourplanner.backend.dal.entity.TourEntity;

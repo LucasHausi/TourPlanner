@@ -1,7 +1,7 @@
 package com.tourplanner.frontend.viewmodel;
 
 import com.tourplanner.backend.dal.entity.TourEntity;
-import com.tourplanner.shared.model.TransportType;
+import com.tourplanner.shared.enums.TransportType;
 import com.tourplanner.backend.bl.TourService;
 import com.tourplanner.backend.bl.TourServiceImpl;
 import javafx.beans.property.*;
