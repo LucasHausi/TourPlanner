@@ -5,9 +5,7 @@ import com.tourplanner.frontend.viewmodel.NewTourViewModel;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
@@ -39,6 +37,16 @@ public class NewTourController implements Initializable {
     public TextField timeInput;
     @FXML
     public TextArea tourInfoInput;
+    @FXML
+    public Label nameErrLabel;
+    @FXML
+    public Label fromErrLabel;
+    @FXML
+    public Label toErrLabel;
+    @FXML
+    public Label timeErrLabel;
+    @FXML
+    public Button saveButton;
 
     private final NewTourViewModel newTourViewModel;
 
@@ -62,6 +70,16 @@ public class NewTourController implements Initializable {
         transportTypeInput.valueProperty().bindBidirectional(newTourViewModel.getTransportType());
         timeInput.textProperty().bindBidirectional(newTourViewModel.getTime());
         tourInfoInput.textProperty().bindBidirectional(newTourViewModel.getTourInfo());
+
+        //Binding for the error labels
+        nameErrLabel.visibleProperty().bind(newTourViewModel.getNameErrorVisible());
+        fromErrLabel.visibleProperty().bind(newTourViewModel.getStartDestinationErrorVisible());
+        toErrLabel.visibleProperty().bind(newTourViewModel.getEndDestinationErrorVisible());
+        timeErrLabel.visibleProperty().bind(newTourViewModel.getTimeErrorVisible());
+
+        //Binding for save button
+        saveButton.visibleProperty().bind(newTourViewModel.getFormValidity());
+
     }
     public void saveTour() throws IOException{
         newTourViewModel.saveTour();
