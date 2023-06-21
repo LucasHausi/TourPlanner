@@ -141,8 +141,8 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button fx:id="editButn" layoutX="331.0" layoutY="283.0" mnemonicParsing="false" text="Edit" />
-                        <Button fx:id="saveBtn" layoutX="329.0" layoutY="322.0" mnemonicParsing="false" text="Save" />
+                        <Button fx:id="editBtn" onAction="#activateEditing" layoutX="331.0" layoutY="283.0" mnemonicParsing="false" text="Edit" />
+                        <Button fx:id="saveBtn" onAction="#saveChanges" visible="false" layoutX="329.0" layoutY="322.0" mnemonicParsing="false" text="Save" />
                      </children></AnchorPane>
             </content>
           </Tab>

@@ -7,7 +7,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,6 +24,24 @@ public class MainWindowController implements Initializable {
     public TextField searchField;
     @FXML
     ListView<String> listView = new ListView();
+    @FXML
+    TextField nameField;
+    @FXML
+    TextField descField;
+    @FXML
+    TextField fromField;
+    @FXML
+    TextField toField;
+    @FXML
+    TextField transTypeField;
+    @FXML
+    TextField timeField;
+    @FXML
+    TextArea infoArea;
+    @FXML
+    Button editBtn;
+    @FXML
+    Button saveBtn;
 
     Stage primaryStage;
 
@@ -66,6 +86,28 @@ public class MainWindowController implements Initializable {
         dialog.showAndWait();
 
         listView.setItems(mainWindowViewModel.getTourList());
+    }
+
+    public void activateEditing(){
+        this.nameField.editableProperty().set(true);
+        this.descField.editableProperty().set(true);
+        this.fromField.editableProperty().set(true);
+        this.toField.editableProperty().set(true);
+        this.transTypeField.editableProperty().set(true);
+        this.timeField.editableProperty().set(true);
+        this.infoArea.editableProperty().set(true);
+        this.saveBtn.visibleProperty().set(true);
+    }
+    public void saveChanges()
+    {
+        this.nameField.editableProperty().set(false);
+        this.descField.editableProperty().set(false);
+        this.fromField.editableProperty().set(false);
+        this.toField.editableProperty().set(false);
+        this.transTypeField.editableProperty().set(false);
+        this.timeField.editableProperty().set(false);
+        this.infoArea.editableProperty().set(false);
+        this.saveBtn.visibleProperty().set(false);
     }
 
     public void setPrimaryStage(Stage primaryStage) {
