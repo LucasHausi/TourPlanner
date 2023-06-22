@@ -17,7 +17,7 @@ public class TourLogController {
         this.tourLogRepository = tourLogRepository;
     }
 
-    @PostMapping(path = "/tourLog/add")
+    @PostMapping(path = "/tourLog/save")
     public ResponseEntity<TourLogEntity> addTourLog(@RequestBody TourLogEntity tourLogEntity) {
         TourLogEntity savedTour = tourLogRepository.save(tourLogEntity);
         String path = "/tour/"+savedTour.getId();

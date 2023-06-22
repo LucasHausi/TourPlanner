@@ -1,5 +1,6 @@
 package com.tourplanner.frontend.view;
 
+import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.frontend.FXMLDependencyInjection;
 import com.tourplanner.frontend.viewmodel.MainWindowViewModel;
 import javafx.fxml.FXML;
@@ -23,7 +24,7 @@ public class MainWindowController implements Initializable {
     @FXML
     public TextField searchField;
     @FXML
-    ListView<String> listView = new ListView();
+    ListView<TourEntity> listView = new ListView();
     @FXML
     TextField nameField;
     @FXML
@@ -38,9 +39,7 @@ public class MainWindowController implements Initializable {
     TextField timeField;
     @FXML
     TextArea infoArea;
-    @FXML
     Button editBtn;
-    @FXML
     Button saveBtn;
 
     Stage primaryStage;
@@ -53,7 +52,13 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        nameField.textProperty().bindBidirectional(mainWindowViewModel.getName());
+        descField.textProperty().bindBidirectional(mainWindowViewModel.getDescField());
+        fromField.textProperty().bindBidirectional(mainWindowViewModel.getFromField());
+        toField.textProperty().bindBidirectional(mainWindowViewModel.getToField());
+        transTypeField.textProperty().bindBidirectional(mainWindowViewModel.getTransTypeField());
+        timeField.textProperty().bindBidirectional(mainWindowViewModel.getTimeField());
+        infoArea.textProperty().bindBidirectional(mainWindowViewModel.getInfoArea());
     }
 
     public void addItem() throws IOException {
@@ -70,6 +75,9 @@ public class MainWindowController implements Initializable {
         dialog.showAndWait();
 
         listView.setItems(mainWindowViewModel.getTourList());
+        listView.setOnMouseClicked(event -> {
+            System.out.println(listView.getSelectionModel().getSelectedItem().getName());
+        });
     }
 
     public void addTourLog() throws IOException {
@@ -98,8 +106,7 @@ public class MainWindowController implements Initializable {
         this.infoArea.editableProperty().set(true);
         this.saveBtn.visibleProperty().set(true);
     }
-    public void saveChanges()
-    {
+    public void saveChanges() throws IOException {
         this.nameField.editableProperty().set(false);
         this.descField.editableProperty().set(false);
         this.fromField.editableProperty().set(false);
@@ -108,6 +115,7 @@ public class MainWindowController implements Initializable {
         this.timeField.editableProperty().set(false);
         this.infoArea.editableProperty().set(false);
         this.saveBtn.visibleProperty().set(false);
+        mainWindowViewModel.updateTour();
     }
 
     public void setPrimaryStage(Stage primaryStage) {

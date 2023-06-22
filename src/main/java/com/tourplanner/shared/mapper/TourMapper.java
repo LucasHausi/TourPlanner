@@ -6,6 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface TourMapper {
-    TourEntity TourToTourEntity(Tour tour);
-    Tour tourEntityToTour(TourEntity tourEntity);
+    TourEntity toEntity(Tour tour);
+    Tour fromEntity(TourEntity tourEntity);
 }

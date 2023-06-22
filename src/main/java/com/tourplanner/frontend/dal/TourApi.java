@@ -12,8 +12,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface TourApi {
-    @POST("/newTour")
-    Call<TourEntity> newTour(@Body TourEntity tourEntity);
+    @POST("/tour/save")
+    Call<TourEntity> createOrUpdateTour(@Body TourEntity tourEntity);
 
     @GET("/tour/{id}")
     Call<TourEntity> getTour(@Path("id") UUID id);

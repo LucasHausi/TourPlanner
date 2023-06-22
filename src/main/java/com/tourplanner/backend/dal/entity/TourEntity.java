@@ -10,7 +10,6 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @EqualsAndHashCode
 @Entity
 @Table(name="tour")
@@ -42,4 +41,9 @@ public class TourEntity {
     private String estimatedTime;
 
     private String routeInformation; //ToDO soll irgendwie eine Map oder ein Bild einer Map oder so sein
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

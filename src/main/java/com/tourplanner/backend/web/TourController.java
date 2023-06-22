@@ -12,19 +12,17 @@ import java.util.UUID;
 @RestController
 public class TourController {
     public final TourRepository tourRepository;
-
     public TourController(TourRepository tourRepository) {
         this.tourRepository = tourRepository;
     }
 
-    @PostMapping(path = "/newTour")
-    public ResponseEntity<TourEntity> newTour(@RequestBody TourEntity tourEntity) {
+    @PostMapping(path = "/tour/save")
+    public ResponseEntity<TourEntity> createOrUpdateTour(@RequestBody TourEntity tourEntity) {
         TourEntity savedTourEntity = tourRepository.save(tourEntity);
         String path = "/tour/"+ savedTourEntity.getId();
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTourEntity);
         return ResponseEntity.created(uri).body(savedTourEntity);
     }
-
     @GetMapping(path = "/tour/{id}")
     public TourEntity getTour(@PathVariable("id") UUID id){
         return tourRepository.findById(id).orElseThrow();

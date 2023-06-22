@@ -33,6 +33,6 @@ public class NewTourLogViewModel {
 
     public void saveTourLog() throws IOException {
         TourLogEntity tourLogEntity = new TourLogEntity(UUID.randomUUID(), date.get(),comment.get(),difficulty.get(), LocalTime.parse(duration.get()),Integer.valueOf(rating.get()),new TourEntity());
-        service.add(tourLogEntity);
+        service.createOrUpdateTourLog(tourLogEntity);
     }
 }

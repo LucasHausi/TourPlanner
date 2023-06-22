@@ -26,16 +26,10 @@ public class NewTourViewModel {
     private final ObjectProperty<TransportType> transportType = new SimpleObjectProperty<>();
     private final StringProperty time = new SimpleStringProperty();
     private final StringProperty tourInfo = new SimpleStringProperty();
-
-    @Getter
     private final  BooleanProperty nameErrorVisible = new SimpleBooleanProperty(false);
-    @Getter
     private final  BooleanProperty startDestinationErrorVisible = new SimpleBooleanProperty(false);
-    @Getter
     private final  BooleanProperty endDestinationErrorVisible = new SimpleBooleanProperty(false);
-    @Getter
     private final  BooleanProperty timeErrorVisible = new SimpleBooleanProperty(false);
-    @Getter
     private final  BooleanProperty formValidity= new SimpleBooleanProperty(false);
 
 
@@ -76,6 +70,6 @@ public class NewTourViewModel {
     public void saveTour() throws IOException {
         TourEntity tourEntity = new TourEntity(UUID.randomUUID(), name.get(), description.get(), from.get(),
                         to.get(), transportType.get(), 0.0, time.get(), tourInfo.get());
-        service.add(tourEntity);
+        service.createOrUpdate(tourEntity);
     }
 }

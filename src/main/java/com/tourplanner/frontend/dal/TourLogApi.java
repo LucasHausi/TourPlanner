@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TourLogApi {
-    @POST("/tourLog/add")
-    Call<TourLogEntity> addTourLog(@RequestBody TourLogEntity tourLogEntity);
+    @POST("/tourLog/save")
+    Call<TourLogEntity> createOrUpdateTourLog(@RequestBody TourLogEntity tourLogEntity);
 
     @GET("/tourLog/{id}")
     Call<TourLogEntity> getTourLog(@Path("id") UUID id);

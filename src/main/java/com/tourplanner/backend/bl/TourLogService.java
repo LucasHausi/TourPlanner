@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface TourLogService {
-     void add(TourLogEntity tour) throws IOException;
+     void createOrUpdateTourLog(TourLogEntity tour) throws IOException;
 
      List<TourLogEntity> getAllTours() throws IOException;
 }

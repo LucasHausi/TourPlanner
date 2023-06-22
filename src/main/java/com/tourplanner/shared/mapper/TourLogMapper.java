@@ -6,6 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface TourLogMapper {
-    TourLogEntity TourLogToTourLogEntity(TourLog tourLog);
+    TourLogEntity toEntity(TourLog tourLog);
     TourLog tourLogEntityToTourLog(TourLogEntity tourLogEntity);
 }

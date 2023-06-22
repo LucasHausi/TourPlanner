@@ -13,23 +13,23 @@ import java.util.List;
 @Component
 public class TourLogServiceImpl implements TourLogService {
     @Getter
-    private final TourLogApi service;
+    private final TourLogApi tourLogApi;
     public TourLogServiceImpl(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://localhost:30019")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
 
-        service = retrofit.create(TourLogApi.class);
+        tourLogApi = retrofit.create(TourLogApi.class);
     }
 
     @Override
-    public void add(TourLogEntity tourLogEntity) throws IOException {
-        service.addTourLog(tourLogEntity).execute();
+    public void createOrUpdateTourLog(TourLogEntity tourLogEntity) throws IOException {
+        tourLogApi.createOrUpdateTourLog(tourLogEntity).execute();
     }
 
     @Override
     public List<TourLogEntity> getAllTours() throws IOException {
-        return service.getAllTourLogs().execute().body();
+        return tourLogApi.getAllTourLogs().execute().body();
     }
 }

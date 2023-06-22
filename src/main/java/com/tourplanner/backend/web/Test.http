@@ -3,7 +3,7 @@ Accept: application/json
 
 ###
 ###
-POST http://localhost:30019/newTour
+POST http://localhost:30019/tour/save
 Content-Type: application/json
 
 {
