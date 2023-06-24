@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -31,7 +30,7 @@ public class TourLogEntity {
     private Difficulty difficulty;
 
     @Column(name="totalTime")
-    private LocalTime totalTime;
+    private String totalTime;
 
     @Column(name="rating")
     private int rating;

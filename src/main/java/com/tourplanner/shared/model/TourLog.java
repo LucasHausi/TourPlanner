@@ -4,7 +4,6 @@ import com.tourplanner.shared.enums.Difficulty;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -19,7 +18,7 @@ public class TourLog {
     private String comment;
     private Difficulty difficulty;
 
-    private LocalTime totalTime;
+    private String totalTime;
 
     private int rating;
 

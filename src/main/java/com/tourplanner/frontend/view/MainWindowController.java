@@ -91,6 +91,7 @@ public class MainWindowController implements Initializable {
         dialog.setTitle("New Tour Log");
         dialog.setScene(dialogScene);
         loader.<NewTourLogController>getController().setNewTourLogDialogStage(dialog);
+        loader.<NewTourLogController>getController().setTour(listView.getSelectionModel().getSelectedItem());
         dialog.showAndWait();
 
         listView.setItems(mainWindowViewModel.getTourList());

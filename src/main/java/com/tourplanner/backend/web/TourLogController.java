@@ -18,7 +18,7 @@ public class TourLogController {
     }
 
     @PostMapping(path = "/tourLog/save")
-    public ResponseEntity<TourLogEntity> addTourLog(@RequestBody TourLogEntity tourLogEntity) {
+    public ResponseEntity<TourLogEntity> createOrUpdateTourLog(@RequestBody TourLogEntity tourLogEntity) {
         TourLogEntity savedTour = tourLogRepository.save(tourLogEntity);
         String path = "/tour/"+savedTour.getId();
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTour);

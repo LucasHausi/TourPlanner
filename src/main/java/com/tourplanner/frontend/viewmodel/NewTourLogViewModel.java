@@ -7,11 +7,11 @@ import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import javafx.beans.property.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.UUID;
 
 //If deleted there's an error in the NewTourController.class
@@ -26,13 +26,16 @@ public class NewTourLogViewModel {
     private final StringProperty duration = new SimpleStringProperty();
     private final IntegerProperty rating = new SimpleIntegerProperty();
 
+    @Setter
+    private TourEntity tour;
+
 
     public NewTourLogViewModel(TourLogServiceImpl service){
         this.service = service;
     }
 
     public void saveTourLog() throws IOException {
-        TourLogEntity tourLogEntity = new TourLogEntity(UUID.randomUUID(), date.get(),comment.get(),difficulty.get(), LocalTime.parse(duration.get()),Integer.valueOf(rating.get()),new TourEntity());
+        TourLogEntity tourLogEntity = new TourLogEntity(UUID.randomUUID(), date.get(),comment.get(),difficulty.get(), duration.get(),Integer.valueOf(rating.get()),tour);
         service.createOrUpdateTourLog(tourLogEntity);
     }
 }
