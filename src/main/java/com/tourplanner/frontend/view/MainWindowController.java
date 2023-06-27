@@ -106,6 +106,10 @@ public class MainWindowController implements Initializable {
         listView.setItems(mainWindowViewModel.getTourList());
     }
 
+    public void deleteTour(){
+
+    }
+
     public void activateEditing(){
         this.nameField.editableProperty().set(true);
         this.descField.editableProperty().set(true);

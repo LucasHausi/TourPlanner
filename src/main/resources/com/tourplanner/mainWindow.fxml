@@ -48,7 +48,7 @@
               <items>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tours" textAlignment="CENTER" wrappingWidth="35.373046875" />
                   <Button mnemonicParsing="false" onAction="#addItem" text="+" />
-                  <Button mnemonicParsing="false" text="-" />
+                  <Button mnemonicParsing="false" onAction="#deleteTour" text="-" />
                   <Button mnemonicParsing="false" text="..." />
               </items>
                <VBox.margin>
