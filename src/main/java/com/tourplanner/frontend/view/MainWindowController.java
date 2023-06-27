@@ -106,8 +106,9 @@ public class MainWindowController implements Initializable {
         listView.setItems(mainWindowViewModel.getTourList());
     }
 
-    public void deleteTour(){
-
+    public void deleteTour() throws IOException {
+        mainWindowViewModel.deleteTour(listView.getSelectionModel().getSelectedItem().getId());
+        listView.setItems(mainWindowViewModel.getTourList());
     }
 
     public void activateEditing(){

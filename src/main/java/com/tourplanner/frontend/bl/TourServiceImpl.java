@@ -9,6 +9,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class TourServiceImpl implements TourService {
@@ -26,6 +27,11 @@ public class TourServiceImpl implements TourService {
     @Override
     public void createOrUpdate(TourEntity tourEntity) throws IOException {
         tourApi.createOrUpdateTour(tourEntity).execute();
+    }
+
+    @Override
+    public void deleteTour(UUID id) throws IOException {
+        tourApi.deleteTour(id).execute();
     }
 
     @Override

@@ -13,5 +13,9 @@ Content-Type: application/json
     "destination": "there",
     "distance": 2
 }
+###
+
+DELETE  http://localhost:30019/tour/d9dbfce2-31dc-45aa-a934-a4d7d3968cd5/delete
+Accept: application/json
 
 
