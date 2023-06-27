@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class MainWindowViewModel {
     TourService service;
 
-    private final SimpleStringProperty name = new SimpleStringProperty();
+    private final SimpleStringProperty nameField = new SimpleStringProperty();
     private final SimpleStringProperty descField = new SimpleStringProperty();
     private final SimpleStringProperty fromField = new SimpleStringProperty();
     private final SimpleStringProperty toField = new SimpleStringProperty();
@@ -34,8 +34,18 @@ public class MainWindowViewModel {
     }
 
     public void updateTour() throws IOException {
-        TourEntity tourEntity = new TourEntity(UUID.randomUUID(), name.get(), descField.get(), fromField.get(),
+        TourEntity tourEntity = new TourEntity(UUID.randomUUID(), nameField.get(), descField.get(), fromField.get(),
                 toField.get(), TransportType.valueOf(transTypeField.get()), 0.0, timeField.get(), infoArea.get());
         service.createOrUpdate(tourEntity);
+    }
+    public void updateTourInfos(TourEntity t){
+        this.nameField.set(t.getName());
+        this.descField.set(t.getDescription());
+        this.fromField.set(t.getStartingPoint());
+        this.toField.set(t.getDestination());
+        this.transTypeField.set(t.getTransportType().toString());
+        this.timeField.set(t.getEstimatedTime());
+        this.infoArea.set(t.getRouteInformation());
+
     }
 }

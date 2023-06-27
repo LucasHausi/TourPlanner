@@ -39,7 +39,9 @@ public class MainWindowController implements Initializable {
     TextField timeField;
     @FXML
     TextArea infoArea;
+    @FXML
     Button editBtn;
+    @FXML
     Button saveBtn;
 
     Stage primaryStage;
@@ -52,13 +54,20 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        nameField.textProperty().bindBidirectional(mainWindowViewModel.getName());
+        nameField.textProperty().bindBidirectional(mainWindowViewModel.getNameField());
         descField.textProperty().bindBidirectional(mainWindowViewModel.getDescField());
         fromField.textProperty().bindBidirectional(mainWindowViewModel.getFromField());
         toField.textProperty().bindBidirectional(mainWindowViewModel.getToField());
         transTypeField.textProperty().bindBidirectional(mainWindowViewModel.getTransTypeField());
         timeField.textProperty().bindBidirectional(mainWindowViewModel.getTimeField());
         infoArea.textProperty().bindBidirectional(mainWindowViewModel.getInfoArea());
+
+        //load older tours from the DB
+        try {
+            listView.setItems(mainWindowViewModel.getTourList());
+        } catch (IOException e) {
+            //gets error if the table is empty
+        }
     }
 
     public void addItem() throws IOException {
@@ -76,7 +85,7 @@ public class MainWindowController implements Initializable {
 
         listView.setItems(mainWindowViewModel.getTourList());
         listView.setOnMouseClicked(event -> {
-            System.out.println(listView.getSelectionModel().getSelectedItem().getName());
+            mainWindowViewModel.updateTourInfos(listView.getSelectionModel().getSelectedItem());
         });
     }
 
