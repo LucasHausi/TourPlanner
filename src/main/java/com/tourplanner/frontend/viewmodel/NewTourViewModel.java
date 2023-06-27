@@ -3,8 +3,8 @@ package com.tourplanner.frontend.viewmodel;
 import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.frontend.bl.ValidationService;
 import com.tourplanner.shared.enums.TransportType;
-import com.tourplanner.backend.bl.TourService;
-import com.tourplanner.backend.bl.TourServiceImpl;
+import com.tourplanner.frontend.bl.TourService;
+import com.tourplanner.frontend.bl.TourServiceImpl;
 
 import javafx.beans.property.*;
 import lombok.Getter;

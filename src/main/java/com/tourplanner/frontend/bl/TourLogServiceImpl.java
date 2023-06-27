@@ -1,4 +1,4 @@
-package com.tourplanner.backend.bl;
+package com.tourplanner.frontend.bl;
 
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.frontend.dal.TourLogApi;

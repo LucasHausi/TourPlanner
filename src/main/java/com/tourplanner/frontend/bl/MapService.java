@@ -1,4 +1,4 @@
-package com.tourplanner.backend.bl;
+package com.tourplanner.frontend.bl;
 
 import java.io.IOException;
 

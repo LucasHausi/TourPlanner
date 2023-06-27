@@ -1,8 +1,8 @@
 package com.tourplanner.frontend.view;
 
 
-import com.tourplanner.backend.bl.TourLogServiceImpl;
-import com.tourplanner.backend.bl.TourServiceImpl;
+import com.tourplanner.frontend.bl.TourLogServiceImpl;
+import com.tourplanner.frontend.bl.TourServiceImpl;
 import com.tourplanner.frontend.viewmodel.MainWindowViewModel;
 import com.tourplanner.frontend.viewmodel.NewTourLogViewModel;
 import com.tourplanner.frontend.viewmodel.NewTourViewModel;

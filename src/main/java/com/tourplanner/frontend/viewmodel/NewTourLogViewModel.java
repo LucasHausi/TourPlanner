@@ -1,8 +1,8 @@
 package com.tourplanner.frontend.viewmodel;
 
 import com.tourplanner.shared.enums.Difficulty;
-import com.tourplanner.backend.bl.TourLogService;
-import com.tourplanner.backend.bl.TourLogServiceImpl;
+import com.tourplanner.frontend.bl.TourLogService;
+import com.tourplanner.frontend.bl.TourLogServiceImpl;
 import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import javafx.beans.property.*;
