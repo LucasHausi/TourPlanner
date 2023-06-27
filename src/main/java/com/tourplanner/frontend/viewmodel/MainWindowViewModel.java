@@ -1,9 +1,8 @@
 package com.tourplanner.frontend.viewmodel;
 
-import com.tourplanner.frontend.bl.TourService;
-import com.tourplanner.frontend.bl.TourServiceImpl;
+import com.tourplanner.backend.dal.entity.TourLogEntity;
+import com.tourplanner.frontend.bl.*;
 import com.tourplanner.backend.dal.entity.TourEntity;
-import com.tourplanner.frontend.bl.ValidationService;
 import com.tourplanner.shared.enums.TransportType;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,7 +16,9 @@ import java.util.stream.Collectors;
 
 @Getter
 public class MainWindowViewModel {
-    TourService service;
+    TourService tourService;
+
+    TourLogService tourLogService;
 
     private final SimpleStringProperty nameField = new SimpleStringProperty();
     private final SimpleStringProperty descField = new SimpleStringProperty();
@@ -34,7 +35,8 @@ public class MainWindowViewModel {
 
     public MainWindowViewModel() {
 
-        service = new TourServiceImpl();
+        tourService = new TourServiceImpl();
+        tourLogService = new TourLogServiceImpl();
         this.nameField.addListener((observable, oldValue, newValue) -> validateName(newValue));
         this.fromField.addListener((observable, oldValue, newValue) -> validateFromDestination(newValue));
         this.toField.addListener((observable, oldValue, newValue) -> validateTODestination(newValue));
@@ -67,15 +69,15 @@ public class MainWindowViewModel {
     }
 
     public ObservableList<TourEntity> getTourList() throws IOException {
-        return service.getAllTours().stream().collect(Collectors.toCollection(FXCollections::observableArrayList));
+        return tourService.getAllTours().stream().collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
     public void deleteTour(UUID id) throws IOException {
-        service.deleteTour(id);
+        tourService.deleteTour(id);
     }
     public void updateTour(UUID id) throws IOException {
         TourEntity tourEntity = new TourEntity(id, nameField.get(), descField.get(), fromField.get(),
                 toField.get(), TransportType.valueOf(transTypeField.get()), 0.0, timeField.get(), infoArea.get());
-        service.createOrUpdate(tourEntity);
+        tourService.createOrUpdate(tourEntity);
     }
     public void updateTourInfos(TourEntity t){
         this.nameField.set(t.getName());
@@ -86,5 +88,9 @@ public class MainWindowViewModel {
         this.timeField.set(t.getEstimatedTime());
         this.infoArea.set(t.getRouteInformation());
 
+    }
+
+    public ObservableList<TourLogEntity> getTourLogList(TourEntity tour) throws IOException {
+        return tourLogService.getAllTourLogsOfTour(tour).stream().collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 }

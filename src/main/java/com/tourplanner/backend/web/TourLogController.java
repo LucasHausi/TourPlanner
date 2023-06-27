@@ -1,6 +1,7 @@
 package com.tourplanner.backend.web;
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.backend.dal.repository.TourLogRepository;
+import com.tourplanner.backend.dal.repository.TourRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -12,9 +13,11 @@ import java.util.UUID;
 @RestController
 public class TourLogController {
     public final TourLogRepository tourLogRepository;
+    public final TourRepository tourRepository;
 
-    public TourLogController(TourLogRepository tourLogRepository) {
+    public TourLogController(TourLogRepository tourLogRepository, TourRepository tourRepository) {
         this.tourLogRepository = tourLogRepository;
+        this.tourRepository = tourRepository;
     }
 
     @PostMapping(path = "/tourLog/save")
@@ -32,7 +35,7 @@ public class TourLogController {
 
     @GetMapping(path = "/tour/{tourId}/tourLogs")
     public List<TourLogEntity> getTourLogs(@PathVariable("tourId") UUID tourId){
-        return tourLogRepository.getTourLogById(tourId);
+        return tourLogRepository.getTourLogEntityByTourEntity(tourRepository.findById(tourId).get());
     }
 
     @GetMapping(path = "/tourLogs")

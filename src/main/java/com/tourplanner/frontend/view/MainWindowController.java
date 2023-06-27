@@ -1,6 +1,7 @@
 package com.tourplanner.frontend.view;
 
 import com.tourplanner.backend.dal.entity.TourEntity;
+import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.frontend.FXMLDependencyInjection;
 import com.tourplanner.frontend.viewmodel.MainWindowViewModel;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -47,9 +50,23 @@ public class MainWindowController implements Initializable {
     TextArea infoArea;
 
     @FXML
+    TableView<TourLogEntity> tourLogTable;
+
+    @FXML
+    TableColumn<TourLogEntity, LocalDateTime> dateColumn;
+
+    @FXML
+    TableColumn<TourLogEntity, String> durationColumn;
+
+    @FXML
+    TableColumn<TourLogEntity, Integer> distanceColumn;
+
+    @FXML
     Button saveBtn;
     @FXML
     Label errFormField;
+    @FXML
+    Tab routeTab;
 
     @FXML
     private ReusableCompController reusableCompController;
@@ -75,12 +92,22 @@ public class MainWindowController implements Initializable {
         //Binding for saveBtn & errorLabel
         saveBtn.visibleProperty().bindBidirectional(mainWindowViewModel.getFormValidity());
         errFormField.visibleProperty().bind(mainWindowViewModel.getFormValidity().not());
-
         //load older tours from the DB
         try {
             listView.setItems(mainWindowViewModel.getTourList());
             listView.setOnMouseClicked(event -> {
                 mainWindowViewModel.updateTourInfos(listView.getSelectionModel().getSelectedItem());
+                try {
+                    dateColumn.setCellValueFactory(
+                            new PropertyValueFactory<TourLogEntity, LocalDateTime>("dateTime"));
+                    durationColumn.setCellValueFactory(
+                            new PropertyValueFactory<TourLogEntity, String>("totalTime"));
+                    distanceColumn.setCellValueFactory(
+                            new PropertyValueFactory<TourLogEntity, Integer>("rating"));
+                    tourLogTable.setItems(mainWindowViewModel.getTourLogList(listView.getSelectionModel().getSelectedItem()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
         } catch (IOException e) {
             //gets error if the table is empty

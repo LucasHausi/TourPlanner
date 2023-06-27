@@ -1,5 +1,6 @@
 package com.tourplanner.frontend.bl;
 
+import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.frontend.dal.TourLogApi;
 import lombok.Getter;
@@ -31,5 +32,10 @@ public class TourLogServiceImpl implements TourLogService {
     @Override
     public List<TourLogEntity> getAllTours() throws IOException {
         return tourLogApi.getAllTourLogs().execute().body();
+    }
+
+    @Override
+    public List<TourLogEntity> getAllTourLogsOfTour(TourEntity tour) throws IOException {
+        return tourLogApi.getTourLogs(tour.getId()).execute().body();
     }
 }
