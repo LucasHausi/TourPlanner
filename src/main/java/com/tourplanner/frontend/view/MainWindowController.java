@@ -165,6 +165,14 @@ public class MainWindowController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+        Button tourLogModify = (Button)tourLogToolBar.getItems().get(3);
+        tourLogModify.setOnAction(event -> {
+            try {
+                modifyTourLog();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
     }
 
@@ -198,7 +206,7 @@ public class MainWindowController implements Initializable {
         loader.<NewTourLogController>getController().setTour(listView.getSelectionModel().getSelectedItem());
         dialog.showAndWait();
 
-        listView.setItems(mainWindowViewModel.getTourList());
+        tourLogTable.setItems(mainWindowViewModel.getTourLogList(listView.getSelectionModel().getSelectedItem()));
     }
 
     public void deleteTour() throws IOException {
@@ -208,6 +216,24 @@ public class MainWindowController implements Initializable {
 
     public void deleteTourLog() throws IOException {
         mainWindowViewModel.deleteTourLog(tourLogTable.getSelectionModel().getSelectedItem().getId());
+        tourLogTable.setItems(mainWindowViewModel.getTourLogList(listView.getSelectionModel().getSelectedItem()));
+    }
+
+    public void modifyTourLog() throws IOException {
+        final Stage dialog = new Stage();
+
+        FXMLLoader loader =  FXMLDependencyInjection.getLoader("newTourLog.fxml", Locale.ENGLISH, null);
+        Parent root  = loader.load();
+        Scene dialogScene = new Scene(root);
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.initOwner(primaryStage);
+        dialog.setTitle("Modify Tour Log");
+        dialog.setScene(dialogScene);
+        loader.<NewTourLogController>getController().setNewTourLogDialogStage(dialog);
+        loader.<NewTourLogController>getController().setTour(listView.getSelectionModel().getSelectedItem());
+        loader.<NewTourLogController>getController().setTourLogData(tourLogTable.getSelectionModel().getSelectedItem());
+        dialog.showAndWait();
+
         tourLogTable.setItems(mainWindowViewModel.getTourLogList(listView.getSelectionModel().getSelectedItem()));
     }
 

@@ -1,6 +1,7 @@
 package com.tourplanner.frontend.view;
 
 import com.tourplanner.backend.dal.entity.TourEntity;
+import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.shared.enums.Difficulty;
 import com.tourplanner.frontend.viewmodel.NewTourLogViewModel;
 import javafx.collections.FXCollections;
@@ -59,8 +60,13 @@ public class NewTourLogController implements Initializable {
         this.newTourLogViewModel.setTour(tour);
     }
 
+    public void setTourLogData(TourLogEntity tourLog){
+        newTourLogViewModel.setTourLogData(tourLog);
+    }
+
     public void saveTourLog() throws IOException{
         newTourLogViewModel.saveTourLog();
+        newTourLogViewModel.clearTourLogData();
         //close dialog
         newTourLogDialogStage.close();
     }

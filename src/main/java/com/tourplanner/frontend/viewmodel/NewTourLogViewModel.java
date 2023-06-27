@@ -29,13 +29,32 @@ public class NewTourLogViewModel {
     @Setter
     private TourEntity tour;
 
+    @Setter
+    private UUID tourLogId = null;
+
 
     public NewTourLogViewModel(TourLogServiceImpl service){
         this.service = service;
     }
 
+    public void setTourLogData(TourLogEntity tourLog){
+        this.tourLogId = tourLog.getId();
+        this.date.set(tourLog.getDateTime());
+        this.comment.set(tourLog.getComment());
+        this.difficulty.set(tourLog.getDifficulty());
+        this.duration.set(tourLog.getTotalTime());
+        this.rating.set(tourLog.getRating());
+    }
+    public void clearTourLogData(){
+        this.tourLogId = null;
+        this.date.set(null);
+        this.comment.set("");
+        this.difficulty.set(null);
+        this.duration.set(null);
+        this.rating.set(0);
+    }
     public void saveTourLog() throws IOException {
-        TourLogEntity tourLogEntity = new TourLogEntity(UUID.randomUUID(), date.get(),comment.get(),difficulty.get(), duration.get(),Integer.valueOf(rating.get()),tour);
+        TourLogEntity tourLogEntity = new TourLogEntity(tourLogId!=null ? tourLogId : UUID.randomUUID(), date.get(),comment.get(),difficulty.get(), duration.get(),Integer.valueOf(rating.get()),tour);
         service.createOrUpdateTourLog(tourLogEntity);
     }
 }
