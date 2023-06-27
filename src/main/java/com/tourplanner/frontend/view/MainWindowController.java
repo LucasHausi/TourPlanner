@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -20,6 +22,13 @@ import java.util.ResourceBundle;
 public class MainWindowController implements Initializable {
     @FXML
     public TextField searchField;
+
+    @FXML
+    public AnchorPane tourComp;
+
+    @FXML
+    public AnchorPane tourLogComp;
+
     @FXML
     ListView<TourEntity> listView = new ListView();
     @FXML
@@ -41,6 +50,9 @@ public class MainWindowController implements Initializable {
     Button saveBtn;
     @FXML
     Label errFormField;
+
+    @FXML
+    private ReusableCompController reusableCompController;
 
     Stage primaryStage;
 
@@ -74,6 +86,38 @@ public class MainWindowController implements Initializable {
             //gets error if the table is empty
             System.err.println(e);
         }
+
+        ToolBar toolBar = (ToolBar) tourComp.getChildren().get(0);
+        Text text = (Text)toolBar.getItems().get(0);
+        text.setText("Tours");
+        Button tourAdd = (Button)toolBar.getItems().get(1);
+        tourAdd.setOnAction(event -> {
+            try {
+                addItem();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Button tourDelete = (Button)toolBar.getItems().get(2);
+        tourDelete.setOnAction(event -> {
+            try {
+                deleteTour();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        ToolBar tourLogToolBar = (ToolBar) tourLogComp.getChildren().get(0);
+        Text tourLogText = (Text)tourLogToolBar.getItems().get(0);
+        tourLogText.setText("TourLogs");
+        Button tourLogAdd = (Button)tourLogToolBar.getItems().get(1);
+        tourLogAdd.setOnAction(event -> {
+            try {
+                addTourLog();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void addItem() throws IOException {

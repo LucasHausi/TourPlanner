@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.text.Text?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.tourplanner.frontend.view.ReusableCompController">
+    <ToolBar>
+        <items>
+            <Text fx:id="buttonGroupText" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="35.373046875" />
+            <Button fx:id="add" mnemonicParsing="false" text="+" />
+            <Button fx:id="delete" mnemonicParsing="false" text="-" />
+            <Button fx:id="misc" mnemonicParsing="false" text="..." />
+        </items>
+        <VBox.margin>
+            <Insets />
+        </VBox.margin>
+    </ToolBar>
+</AnchorPane>

@@ -15,7 +15,6 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -44,17 +43,7 @@
    <children>
       <VBox style="-fx-border-color: #000;" GridPane.rowIndex="1" GridPane.rowSpan="3">
          <children>
-            <ToolBar>
-              <items>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tours" textAlignment="CENTER" wrappingWidth="35.373046875" />
-                  <Button mnemonicParsing="false" onAction="#addItem" text="+" />
-                  <Button mnemonicParsing="false" onAction="#deleteTour" text="-" />
-                  <Button mnemonicParsing="false" text="..." />
-              </items>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </ToolBar>
+             <fx:include fx:id="tourComp" source="reusableComp.fxml"/>
             <ListView fx:id="listView" />
          </children>
          <GridPane.margin>
@@ -78,14 +67,7 @@
                                     <Image url="@../../pictures/MapsExample.PNG" />
                                  </image>
                               </ImageView>
-                              <ToolBar>
-                                <items>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tours Logs" />
-                                    <Button mnemonicParsing="false" onAction="#addTourLog" text="+" />
-                                    <Button mnemonicParsing="false" text="-" />
-                                    <Button mnemonicParsing="false" text="..." />
-                                </items>
-                              </ToolBar>
+                               <fx:include fx:id="tourLogComp" source="reusableComp.fxml"/>
                               <TableView>
                                 <columns>
                                   <TableColumn prefWidth="75.0" text="Date" />
