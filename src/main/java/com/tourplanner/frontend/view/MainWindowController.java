@@ -156,6 +156,16 @@ public class MainWindowController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+
+        Button tourLogDelete = (Button)tourLogToolBar.getItems().get(2);
+        tourLogDelete.setOnAction(event -> {
+            try {
+                deleteTourLog();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 
     public void addItem() throws IOException {
@@ -194,6 +204,11 @@ public class MainWindowController implements Initializable {
     public void deleteTour() throws IOException {
         mainWindowViewModel.deleteTour(listView.getSelectionModel().getSelectedItem().getId());
         listView.setItems(mainWindowViewModel.getTourList());
+    }
+
+    public void deleteTourLog() throws IOException {
+        mainWindowViewModel.deleteTourLog(tourLogTable.getSelectionModel().getSelectedItem().getId());
+        tourLogTable.setItems(mainWindowViewModel.getTourLogList(listView.getSelectionModel().getSelectedItem()));
     }
 
     public void saveChanges() throws IOException {

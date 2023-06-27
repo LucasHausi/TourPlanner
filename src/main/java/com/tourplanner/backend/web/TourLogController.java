@@ -2,6 +2,7 @@ package com.tourplanner.backend.web;
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.backend.dal.repository.TourLogRepository;
 import com.tourplanner.backend.dal.repository.TourRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,6 +33,15 @@ public class TourLogController {
     public TourLogEntity getTourLog(@PathVariable("id") UUID id){
         return tourLogRepository.findById(id).orElseThrow();
    }
+
+    @DeleteMapping(value = "/tourLog/{tourLogId}/delete")
+    public ResponseEntity<UUID> deleteTourLog(@PathVariable UUID tourLogId) {
+        if (!tourLogRepository.existsById(tourLogId)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        tourLogRepository.deleteById(tourLogId);
+        return new ResponseEntity<>(tourLogId, HttpStatus.OK);
+    }
 
     @GetMapping(path = "/tour/{tourId}/tourLogs")
     public List<TourLogEntity> getTourLogs(@PathVariable("tourId") UUID tourId){

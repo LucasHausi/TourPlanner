@@ -2,7 +2,6 @@ package com.tourplanner.frontend.viewmodel;
 
 import com.tourplanner.frontend.bl.*;
 import com.tourplanner.backend.dal.entity.TourLogEntity;
-import com.tourplanner.frontend.bl.*;
 import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.shared.enums.TransportType;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -76,6 +75,10 @@ public class MainWindowViewModel {
     }
     public void deleteTour(UUID id) throws IOException {
         tourService.deleteTour(id);
+    }
+
+    public void deleteTourLog(UUID tourLogId) throws IOException {
+        tourLogService.deleteTourLog(tourLogId);
     }
     public void updateTour(UUID id) throws IOException {
         TourEntity tourEntity = new TourEntity(id, nameField.get(), descField.get(), fromField.get(),

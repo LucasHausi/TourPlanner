@@ -2,10 +2,8 @@ package com.tourplanner.frontend.dal;
 
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.*;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +16,9 @@ public interface TourLogApi {
 
     @GET("/tour/{tourId}/tourLogs")
     Call<List<TourLogEntity>> getTourLogs(@Path("tourId") UUID tourId);
+
+    @DELETE( "/tourLog/{tourLogId}/delete")
+    Call<UUID> deleteTourLog(@Path("tourLogId") UUID tourLogId);
 
     @GET("/tourLogs")
     Call<List<TourLogEntity>> getAllTourLogs();
