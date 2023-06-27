@@ -1,6 +1,7 @@
 package com.tourplanner.backend.web;
 import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.backend.dal.repository.TourRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,6 +24,15 @@ public class TourController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTourEntity);
         return ResponseEntity.created(uri).body(savedTourEntity);
     }
+    @DeleteMapping(value = "/tour/{tourId}/delete")
+    public ResponseEntity<UUID> deleteTour(@PathVariable UUID tourId) {
+        if (!tourRepository.existsById(tourId)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        tourRepository.deleteById(tourId);
+        return new ResponseEntity<>(tourId, HttpStatus.OK);
+    }
+
     @GetMapping(path = "/tour/{id}")
     public TourEntity getTour(@PathVariable("id") UUID id){
         return tourRepository.findById(id).orElseThrow();
