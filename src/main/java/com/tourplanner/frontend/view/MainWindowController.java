@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -39,10 +36,11 @@ public class MainWindowController implements Initializable {
     TextField timeField;
     @FXML
     TextArea infoArea;
-    @FXML
-    Button editBtn;
+
     @FXML
     Button saveBtn;
+    @FXML
+    Label errFormField;
 
     Stage primaryStage;
 
@@ -61,6 +59,10 @@ public class MainWindowController implements Initializable {
         transTypeField.textProperty().bindBidirectional(mainWindowViewModel.getTransTypeField());
         timeField.textProperty().bindBidirectional(mainWindowViewModel.getTimeField());
         infoArea.textProperty().bindBidirectional(mainWindowViewModel.getInfoArea());
+
+        //Binding for saveBtn & errorLabel
+        saveBtn.visibleProperty().bindBidirectional(mainWindowViewModel.getFormValidity());
+        errFormField.visibleProperty().bind(mainWindowViewModel.getFormValidity().not());
 
         //load older tours from the DB
         try {
@@ -112,24 +114,7 @@ public class MainWindowController implements Initializable {
         listView.setItems(mainWindowViewModel.getTourList());
     }
 
-    public void activateEditing(){
-        this.nameField.editableProperty().set(true);
-        this.descField.editableProperty().set(true);
-        this.fromField.editableProperty().set(true);
-        this.toField.editableProperty().set(true);
-        this.transTypeField.editableProperty().set(true);
-        this.timeField.editableProperty().set(true);
-        this.infoArea.editableProperty().set(true);
-        this.saveBtn.visibleProperty().set(true);
-    }
     public void saveChanges() throws IOException {
-        this.nameField.editableProperty().set(false);
-        this.descField.editableProperty().set(false);
-        this.fromField.editableProperty().set(false);
-        this.toField.editableProperty().set(false);
-        this.transTypeField.editableProperty().set(false);
-        this.timeField.editableProperty().set(false);
-        this.infoArea.editableProperty().set(false);
         this.saveBtn.visibleProperty().set(false);
         mainWindowViewModel.updateTour(listView.getSelectionModel().getSelectedItem().getId());
         listView.setItems(mainWindowViewModel.getTourList());

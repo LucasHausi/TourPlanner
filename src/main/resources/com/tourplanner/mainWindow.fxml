@@ -27,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tourplanner.frontend.view.MainWindowController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tourplanner.frontend.view.MainWindowController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -121,19 +121,19 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin>
                               </VBox>
-                              <VBox prefHeight="341.0" prefWidth="182.0" spacing="20.0">
+                              <VBox prefHeight="341.0" prefWidth="158.0" spacing="20.0">
                                  <children>
-                                    <TextField fx:id="nameField" editable="false">
+                                    <TextField fx:id="nameField">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
                                     </TextField>
-                                    <TextField fx:id="descField" editable="false" />
-                                    <TextField fx:id="fromField" editable="false" />
-                                    <TextField fx:id="toField" editable="false" prefHeight="25.0" prefWidth="184.0" />
-                                    <TextField fx:id="transTypeField" editable="false" />
-                                    <TextField fx:id="timeField" editable="false" />
-                                    <TextArea fx:id="infoArea" editable="false" prefHeight="200.0" prefWidth="200.0" />
+                                    <TextField fx:id="descField" />
+                                    <TextField fx:id="fromField" />
+                                    <TextField fx:id="toField" prefHeight="25.0" prefWidth="184.0" />
+                                    <TextField fx:id="transTypeField" />
+                                    <TextField fx:id="timeField" />
+                                    <TextArea fx:id="infoArea" prefHeight="200.0" prefWidth="200.0" />
                                  </children>
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
@@ -141,8 +141,8 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button fx:id="editBtn" onAction="#activateEditing" layoutX="331.0" layoutY="283.0" mnemonicParsing="false" text="Edit" />
-                        <Button fx:id="saveBtn" onAction="#saveChanges" visible="false" layoutX="329.0" layoutY="322.0" mnemonicParsing="false" text="Save" />
+                        <Button fx:id="saveBtn" layoutX="326.0" layoutY="314.0" mnemonicParsing="false" onAction="#saveChanges" text="Save" visible="false" />
+                        <Label fx:id="errFormField" layoutX="310.0" layoutY="299.0" prefHeight="55.0" prefWidth="83.0" text="Please correct the false input values!" textFill="RED" visible="false" wrapText="true" />
                      </children></AnchorPane>
             </content>
           </Tab>

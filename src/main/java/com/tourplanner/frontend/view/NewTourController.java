@@ -77,6 +77,7 @@ public class NewTourController implements Initializable {
         toErrLabel.visibleProperty().bind(newTourViewModel.getEndDestinationErrorVisible());
         timeErrLabel.visibleProperty().bind(newTourViewModel.getTimeErrorVisible());
 
+
         //Binding for save button
         saveButton.visibleProperty().bind(newTourViewModel.getFormValidity());
 

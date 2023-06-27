@@ -3,7 +3,9 @@ package com.tourplanner.frontend.viewmodel;
 import com.tourplanner.frontend.bl.TourService;
 import com.tourplanner.frontend.bl.TourServiceImpl;
 import com.tourplanner.backend.dal.entity.TourEntity;
+import com.tourplanner.frontend.bl.ValidationService;
 import com.tourplanner.shared.enums.TransportType;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,9 +26,44 @@ public class MainWindowViewModel {
     private final SimpleStringProperty transTypeField = new SimpleStringProperty();
     private final SimpleStringProperty timeField = new SimpleStringProperty();
     private final SimpleStringProperty infoArea = new SimpleStringProperty();
+    private final SimpleBooleanProperty formValidity = new SimpleBooleanProperty(false);
+    private boolean nameErr;
+    private boolean startDestEr;
+    private boolean toDestErr;
+    private boolean timeErr;
 
     public MainWindowViewModel() {
+
         service = new TourServiceImpl();
+        this.nameField.addListener((observable, oldValue, newValue) -> validateName(newValue));
+        this.fromField.addListener((observable, oldValue, newValue) -> validateFromDestination(newValue));
+        this.toField.addListener((observable, oldValue, newValue) -> validateTODestination(newValue));
+        this.timeField.addListener((observable, oldValue, newValue) -> validateTime(newValue));
+    }
+    private void validateName(String name) {
+        boolean isValid = ValidationService.isValidName(name);
+        nameErr = !isValid;
+        upDateFormValidity();
+    }
+
+    private void validateFromDestination(String city) {
+        boolean isValid = ValidationService.isValidDestination(city);
+        startDestEr = !isValid;
+        upDateFormValidity();
+    }
+    private void validateTODestination(String city) {
+        boolean isValid = ValidationService.isValidDestination(city);
+        toDestErr = !isValid;
+        upDateFormValidity();
+    }
+
+    private void validateTime(String time) {
+        boolean isValid = ValidationService.isValidTime(time);
+        timeErr = !isValid;
+        upDateFormValidity();
+    }
+    private void upDateFormValidity(){
+        formValidity.set(!this.nameErr && !startDestEr && !toDestErr && !timeErr);
     }
 
     public ObservableList<TourEntity> getTourList() throws IOException {
