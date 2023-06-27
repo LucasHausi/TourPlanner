@@ -35,8 +35,8 @@ public class MainWindowViewModel {
     public void deleteTour(UUID id) throws IOException {
         service.deleteTour(id);
     }
-    public void updateTour() throws IOException {
-        TourEntity tourEntity = new TourEntity(UUID.randomUUID(), nameField.get(), descField.get(), fromField.get(),
+    public void updateTour(UUID id) throws IOException {
+        TourEntity tourEntity = new TourEntity(id, nameField.get(), descField.get(), fromField.get(),
                 toField.get(), TransportType.valueOf(transTypeField.get()), 0.0, timeField.get(), infoArea.get());
         service.createOrUpdate(tourEntity);
     }

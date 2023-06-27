@@ -65,8 +65,12 @@ public class MainWindowController implements Initializable {
         //load older tours from the DB
         try {
             listView.setItems(mainWindowViewModel.getTourList());
+            listView.setOnMouseClicked(event -> {
+                mainWindowViewModel.updateTourInfos(listView.getSelectionModel().getSelectedItem());
+            });
         } catch (IOException e) {
             //gets error if the table is empty
+            System.err.println(e);
         }
     }
 
@@ -84,9 +88,6 @@ public class MainWindowController implements Initializable {
         dialog.showAndWait();
 
         listView.setItems(mainWindowViewModel.getTourList());
-        listView.setOnMouseClicked(event -> {
-            mainWindowViewModel.updateTourInfos(listView.getSelectionModel().getSelectedItem());
-        });
     }
 
     public void addTourLog() throws IOException {
@@ -130,7 +131,8 @@ public class MainWindowController implements Initializable {
         this.timeField.editableProperty().set(false);
         this.infoArea.editableProperty().set(false);
         this.saveBtn.visibleProperty().set(false);
-        mainWindowViewModel.updateTour();
+        mainWindowViewModel.updateTour(listView.getSelectionModel().getSelectedItem().getId());
+        listView.setItems(mainWindowViewModel.getTourList());
     }
 
     public void setPrimaryStage(Stage primaryStage) {
