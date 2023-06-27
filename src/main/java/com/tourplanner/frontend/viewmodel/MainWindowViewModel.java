@@ -1,5 +1,6 @@
 package com.tourplanner.frontend.viewmodel;
 
+import com.tourplanner.frontend.bl.*;
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.frontend.bl.*;
 import com.tourplanner.backend.dal.entity.TourEntity;
@@ -19,6 +20,7 @@ public class MainWindowViewModel {
     TourService tourService;
 
     TourLogService tourLogService;
+    MapService mapService;
 
     private final SimpleStringProperty nameField = new SimpleStringProperty();
     private final SimpleStringProperty descField = new SimpleStringProperty();
@@ -35,6 +37,7 @@ public class MainWindowViewModel {
 
     public MainWindowViewModel() {
 
+        mapService = new MapServiceImp();
         tourService = new TourServiceImpl();
         tourLogService = new TourLogServiceImpl();
         this.nameField.addListener((observable, oldValue, newValue) -> validateName(newValue));
@@ -87,6 +90,9 @@ public class MainWindowViewModel {
         this.transTypeField.set(t.getTransportType().toString());
         this.timeField.set(t.getEstimatedTime());
         this.infoArea.set(t.getRouteInformation());
+    }
+    public void fetchRouteImage(String to, String from) throws IOException {
+        mapService.getMap(to, from);
 
     }
 

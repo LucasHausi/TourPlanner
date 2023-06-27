@@ -18,4 +18,4 @@ Content-Type: application/json
 DELETE  http://localhost:30019/tour/d9dbfce2-31dc-45aa-a934-a4d7d3968cd5/delete
 Accept: application/json
 
-
+GET https://www.mapquestapi.com/directions/v2/route

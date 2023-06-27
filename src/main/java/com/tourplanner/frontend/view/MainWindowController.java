@@ -10,6 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -66,6 +68,8 @@ public class MainWindowController implements Initializable {
     @FXML
     Label errFormField;
     @FXML
+    ImageView routeImage;
+    @FXML
     Tab routeTab;
 
     @FXML
@@ -107,6 +111,13 @@ public class MainWindowController implements Initializable {
                     tourLogTable.setItems(mainWindowViewModel.getTourLogList(listView.getSelectionModel().getSelectedItem()));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
+                }
+                try {
+                    mainWindowViewModel.fetchRouteImage(toField.getText(), fromField.getText());
+                    routeImage.setImage(new Image("pictures/route.png"));
+                } catch (IOException e) {
+                    //fetching image failed
+                    System.err.println("Error when loading image");
                 }
             });
         } catch (IOException e) {
