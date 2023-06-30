@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Locale;
@@ -288,7 +289,13 @@ public class MainWindowController implements Initializable, Subscriber {
         this.fromOvvLabel.setText(t.getStartingPoint());
         this.toOvvLabel.setText(t.getDestination());
         this.distOvvLabel.setText(String.valueOf(t.getDistance()));
-        this.toOvvLabel.setText(t.getEstimatedTime());
+        int sec = Integer.valueOf(t.getEstimatedTime());
+        Duration duration = Duration.ofSeconds(sec);
+        long HH = sec / 3600;
+        long MM = (sec % 3600) / 60;
+        long SS = sec % 60;
+        String timeInHHMMSS = String.format("%02d:%02d:%02d", HH, MM, SS);
+        this.timeOvvLabel.setText(timeInHHMMSS);
         this.infoOvvLabel.setText(t.getRouteInformation());
     }
 
