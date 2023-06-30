@@ -4,7 +4,9 @@ import com.tourplanner.frontend.bl.*;
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.shared.enums.TransportType;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,14 +26,13 @@ public class MainWindowViewModel {
     private final SimpleStringProperty descField = new SimpleStringProperty();
     private final SimpleStringProperty fromField = new SimpleStringProperty();
     private final SimpleStringProperty toField = new SimpleStringProperty();
-    private final SimpleStringProperty transTypeField = new SimpleStringProperty();
-    private final SimpleStringProperty timeField = new SimpleStringProperty();
+    private final ObjectProperty<TransportType> transTypeField = new SimpleObjectProperty<>();
     private final SimpleStringProperty infoArea = new SimpleStringProperty();
     private final SimpleBooleanProperty formValidity = new SimpleBooleanProperty(false);
     private boolean nameErr;
     private boolean startDestEr;
     private boolean toDestErr;
-    private boolean timeErr;
+    private boolean transTypErr;
 
     public MainWindowViewModel() {
 
@@ -41,7 +42,7 @@ public class MainWindowViewModel {
         this.nameField.addListener((observable, oldValue, newValue) -> validateName(newValue));
         this.fromField.addListener((observable, oldValue, newValue) -> validateFromDestination(newValue));
         this.toField.addListener((observable, oldValue, newValue) -> validateTODestination(newValue));
-        this.timeField.addListener((observable, oldValue, newValue) -> validateTime(newValue));
+        this.transTypeField.addListener((observable, oldValue, newValue) -> validateTransType(newValue));
     }
     private void validateName(String name) {
         boolean isValid = ValidationService.isValidName(name);
@@ -60,13 +61,13 @@ public class MainWindowViewModel {
         upDateFormValidity();
     }
 
-    private void validateTime(String time) {
-        boolean isValid = ValidationService.isValidTime(time);
-        timeErr = !isValid;
+    private void validateTransType(TransportType transportType){
+        boolean isValid = ValidationService.isValidTransType(transportType);
+        transTypErr = !isValid;
         upDateFormValidity();
     }
     private void upDateFormValidity(){
-        formValidity.set(!this.nameErr && !startDestEr && !toDestErr && !timeErr);
+        formValidity.set(!this.nameErr && !startDestEr && !toDestErr && !transTypErr);
     }
 
     public ObservableList<TourEntity> getTourList() throws IOException {
@@ -79,9 +80,9 @@ public class MainWindowViewModel {
     public void deleteTourLog(UUID tourLogId) throws IOException {
         tourLogService.deleteTourLog(tourLogId);
     }
-    public void updateTour(UUID id) throws IOException {
-        TourEntity tourEntity = new TourEntity(id, nameField.get(), descField.get(), fromField.get(),
-                toField.get(), TransportType.valueOf(transTypeField.get()), 0.0, timeField.get(), infoArea.get());
+    public void updateTour(TourEntity t) throws IOException {
+        TourEntity tourEntity = new TourEntity(t.getId(), nameField.get(), descField.get(), fromField.get(),
+                toField.get(), transTypeField.get(),t.getDistance(), t.getEstimatedTime(), infoArea.get());
         tourService.createOrUpdate(tourEntity);
     }
     public void updateTourInfos(TourEntity t){
@@ -89,8 +90,7 @@ public class MainWindowViewModel {
         this.descField.set(t.getDescription());
         this.fromField.set(t.getStartingPoint());
         this.toField.set(t.getDestination());
-        this.transTypeField.set(t.getTransportType().toString());
-        this.timeField.set(t.getEstimatedTime());
+        this.transTypeField.set(t.getTransportType());
         this.infoArea.set(t.getRouteInformation());
     }
     public void fetchRouteImage(UUID id, String to, String from) throws IOException {

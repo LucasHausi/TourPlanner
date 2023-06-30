@@ -32,9 +32,6 @@ public class NewTourController implements Initializable {
 
     @FXML
     public ChoiceBox<TransportType> transportTypeInput;
-
-    @FXML
-    public TextField timeInput;
     @FXML
     public TextArea tourInfoInput;
     @FXML
@@ -44,7 +41,7 @@ public class NewTourController implements Initializable {
     @FXML
     public Label toErrLabel;
     @FXML
-    public Label timeErrLabel;
+    public Label transTypeErrLabel;
     @FXML
     public Button saveButton;
 
@@ -68,15 +65,13 @@ public class NewTourController implements Initializable {
         toInput.textProperty().bindBidirectional(newTourViewModel.getTo());
         fromInput.textProperty().bindBidirectional(newTourViewModel.getFrom());
         transportTypeInput.valueProperty().bindBidirectional(newTourViewModel.getTransportType());
-        timeInput.textProperty().bindBidirectional(newTourViewModel.getTime());
         tourInfoInput.textProperty().bindBidirectional(newTourViewModel.getTourInfo());
 
         //Binding for the error labels
         nameErrLabel.visibleProperty().bind(newTourViewModel.getNameErrorVisible());
         fromErrLabel.visibleProperty().bind(newTourViewModel.getStartDestinationErrorVisible());
         toErrLabel.visibleProperty().bind(newTourViewModel.getEndDestinationErrorVisible());
-        timeErrLabel.visibleProperty().bind(newTourViewModel.getTimeErrorVisible());
-
+        transTypeErrLabel.visibleProperty().bind(newTourViewModel.getTransportTypeErrorVisible());
 
         //Binding for save button
         saveButton.visibleProperty().bind(newTourViewModel.getFormValidity());

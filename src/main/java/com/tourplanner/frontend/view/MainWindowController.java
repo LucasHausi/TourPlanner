@@ -5,6 +5,8 @@ import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.frontend.FXMLDependencyInjection;
 import com.tourplanner.frontend.bl.Subscriber;
 import com.tourplanner.frontend.viewmodel.MainWindowViewModel;
+import com.tourplanner.shared.enums.TransportType;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,10 +24,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class MainWindowController implements Initializable, Subscriber {
     @FXML
@@ -48,9 +52,7 @@ public class MainWindowController implements Initializable, Subscriber {
     @FXML
     TextField toField;
     @FXML
-    TextField transTypeField;
-    @FXML
-    TextField timeField;
+    ChoiceBox<TransportType> transTypeField;
     @FXML
     TextArea infoArea;
 
@@ -88,12 +90,15 @@ public class MainWindowController implements Initializable, Subscriber {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Set initial values for the choice box;
+        transTypeField.setItems(Arrays.stream(TransportType.values())
+                .collect(Collectors.toCollection(FXCollections::observableArrayList)));
+
         nameField.textProperty().bindBidirectional(mainWindowViewModel.getNameField());
         descField.textProperty().bindBidirectional(mainWindowViewModel.getDescField());
         fromField.textProperty().bindBidirectional(mainWindowViewModel.getFromField());
         toField.textProperty().bindBidirectional(mainWindowViewModel.getToField());
-        transTypeField.textProperty().bindBidirectional(mainWindowViewModel.getTransTypeField());
-        timeField.textProperty().bindBidirectional(mainWindowViewModel.getTimeField());
+        transTypeField.valueProperty().bindBidirectional(mainWindowViewModel.getTransTypeField());
         infoArea.textProperty().bindBidirectional(mainWindowViewModel.getInfoArea());
 
         //Binding for saveBtn & errorLabel
@@ -250,8 +255,14 @@ public class MainWindowController implements Initializable, Subscriber {
 
     public void saveChanges() throws IOException {
         this.saveBtn.visibleProperty().set(false);
-        mainWindowViewModel.updateTour(listView.getSelectionModel().getSelectedItem().getId());
+        mainWindowViewModel.updateTour(listView.getSelectionModel().getSelectedItem());
         listView.setItems(mainWindowViewModel.getTourList());
+        nameField.clear();
+        descField.clear();
+        toField.clear();
+        fromField.clear();
+        fromField.clear();
+        infoArea.clear();
     }
 
     public void setPrimaryStage(Stage primaryStage) {

@@ -8,7 +8,6 @@ import com.tourplanner.frontend.bl.TourService;
 import com.tourplanner.frontend.bl.TourServiceImpl;
 
 import javafx.beans.property.*;
-import javafx.util.Pair;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
@@ -33,8 +32,8 @@ public class NewTourViewModel {
     private final  BooleanProperty nameErrorVisible = new SimpleBooleanProperty(false);
     private final  BooleanProperty startDestinationErrorVisible = new SimpleBooleanProperty(false);
     private final  BooleanProperty endDestinationErrorVisible = new SimpleBooleanProperty(false);
-    private final  BooleanProperty timeErrorVisible = new SimpleBooleanProperty(false);
     private final  BooleanProperty formValidity= new SimpleBooleanProperty(false);
+    private final BooleanProperty transportTypeErrorVisible = new SimpleBooleanProperty(true);
 
 
     public NewTourViewModel(TourServiceImpl tourService, MapService mapService){
@@ -43,12 +42,17 @@ public class NewTourViewModel {
         this.name.addListener((observable, oldValue, newValue) -> validateName(newValue));
         this.from.addListener((observable, oldValue, newValue) -> validateFromDestination(newValue));
         this.to.addListener((observable, oldValue, newValue) -> validateTODestination(newValue));
-        this.time.addListener((observable, oldValue, newValue) -> validateTime(newValue));
+        this.transportType.addListener((observable, oldValue, newValue) -> validateTransType(newValue));
     }
 
     private void validateName(String name) {
         boolean isValid = ValidationService.isValidName(name);
         nameErrorVisible.set(!isValid);
+        upDateFormValidity();
+    }
+    private void validateTransType(TransportType transportType){
+        boolean isValid = ValidationService.isValidTransType(transportType);
+        transportTypeErrorVisible.set(!isValid);
         upDateFormValidity();
     }
 
@@ -63,13 +67,8 @@ public class NewTourViewModel {
         upDateFormValidity();
     }
 
-    private void validateTime(String time) {
-        boolean isValid = ValidationService.isValidTime(time);
-        timeErrorVisible.set(!isValid);
-        upDateFormValidity();
-    }
     private void upDateFormValidity(){
-        formValidity.set(!nameErrorVisible.get() && !startDestinationErrorVisible.get() && !endDestinationErrorVisible.get() && !timeErrorVisible.get());
+        formValidity.set(!nameErrorVisible.get() && !startDestinationErrorVisible.get() && !endDestinationErrorVisible.get()&& !transportTypeErrorVisible.get());
     }
     private String[] fetchDistanceAndTime(String from, String to) throws IOException {
         return mapService.getDistanceAndTime(from,to);
