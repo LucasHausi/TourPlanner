@@ -1,6 +1,7 @@
 package com.tourplanner.frontend.view;
 
 
+import com.tourplanner.frontend.bl.MapServiceImp;
 import com.tourplanner.frontend.bl.Publisher;
 import com.tourplanner.frontend.bl.TourLogServiceImpl;
 import com.tourplanner.frontend.bl.TourServiceImpl;
@@ -19,7 +20,7 @@ public class ControllerFactory {
     private final ReusableCompViewModel reusableCompViewModel;
 
     public ControllerFactory(ConfigurableApplicationContext applicationContext){
-        newTourViewModel = new NewTourViewModel(new TourServiceImpl());
+        newTourViewModel = new NewTourViewModel(new TourServiceImpl(), new MapServiceImp());
         newTourLogViewModel = new NewTourLogViewModel(new TourLogServiceImpl());
         mainWindowViewModel = new MainWindowViewModel();
         reusableCompViewModel = new ReusableCompViewModel();

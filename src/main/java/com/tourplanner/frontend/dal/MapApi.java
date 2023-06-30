@@ -10,4 +10,6 @@ public interface MapApi {
     @GET("/staticmap/v5/map")
     Call<ResponseBody> fetchRoute(@Query("key")  String key, @Query("start") String from, @Query("end") String to,
                                   @Query("size") String size);
+    @GET("/directions/v2/route")
+    Call<ResponseBody> getDistanceAndTime(@Query("key") String key, @Query("from") String from, @Query("to") String to);
 }

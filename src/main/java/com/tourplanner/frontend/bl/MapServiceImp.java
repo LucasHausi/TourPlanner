@@ -1,7 +1,10 @@
 package com.tourplanner.frontend.bl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tourplanner.frontend.dal.MapApi;
 
+import javafx.util.Pair;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +48,18 @@ public class MapServiceImp implements MapService{
         });
 
     }
+
+    @Override
+    public String[] getDistanceAndTime(String from, String to) throws IOException {
+        Response<ResponseBody> response = service.getDistanceAndTime("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4",from,to).execute();
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode resultObj = mapper.readTree(response.body().string());
+        String[] destAndTime = new String[2];
+        destAndTime[0] = resultObj.get("route").get("distance").toString();
+        destAndTime[1] = resultObj.get("route").get("realTime").toString();
+        return destAndTime;
+    }
+
     private static void storeResponseInFile(Response<ResponseBody> response,UUID id, String from, String to) {
         try (ResponseBody body = response.body()) {
             byte[] bytes = body.bytes();
