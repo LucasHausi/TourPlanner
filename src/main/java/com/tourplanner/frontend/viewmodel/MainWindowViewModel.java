@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @Getter
 public class MainWindowViewModel {
     TourService tourService;
-
     TourLogService tourLogService;
     MapService mapService;
 

@@ -21,7 +21,7 @@ public class MapServiceImp implements MapService{
 
     public MapServiceImp(){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.mapquestapi.com/directions/v2/")
+                .baseUrl("https://www.mapquestapi.com")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build();
 
@@ -29,7 +29,7 @@ public class MapServiceImp implements MapService{
     }
     @Override
     public void getMap(UUID id, String from, String to) throws IOException {
-        Call<ResponseBody> responseBodyCall = service.fetchRoute("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4", from, to);
+        Call<ResponseBody> responseBodyCall = service.fetchRoute("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4", from, to, "350,350");
 
         responseBodyCall.enqueue(new Callback<>() {
             @Override

@@ -8,5 +8,6 @@ import retrofit2.http.Query;
 
 public interface MapApi {
     @GET("/staticmap/v5/map")
-    Call<ResponseBody> fetchRoute(@Query("key")  String key, @Query("start") String from, @Query("end") String to);
+    Call<ResponseBody> fetchRoute(@Query("key")  String key, @Query("start") String from, @Query("end") String to,
+                                  @Query("size") String size);
 }
