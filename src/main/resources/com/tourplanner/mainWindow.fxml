@@ -52,20 +52,27 @@
          </GridPane.margin></VBox>
       <TabPane style="-fx-border-color: #000;" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" GridPane.rowSpan="3">
         <tabs>
-            <Tab text="General">
+            <Tab text="Route Infromation">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-          <Tab fx:id="routeTab" text="Route">
+            <Tab text="Route Overview">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="routeImage" fitHeight="360.0" fitWidth="390.0" layoutX="5.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+          <Tab fx:id="routeTab" text="Tour Logs">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0">
                      <children>
                         <VBox>
                            <children>
-                              <ImageView fx:id="routeImage" fitHeight="95.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" />
                                <fx:include fx:id="tourLogComp" source="reusableComp.fxml" />
-                              <TableView fx:id="tourLogTable" minHeight="-Infinity" prefHeight="240.0" prefWidth="400.0">
+                              <TableView fx:id="tourLogTable" minHeight="-Infinity" prefWidth="400.0">
                                 <columns>
                                   <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
                                   <TableColumn fx:id="durationColumn" prefWidth="75.0" text="Duration" />

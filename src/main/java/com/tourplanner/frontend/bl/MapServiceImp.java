@@ -32,7 +32,7 @@ public class MapServiceImp implements MapService{
     }
     @Override
     public void getMap(UUID id, String from, String to) throws IOException {
-        Call<ResponseBody> responseBodyCall = service.fetchRoute("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4", from, to, "400,95");
+        Call<ResponseBody> responseBodyCall = service.fetchRoute("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4", from, to, "390,360");
 
         responseBodyCall.enqueue(new Callback<>() {
             @Override
