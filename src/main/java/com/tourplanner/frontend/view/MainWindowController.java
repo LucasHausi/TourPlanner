@@ -28,16 +28,13 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class MainWindowController implements Initializable, Subscriber {
     @FXML
     public TextField searchField;
-
     @FXML
     public AnchorPane tourComp;
-
     @FXML
     public AnchorPane tourLogComp;
 
@@ -76,6 +73,20 @@ public class MainWindowController implements Initializable, Subscriber {
     ImageView routeImage;
     @FXML
     Tab routeTab;
+    @FXML
+    Label nameOvvLabel;
+    @FXML
+    Label descOvvLabel;
+    @FXML
+    Label fromOvvLabel;
+    @FXML
+    Label toOvvLabel;
+    @FXML
+    Label distOvvLabel;
+    @FXML
+    Label timeOvvLabel;
+    @FXML
+    Label infoOvvLabel;
 
     @FXML
     private ReusableCompController reusableCompController;
@@ -109,7 +120,9 @@ public class MainWindowController implements Initializable, Subscriber {
             listView.setItems(mainWindowViewModel.getTourList());
             listView.setOnMouseClicked(event -> {
                 TourEntity selectedTour = listView.getSelectionModel().getSelectedItem();
-                mainWindowViewModel.updateTourInfos(selectedTour);
+                mainWindowViewModel.updateEditInfos(selectedTour);
+                this.updateTourInfos(selectedTour);
+
                 try {
                     dateColumn.setCellValueFactory(
                             new PropertyValueFactory<TourLogEntity, LocalDateTime>("dateTime"));
@@ -121,20 +134,20 @@ public class MainWindowController implements Initializable, Subscriber {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-                try {
-                    mainWindowViewModel.fetchRouteImage(selectedTour.getId(),toField.getText(), fromField.getText());
-                } catch (IOException e) {
-                    //fetching image failed
-                    System.err.println("Error when loading image");
-                }
-                /*//Try to set the image first maybe it is in the cache
+
+                //Try to set the image first maybe it is in the cache
                 try {
                     routeImage.setImage(new Image("pictures/Route"+selectedTour.getId()+".png"));
                 }
                 //If not found, load the image
                 catch (IllegalArgumentException ex2){
-
-                }*/
+                    try {
+                        mainWindowViewModel.fetchRouteImage(selectedTour.getId(),toField.getText(), fromField.getText());
+                    } catch (IOException e) {
+                        //fetching image failed
+                        System.err.println("Error when loading image");
+                    }
+                }
             });
         } catch (IOException e) {
             //gets error if the table is empty
@@ -267,6 +280,16 @@ public class MainWindowController implements Initializable, Subscriber {
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    public void updateTourInfos(TourEntity t){
+        this.nameOvvLabel.setText(t.getName());
+        this.descOvvLabel.setText(t.getDescription());
+        this.fromOvvLabel.setText(t.getStartingPoint());
+        this.toOvvLabel.setText(t.getDestination());
+        this.distOvvLabel.setText(String.valueOf(t.getDistance()));
+        this.toOvvLabel.setText(t.getEstimatedTime());
+        this.infoOvvLabel.setText(t.getRouteInformation());
     }
 
     @Override

@@ -85,7 +85,7 @@ public class MainWindowViewModel {
                 toField.get(), transTypeField.get(),t.getDistance(), t.getEstimatedTime(), infoArea.get());
         tourService.createOrUpdate(tourEntity);
     }
-    public void updateTourInfos(TourEntity t){
+    public void updateEditInfos(TourEntity t){
         this.nameField.set(t.getName());
         this.descField.set(t.getDescription());
         this.fromField.set(t.getStartingPoint());
@@ -93,6 +93,8 @@ public class MainWindowViewModel {
         this.transTypeField.set(t.getTransportType());
         this.infoArea.set(t.getRouteInformation());
     }
+
+
     public void fetchRouteImage(UUID id, String to, String from) throws IOException {
         mapService.getMap(id, to, from);
 
