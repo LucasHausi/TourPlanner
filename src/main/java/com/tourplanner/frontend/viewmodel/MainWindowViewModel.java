@@ -94,8 +94,8 @@ public class MainWindowViewModel {
         this.timeField.set(t.getEstimatedTime());
         this.infoArea.set(t.getRouteInformation());
     }
-    public void fetchRouteImage(String to, String from) throws IOException {
-        mapService.getMap(to, from);
+    public void fetchRouteImage(UUID id, String to, String from) throws IOException {
+        mapService.getMap(id, to, from);
 
     }
 

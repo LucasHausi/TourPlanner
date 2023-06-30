@@ -3,6 +3,7 @@ package com.tourplanner.frontend.view;
 import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.frontend.FXMLDependencyInjection;
+import com.tourplanner.frontend.bl.Subscriber;
 import com.tourplanner.frontend.viewmodel.MainWindowViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,8 +24,10 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
-public class MainWindowController implements Initializable {
+public class MainWindowController implements Initializable, Subscriber {
     @FXML
     public TextField searchField;
 
@@ -100,7 +103,8 @@ public class MainWindowController implements Initializable {
         try {
             listView.setItems(mainWindowViewModel.getTourList());
             listView.setOnMouseClicked(event -> {
-                mainWindowViewModel.updateTourInfos(listView.getSelectionModel().getSelectedItem());
+                TourEntity selectedTour = listView.getSelectionModel().getSelectedItem();
+                mainWindowViewModel.updateTourInfos(selectedTour);
                 try {
                     dateColumn.setCellValueFactory(
                             new PropertyValueFactory<TourLogEntity, LocalDateTime>("dateTime"));
@@ -113,12 +117,19 @@ public class MainWindowController implements Initializable {
                     throw new RuntimeException(e);
                 }
                 try {
-                    mainWindowViewModel.fetchRouteImage(toField.getText(), fromField.getText());
-                    routeImage.setImage(new Image("pictures/route.png"));
+                    mainWindowViewModel.fetchRouteImage(selectedTour.getId(),toField.getText(), fromField.getText());
                 } catch (IOException e) {
                     //fetching image failed
                     System.err.println("Error when loading image");
                 }
+                /*//Try to set the image first maybe it is in the cache
+                try {
+                    routeImage.setImage(new Image("pictures/Route"+selectedTour.getId()+".png"));
+                }
+                //If not found, load the image
+                catch (IllegalArgumentException ex2){
+
+                }*/
             });
         } catch (IOException e) {
             //gets error if the table is empty
@@ -245,5 +256,13 @@ public class MainWindowController implements Initializable {
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    @Override
+    public void update(UUID id) {
+        TourEntity selectedTour = listView.getSelectionModel().getSelectedItem();
+            if(selectedTour.getId().equals(id)){
+                routeImage.setImage(new Image(System.getProperty("user.dir").toString()+"/images/Route"+id+".png"));
+        }
     }
 }

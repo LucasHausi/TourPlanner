@@ -1,6 +1,7 @@
 package com.tourplanner.frontend.view;
 
 
+import com.tourplanner.frontend.bl.Publisher;
 import com.tourplanner.frontend.bl.TourLogServiceImpl;
 import com.tourplanner.frontend.bl.TourServiceImpl;
 import com.tourplanner.frontend.viewmodel.MainWindowViewModel;
@@ -14,7 +15,7 @@ public class ControllerFactory {
     private final NewTourViewModel newTourViewModel;
     private final NewTourLogViewModel newTourLogViewModel;
     private final MainWindowViewModel mainWindowViewModel;
-
+    private final Publisher publisher;
     private final ReusableCompViewModel reusableCompViewModel;
 
     public ControllerFactory(ConfigurableApplicationContext applicationContext){
@@ -22,11 +23,14 @@ public class ControllerFactory {
         newTourLogViewModel = new NewTourLogViewModel(new TourLogServiceImpl());
         mainWindowViewModel = new MainWindowViewModel();
         reusableCompViewModel = new ReusableCompViewModel();
+        publisher = new Publisher();
     }
     public Object create(Class<?> controllerClass){
         if(controllerClass == MainWindowController.class)
         {
-            return new MainWindowController(mainWindowViewModel);
+            MainWindowController mainWindowController = new MainWindowController(mainWindowViewModel);
+            publisher.subscribe(mainWindowController);
+            return mainWindowController;
         }
         if(controllerClass == NewTourController.class){
             return new NewTourController(newTourViewModel);

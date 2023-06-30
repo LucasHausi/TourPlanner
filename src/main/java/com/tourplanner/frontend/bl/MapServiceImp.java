@@ -9,8 +9,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+import java.io.BufferedWriter;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.UUID;
 
 public class MapServiceImp implements MapService{
 
@@ -25,13 +28,13 @@ public class MapServiceImp implements MapService{
         service = retrofit.create(MapApi.class);
     }
     @Override
-    public void getMap(String from, String to) throws IOException {
+    public void getMap(UUID id, String from, String to) throws IOException {
         Call<ResponseBody> responseBodyCall = service.fetchRoute("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4", from, to);
 
         responseBodyCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                storeResponseInFile(response);
+                storeResponseInFile(response,id, from,to);
             }
 
             @Override
@@ -42,13 +45,13 @@ public class MapServiceImp implements MapService{
         });
 
     }
-    private static void storeResponseInFile(Response<ResponseBody> response) {
+    private static void storeResponseInFile(Response<ResponseBody> response,UUID id, String from, String to) {
         try (ResponseBody body = response.body()) {
             byte[] bytes = body.bytes();
-            FileOutputStream fos = new FileOutputStream("src/main/resources/pictures/route.png");
+            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir").toString()+"/images/Route"+id+".png");
             fos.write(bytes);
             fos.close();
-            System.out.println("File Saved somewhere OO");
+            Publisher.notifySubscribers(id);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
