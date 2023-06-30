@@ -81,8 +81,9 @@ public class MainWindowViewModel {
         tourLogService.deleteTourLog(tourLogId);
     }
     public void updateTour(TourEntity t) throws IOException {
+        String[] distAndTime = mapService.getDistanceAndTime(t.getStartingPoint(),t.getDestination());
         TourEntity tourEntity = new TourEntity(t.getId(), nameField.get(), descField.get(), fromField.get(),
-                toField.get(), transTypeField.get(),t.getDistance(), t.getEstimatedTime(), infoArea.get());
+                toField.get(), transTypeField.get(),Double.parseDouble(distAndTime[0]), distAndTime[1], infoArea.get());
         tourService.createOrUpdate(tourEntity);
     }
     public void updateEditInfos(TourEntity t){
@@ -99,6 +100,7 @@ public class MainWindowViewModel {
         mapService.getMap(id, to, from);
 
     }
+
 
     public ObservableList<TourLogEntity> getTourLogList(TourEntity tour) throws IOException {
         return tourLogService.getAllTourLogsOfTour(tour).stream().collect(Collectors.toCollection(FXCollections::observableArrayList));

@@ -123,7 +123,6 @@ public class MainWindowController implements Initializable, Subscriber {
                 TourEntity selectedTour = listView.getSelectionModel().getSelectedItem();
                 mainWindowViewModel.updateEditInfos(selectedTour);
                 this.updateTourInfos(selectedTour);
-
                 try {
                     dateColumn.setCellValueFactory(
                             new PropertyValueFactory<TourLogEntity, LocalDateTime>("dateTime"));
@@ -288,12 +287,12 @@ public class MainWindowController implements Initializable, Subscriber {
         this.descOvvLabel.setText(t.getDescription());
         this.fromOvvLabel.setText(t.getStartingPoint());
         this.toOvvLabel.setText(t.getDestination());
-        this.distOvvLabel.setText(String.valueOf(t.getDistance()));
+        this.distOvvLabel.setText(t.getDistance()+"km");
         int sec = Integer.valueOf(t.getEstimatedTime());
         Duration duration = Duration.ofSeconds(sec);
-        long HH = sec / 3600;
-        long MM = (sec % 3600) / 60;
-        long SS = sec % 60;
+        long HH = duration.toHours();
+        long MM = duration.toMinutesPart();
+        long SS = duration.toSecondsPart();
         String timeInHHMMSS = String.format("%02d:%02d:%02d", HH, MM, SS);
         this.timeOvvLabel.setText(timeInHHMMSS);
         this.infoOvvLabel.setText(t.getRouteInformation());

@@ -51,7 +51,7 @@ public class MapServiceImp implements MapService{
 
     @Override
     public String[] getDistanceAndTime(String from, String to) throws IOException {
-        Response<ResponseBody> response = service.getDistanceAndTime("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4",from,to).execute();
+        Response<ResponseBody> response = service.getDistanceAndTime("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4",from,to, "k").execute();
         ObjectMapper mapper = new ObjectMapper();
         JsonNode resultObj = mapper.readTree(response.body().string());
         String[] destAndTime = new String[2];

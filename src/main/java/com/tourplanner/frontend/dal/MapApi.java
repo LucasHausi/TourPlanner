@@ -11,5 +11,6 @@ public interface MapApi {
     Call<ResponseBody> fetchRoute(@Query("key")  String key, @Query("start") String from, @Query("end") String to,
                                   @Query("size") String size);
     @GET("/directions/v2/route")
-    Call<ResponseBody> getDistanceAndTime(@Query("key") String key, @Query("from") String from, @Query("to") String to);
+    Call<ResponseBody> getDistanceAndTime(@Query("key") String key, @Query("from") String from, @Query("to") String to,
+                                          @Query("unit") String unit);
 }
