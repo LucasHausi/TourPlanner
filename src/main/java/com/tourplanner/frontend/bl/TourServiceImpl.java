@@ -4,9 +4,11 @@ import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.property.UnitValue;
 import com.tourplanner.backend.dal.entity.TourEntity;
+import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.frontend.dal.TourApi;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -52,16 +54,50 @@ public class TourServiceImpl implements TourService {
         PdfWriter writer = new PdfWriter("RoutePdf_"+id+".pdf");
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
-        document.add(new Paragraph(tour.getName()).setFontSize(24).setBold());
-        document.add(new Image(ImageDataFactory.create("images/Route"+id+".png")));
-        document.add(new Paragraph("Description: " + tour.getDescription()).setFontSize(18));
-        document.add(new Paragraph("From: " + tour.getStartingPoint()).setFontSize(18));
-        document.add(new Paragraph("To: " + tour.getDestination()).setFontSize(18));
-        document.add(new Paragraph("Estimated time: " + tour.getEstimatedTime()).setFontSize(18));
-        document.add(new Paragraph("Distance: " + tour.getDistance()).setFontSize(18));
-        document.add(new Paragraph("Transport Type: " + tour.getTransportType()).setFontSize(18));
-        document.add(new Paragraph("Route Information: " + tour.getRouteInformation()).setFontSize(18));
+        document.add(new Paragraph("Tour Report for \""+tour.getName()+"\"").setFontSize(24).setBold());
 
+        document.add(new Paragraph("\n"));
+
+        document.add(new Paragraph("Tour Data").setFontSize(14).setBold());
+        float [] pointColumnWidths = {200F, 200F};
+        Table tourValueTable = new Table(pointColumnWidths);
+        tourValueTable.addCell("From");
+        tourValueTable.addCell(tour.getStartingPoint());
+        tourValueTable.addCell("To");
+        tourValueTable.addCell(tour.getDestination());
+        tourValueTable.addCell("Estimated time");
+        tourValueTable.addCell(tour.getEstimatedTime());
+        tourValueTable.addCell("Distance");
+        tourValueTable.addCell(String.valueOf(tour.getDistance()));
+        tourValueTable.addCell("Transport Type");
+        tourValueTable.addCell(tour.getTransportType().toString());
+        document.add(tourValueTable);
+
+        document.add(new Paragraph("\n").setFontSize(2));
+        document.add(new Paragraph("Description").setFontSize(14).setBold());
+        document.add(new Paragraph(tour.getDescription()).setFontSize(12));
+        document.add(new Paragraph("Route Information").setFontSize(14).setBold());
+        document.add(new Paragraph(tour.getRouteInformation()).setFontSize(12));
+
+        if(!tour.getTourLogEntityList().isEmpty()) {
+            document.add(new Paragraph("Tour Logs").setFontSize(14).setBold());
+            // Create tourLog table
+            Table tourLogTable = new Table(UnitValue.createPercentArray(3));
+
+            tourLogTable.addHeaderCell("Date");
+            tourLogTable.addHeaderCell("Duration");
+            tourLogTable.addHeaderCell("Distance");
+
+            for (TourLogEntity tourLog : tour.getTourLogEntityList()) {
+                tourLogTable.addCell("gibts nu ned");//tourLog.getDateTime().toLocalDate().toString());
+                tourLogTable.addCell(tourLog.getTotalTime());
+                tourLogTable.addCell(tourLog.getRating() + "");
+            }
+            document.add(tourLogTable);
+        }
+        document.add(new Paragraph("\n").setFontSize(2));
+        document.add(new Paragraph("Route Image").setFontSize(14).setBold());
+        document.add(new Image(ImageDataFactory.create("images/Route"+id+".png")).setAutoScale(true));
         document.close();
     }
 }

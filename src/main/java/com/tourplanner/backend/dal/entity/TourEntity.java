@@ -1,7 +1,9 @@
 package com.tourplanner.backend.dal.entity;
 
+import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.tourplanner.shared.enums.TransportType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -39,6 +41,10 @@ public class TourEntity {
 
     @Column(name="estimatedTime")
     private String estimatedTime;
+
+    @OneToMany(mappedBy="tourEntity")
+    @JsonManagedReference
+    private List<TourLogEntity> tourLogEntityList;
 
     private String routeInformation; //ToDO soll irgendwie eine Map oder ein Bild einer Map oder so sein
 

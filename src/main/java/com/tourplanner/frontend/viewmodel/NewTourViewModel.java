@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 //If deleted there's an error in the NewTourController.class
 @Component
@@ -78,7 +79,7 @@ public class NewTourViewModel {
         String[] distAndTime = fetchDistanceAndTime(from.get(),to.get());
 
         TourEntity tourEntity = new TourEntity(UUID.randomUUID(), name.get(), description.get(), from.get(),
-                        to.get(), transportType.get(), Double.parseDouble(distAndTime[0]), distAndTime[1], tourInfo.get());
+                        to.get(), transportType.get(), Double.parseDouble(distAndTime[0]), distAndTime[1], new ArrayList<>(),tourInfo.get());
         tourService.createOrUpdate(tourEntity);
     }
 }

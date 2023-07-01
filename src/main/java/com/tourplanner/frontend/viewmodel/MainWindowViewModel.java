@@ -87,7 +87,7 @@ public class MainWindowViewModel {
     public void updateTour(TourEntity t) throws IOException {
         String[] distAndTime = mapService.getDistanceAndTime(t.getStartingPoint(),t.getDestination());
         TourEntity tourEntity = new TourEntity(t.getId(), nameField.get(), descField.get(), fromField.get(),
-                toField.get(), transTypeField.get(),Double.parseDouble(distAndTime[0]), distAndTime[1], infoArea.get());
+                toField.get(), transTypeField.get(),Double.parseDouble(distAndTime[0]), distAndTime[1],t.getTourLogEntityList(), infoArea.get());
         tourService.createOrUpdate(tourEntity);
     }
     public void updateEditInfos(TourEntity t){

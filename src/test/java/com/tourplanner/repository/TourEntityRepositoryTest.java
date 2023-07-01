@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,7 +20,7 @@ class TourEntityRepositoryTest {
     @BeforeEach
     void setUp() {
         tourEntity1 = new TourEntity(UUID.randomUUID(), "TestRoute","Go north","Westfield",
-                "Northfield", TransportType.BIKE, 22.0, "22:00", "Image ---");
+                "Northfield", TransportType.BIKE, 22.0, "22:00", new ArrayList<>(),"Image ---");
         repo.save(tourEntity1);
     }
 

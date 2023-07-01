@@ -253,7 +253,6 @@ public class MainWindowController implements Initializable, Subscriber {
     }
     public void printTourPdf() throws IOException {
         mainWindowViewModel.printTourPdf(listView.getSelectionModel().getSelectedItem().getId());
-        listView.setItems(mainWindowViewModel.getTourList());
     }
 
 
