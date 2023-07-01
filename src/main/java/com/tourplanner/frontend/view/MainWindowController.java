@@ -69,6 +69,8 @@ public class MainWindowController implements Initializable, Subscriber {
     @FXML
     Button saveBtn;
     @FXML
+    Button searchToursButton;
+    @FXML
     Label errFormField;
     @FXML
     ImageView routeImage;
@@ -207,6 +209,17 @@ public class MainWindowController implements Initializable, Subscriber {
         tourLogModify.setOnAction(event -> {
             try {
                 modifyTourLog();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        searchToursButton.setOnAction(event -> {
+            try {
+                listView.setItems(mainWindowViewModel.getTourList().stream()
+                        .filter(tourEntity -> tourEntity.getName().contains(searchField.getText()))
+                        .collect(Collectors.toCollection(FXCollections::observableArrayList)));
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
