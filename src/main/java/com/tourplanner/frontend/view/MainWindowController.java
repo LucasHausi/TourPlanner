@@ -137,7 +137,7 @@ public class MainWindowController implements Initializable, Subscriber {
 
                 //Try to set the image first maybe it is in the cache
                 try {
-                    routeImage.setImage(new Image("pictures/Route"+selectedTour.getId()+".png"));
+                    routeImage.setImage(new Image("images/Route"+selectedTour.getId()+".png"));
                 }
                 //If not found, load the image
                 catch (IllegalArgumentException ex2){
@@ -169,6 +169,15 @@ public class MainWindowController implements Initializable, Subscriber {
         tourDelete.setOnAction(event -> {
             try {
                 deleteTour();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        Button tourMisc = (Button)toolBar.getItems().get(3);
+        tourMisc.setOnAction(event -> {
+            try {
+                printTourPdf();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -242,6 +251,11 @@ public class MainWindowController implements Initializable, Subscriber {
         mainWindowViewModel.deleteTour(listView.getSelectionModel().getSelectedItem().getId());
         listView.setItems(mainWindowViewModel.getTourList());
     }
+    public void printTourPdf() throws IOException {
+        mainWindowViewModel.printTourPdf(listView.getSelectionModel().getSelectedItem().getId());
+        listView.setItems(mainWindowViewModel.getTourList());
+    }
+
 
     public void deleteTourLog() throws IOException {
         mainWindowViewModel.deleteTourLog(tourLogTable.getSelectionModel().getSelectedItem().getId());

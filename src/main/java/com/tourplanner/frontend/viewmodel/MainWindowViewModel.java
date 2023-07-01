@@ -77,6 +77,10 @@ public class MainWindowViewModel {
         tourService.deleteTour(id);
     }
 
+    public void printTourPdf(UUID id) throws IOException {
+        tourService.printTourPdf(id);
+    }
+
     public void deleteTourLog(UUID tourLogId) throws IOException {
         tourLogService.deleteTourLog(tourLogId);
     }
@@ -98,7 +102,6 @@ public class MainWindowViewModel {
 
     public void fetchRouteImage(UUID id, String to, String from) throws IOException {
         mapService.getMap(id, to, from);
-
     }
 
 

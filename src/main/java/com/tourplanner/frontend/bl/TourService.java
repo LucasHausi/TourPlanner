@@ -11,4 +11,5 @@ public interface TourService {
 
      void deleteTour(UUID id) throws IOException;
      List<TourEntity> getAllTours() throws IOException;
+    void printTourPdf(UUID id) throws IOException;
 }
