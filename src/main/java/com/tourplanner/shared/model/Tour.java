@@ -28,6 +28,14 @@ public class Tour {
         return name;
     }
 
+    public boolean fulltextSearch(String searchString) {
+        for(String searchKeyword : searchString.split(" ")){
+            if(fitsFulltextSearchCriteria(searchKeyword)){
+                return fitsFulltextSearchCriteria(searchKeyword);
+            }
+        }
+        return false;
+    }
     public boolean fitsFulltextSearchCriteria(String searchString) {
         return  this.description.contains(searchString) ||
                 this.destination.contains(searchString) ||

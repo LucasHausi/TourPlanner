@@ -217,7 +217,7 @@ public class MainWindowController implements Initializable, Subscriber {
         searchToursButton.setOnAction(event -> {
             try {
                 listView.setItems(mainWindowViewModel.getTourList().stream()
-                        .filter(tour -> tour.fitsFulltextSearchCriteria(searchField.getText()))
+                        .filter(tour -> tour.fulltextSearch(searchField.getText()))
                         .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
             } catch (IOException e) {
