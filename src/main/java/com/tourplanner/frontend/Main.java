@@ -22,6 +22,7 @@ public class Main extends Application {
                 SpringApplicationBuilder(Main.class);
         builder.application()
                 .setWebApplicationType(WebApplicationType.NONE);
+        builder.headless(false);
         List<String> args = getParameters().getRaw(); // passed from command line
         applicationContext
                 = builder.run(args.toArray(String[]::new));

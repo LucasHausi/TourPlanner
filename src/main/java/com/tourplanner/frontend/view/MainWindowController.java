@@ -90,6 +90,10 @@ public class MainWindowController implements Initializable, Subscriber {
     Label timeOvvLabel;
     @FXML
     Label infoOvvLabel;
+    @FXML
+    MenuItem importBtn;
+    @FXML
+    MenuItem exportBtn;
 
     @FXML
     private ReusableCompController reusableCompController;
@@ -330,5 +334,13 @@ public class MainWindowController implements Initializable, Subscriber {
             if(selectedTour.getId().equals(id)){
                 routeImage.setImage(new Image(System.getProperty("user.dir").toString()+"/images/Route"+id+".png"));
         }
+    }
+
+    public void importFile() throws IOException, ClassNotFoundException {
+        mainWindowViewModel.importFile();
+        listView.setItems(mainWindowViewModel.getTourList());
+    }
+    public void exportFile() throws IOException {
+        mainWindowViewModel.exportFile(this.listView.getSelectionModel().getSelectedItem());
     }
 }

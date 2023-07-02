@@ -12,7 +12,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
 
-import java.io.IOException;
+import javax.swing.*;
+import java.io.*;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -108,5 +109,27 @@ public class MainWindowViewModel {
 
     public ObservableList<TourLog> getTourLogList(Tour tour) throws IOException {
         return tourLogService.getAllTourLogsOfTour(tour).stream().collect(Collectors.toCollection(FXCollections::observableArrayList));
+    }
+    public void exportFile(Tour t) throws IOException {
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showSaveDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            FileOutputStream fileOutputStream = new FileOutputStream(chooser.getSelectedFile().getAbsolutePath());
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(t);
+            objectOutputStream.flush();
+            objectOutputStream.close();
+        }
+    }
+    public void importFile() throws IOException, ClassNotFoundException {
+        JFileChooser chooser = new JFileChooser();
+        int returnVal = chooser.showSaveDialog(null);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            FileInputStream fileInputStream = new FileInputStream(chooser.getSelectedFile().getAbsolutePath());
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            Tour t = (Tour) objectInputStream.readObject();
+            tourService.createOrUpdate(t);
+            objectInputStream.close();
+        }
     }
 }
