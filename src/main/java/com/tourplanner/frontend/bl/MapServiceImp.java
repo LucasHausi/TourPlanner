@@ -55,8 +55,14 @@ public class MapServiceImp implements MapService{
         ObjectMapper mapper = new ObjectMapper();
         JsonNode resultObj = mapper.readTree(response.body().string());
         String[] destAndTime = new String[2];
-        destAndTime[0] = resultObj.get("route").get("distance").toString();
-        destAndTime[1] = resultObj.get("route").get("realTime").toString();
+        try{
+            destAndTime[0] = resultObj.get("route").get("distance").toString();
+            destAndTime[1] = resultObj.get("route").get("realTime").toString();
+        }catch (NullPointerException ex1){
+            destAndTime[0] = "0.0";
+            destAndTime[1] = "0";
+        }
+
         return destAndTime;
     }
 
