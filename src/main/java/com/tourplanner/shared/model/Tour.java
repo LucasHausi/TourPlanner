@@ -27,4 +27,14 @@ public class Tour {
     public String toString() {
         return name;
     }
+
+    public boolean fitsFulltextSearchCriteria(String searchString) {
+        return  this.description.contains(searchString) ||
+                this.destination.contains(searchString) ||
+                this.startingPoint.contains(searchString) ||
+                this.name.contains(searchString) ||
+                this.estimatedTime.contains(searchString) ||
+                this.routeInformation.contains(searchString) ||
+                this.transportType.toString().contains(searchString);
+    }
 }
