@@ -1,9 +1,9 @@
 package com.tourplanner.frontend.viewmodel;
 
 import com.tourplanner.frontend.bl.*;
-import com.tourplanner.backend.dal.entity.TourLogEntity;
-import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.shared.enums.TransportType;
+import com.tourplanner.shared.model.Tour;
+import com.tourplanner.shared.model.TourLog;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -70,7 +70,7 @@ public class MainWindowViewModel {
         formValidity.set(!this.nameErr && !startDestEr && !toDestErr && !transTypErr);
     }
 
-    public ObservableList<TourEntity> getTourList() throws IOException {
+    public ObservableList<Tour> getTourList() throws IOException {
         return tourService.getAllTours().stream().collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
     public void deleteTour(UUID id) throws IOException {
@@ -84,13 +84,13 @@ public class MainWindowViewModel {
     public void deleteTourLog(UUID tourLogId) throws IOException {
         tourLogService.deleteTourLog(tourLogId);
     }
-    public void updateTour(TourEntity t) throws IOException {
+    public void updateTour(Tour t) throws IOException {
         String[] distAndTime = mapService.getDistanceAndTime(t.getStartingPoint(),t.getDestination());
-        TourEntity tourEntity = new TourEntity(t.getId(), nameField.get(), descField.get(), fromField.get(),
-                toField.get(), transTypeField.get(),Double.parseDouble(distAndTime[0]), distAndTime[1],t.getTourLogEntityList(), infoArea.get());
-        tourService.createOrUpdate(tourEntity);
+        Tour tour = new Tour(t.getId(), nameField.get(), descField.get(), fromField.get(),
+                toField.get(), transTypeField.get(),Double.parseDouble(distAndTime[0]), distAndTime[1],t.getTourLogList(), infoArea.get());
+        tourService.createOrUpdate(tour);
     }
-    public void updateEditInfos(TourEntity t){
+    public void updateEditInfos(Tour t){
         this.nameField.set(t.getName());
         this.descField.set(t.getDescription());
         this.fromField.set(t.getStartingPoint());
@@ -105,7 +105,7 @@ public class MainWindowViewModel {
     }
 
 
-    public ObservableList<TourLogEntity> getTourLogList(TourEntity tour) throws IOException {
+    public ObservableList<TourLog> getTourLogList(Tour tour) throws IOException {
         return tourLogService.getAllTourLogsOfTour(tour).stream().collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
 }

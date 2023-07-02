@@ -7,9 +7,9 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.property.UnitValue;
-import com.tourplanner.backend.dal.entity.TourEntity;
-import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.frontend.dal.TourApi;
+import com.tourplanner.shared.model.Tour;
+import com.tourplanner.shared.model.TourLog;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
@@ -34,8 +34,8 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public void createOrUpdate(TourEntity tourEntity) throws IOException {
-        tourApi.createOrUpdateTour(tourEntity).execute();
+    public void createOrUpdate(Tour tour) throws IOException {
+        tourApi.createOrUpdateTour(tour).execute();
     }
 
     @Override
@@ -44,13 +44,13 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public List<TourEntity> getAllTours() throws IOException {
+    public List<Tour> getAllTours() throws IOException {
         return tourApi.getAllTours().execute().body();
     }
 
     @Override
     public void printTourPdf(UUID id) throws IOException {
-        TourEntity tour = tourApi.getTour(id).execute().body();
+        Tour tour = tourApi.getTour(id).execute().body();
         PdfWriter writer = new PdfWriter("RoutePdf_"+id+".pdf");
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
@@ -79,7 +79,7 @@ public class TourServiceImpl implements TourService {
         document.add(new Paragraph("Route Information").setFontSize(14).setBold());
         document.add(new Paragraph(tour.getRouteInformation()).setFontSize(12));
 
-        if(!tour.getTourLogEntityList().isEmpty()) {
+        if(!tour.getTourLogList().isEmpty()) {
             document.add(new Paragraph("Tour Logs").setFontSize(14).setBold());
             // Create tourLog table
             Table tourLogTable = new Table(UnitValue.createPercentArray(3));
@@ -88,7 +88,7 @@ public class TourServiceImpl implements TourService {
             tourLogTable.addHeaderCell("Duration");
             tourLogTable.addHeaderCell("Distance");
 
-            for (TourLogEntity tourLog : tour.getTourLogEntityList()) {
+            for (TourLog tourLog : tour.getTourLogList()) {
                 tourLogTable.addCell("gibts nu ned");//tourLog.getDateTime().toLocalDate().toString());
                 tourLogTable.addCell(tourLog.getTotalTime());
                 tourLogTable.addCell(tourLog.getRating() + "");

@@ -1,8 +1,8 @@
 package com.tourplanner.frontend.bl;
 
-import com.tourplanner.backend.dal.entity.TourEntity;
-import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.frontend.dal.TourLogApi;
+import com.tourplanner.shared.model.Tour;
+import com.tourplanner.shared.model.TourLog;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
@@ -26,8 +26,8 @@ public class TourLogServiceImpl implements TourLogService {
     }
 
     @Override
-    public void createOrUpdateTourLog(TourLogEntity tourLogEntity) throws IOException {
-        tourLogApi.createOrUpdateTourLog(tourLogEntity).execute();
+    public void createOrUpdateTourLog(TourLog tourLog) throws IOException {
+        tourLogApi.createOrUpdateTourLog(tourLog).execute();
     }
 
     @Override
@@ -36,12 +36,12 @@ public class TourLogServiceImpl implements TourLogService {
     }
 
     @Override
-    public List<TourLogEntity> getAllTours() throws IOException {
+    public List<TourLog> getAllTours() throws IOException {
         return tourLogApi.getAllTourLogs().execute().body();
     }
 
     @Override
-    public List<TourLogEntity> getAllTourLogsOfTour(TourEntity tour) throws IOException {
+    public List<TourLog> getAllTourLogsOfTour(Tour tour) throws IOException {
         return tourLogApi.getTourLogs(tour.getId()).execute().body();
     }
 }

@@ -47,9 +47,4 @@ public class TourEntity {
     private List<TourLogEntity> tourLogEntityList;
 
     private String routeInformation; //ToDO soll irgendwie eine Map oder ein Bild einer Map oder so sein
-
-    @Override
-    public String toString() {
-        return name;
-    }
 }

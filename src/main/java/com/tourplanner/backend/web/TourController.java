@@ -1,6 +1,8 @@
 package com.tourplanner.backend.web;
 import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.backend.dal.repository.TourRepository;
+import com.tourplanner.backend.mapper.TourMapper;
+import com.tourplanner.shared.model.Tour;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,20 +11,24 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 public class TourController {
-    public final TourRepository tourRepository;
-    public TourController(TourRepository tourRepository) {
+    private final TourRepository tourRepository;
+    private final TourMapper tourMapper;
+
+    public TourController(TourRepository tourRepository, TourMapper tourMapper) {
         this.tourRepository = tourRepository;
+        this.tourMapper = tourMapper;
     }
 
     @PostMapping(path = "/tour/save")
-    public ResponseEntity<TourEntity> createOrUpdateTour(@RequestBody TourEntity tourEntity) {
-        TourEntity savedTourEntity = tourRepository.save(tourEntity);
+    public ResponseEntity<Tour> createOrUpdateTour(@RequestBody Tour tour) {
+        TourEntity savedTourEntity = tourRepository.save(tourMapper.toEntity(tour));
         String path = "/tour/"+ savedTourEntity.getId();
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTourEntity);
-        return ResponseEntity.created(uri).body(savedTourEntity);
+        return ResponseEntity.created(uri).body(tourMapper.fromEntity(savedTourEntity));
     }
     @DeleteMapping(value = "/tour/{tourId}/delete")
     public ResponseEntity<UUID> deleteTour(@PathVariable UUID tourId) {
@@ -34,12 +40,13 @@ public class TourController {
     }
 
     @GetMapping(path = "/tour/{id}")
-    public TourEntity getTour(@PathVariable("id") UUID id){
-        return tourRepository.findById(id).orElseThrow();
+    public Tour getTour(@PathVariable("id") UUID id){
+        return tourMapper.fromEntity(tourRepository.findById(id).orElseThrow());
    }
 
     @GetMapping(path = "/allTours")
-    public List<TourEntity> getAllTours(){
-        return tourRepository.findAll();
+    public List<Tour> getAllTours(){
+        return tourRepository.findAll().stream().map(tourMapper::fromEntity)
+                .collect(Collectors.toList());
     }
 }

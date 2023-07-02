@@ -1,12 +1,12 @@
 package com.tourplanner.frontend.viewmodel;
 
-import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.frontend.bl.MapService;
 import com.tourplanner.frontend.bl.ValidationService;
 import com.tourplanner.shared.enums.TransportType;
 import com.tourplanner.frontend.bl.TourService;
 import com.tourplanner.frontend.bl.TourServiceImpl;
 
+import com.tourplanner.shared.model.Tour;
 import javafx.beans.property.*;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -78,8 +78,8 @@ public class NewTourViewModel {
     public void saveTour() throws IOException {
         String[] distAndTime = fetchDistanceAndTime(from.get(),to.get());
 
-        TourEntity tourEntity = new TourEntity(UUID.randomUUID(), name.get(), description.get(), from.get(),
+        Tour tour = new Tour(UUID.randomUUID(), name.get(), description.get(), from.get(),
                         to.get(), transportType.get(), Double.parseDouble(distAndTime[0]), distAndTime[1], new ArrayList<>(),tourInfo.get());
-        tourService.createOrUpdate(tourEntity);
+        tourService.createOrUpdate(tour);
     }
 }

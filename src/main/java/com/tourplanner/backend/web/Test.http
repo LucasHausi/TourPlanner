@@ -1,4 +1,4 @@
-GET http://localhost:30019/tourEntity/5fb8e358-f108-4f9d-b4f2-674bc2fd6723
+GET http://localhost:30019/tour/5fb8e358-f108-4f9d-b4f2-674bc2fd6723
 Accept: application/json
 
 ###
@@ -8,7 +8,7 @@ Content-Type: application/json
 
 {
     "name": "tourOne",
-    "description": "this is my first tourEntity!",
+    "description": "this is my first tour!",
     "startingPoint": "here",
     "destination": "there",
     "distance": 2

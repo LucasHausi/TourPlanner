@@ -3,8 +3,8 @@ package com.tourplanner.frontend.viewmodel;
 import com.tourplanner.shared.enums.Difficulty;
 import com.tourplanner.frontend.bl.TourLogService;
 import com.tourplanner.frontend.bl.TourLogServiceImpl;
-import com.tourplanner.backend.dal.entity.TourEntity;
-import com.tourplanner.backend.dal.entity.TourLogEntity;
+import com.tourplanner.shared.model.Tour;
+import com.tourplanner.shared.model.TourLog;
 import javafx.beans.property.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,14 +20,14 @@ import java.util.UUID;
 public class NewTourLogViewModel {
 
     private final TourLogService service;
-    private final ObjectProperty<LocalDateTime> date = new SimpleObjectProperty();
+    private final ObjectProperty<LocalDateTime> date = new SimpleObjectProperty<>();
     private final StringProperty comment = new SimpleStringProperty();
     private final ObjectProperty<Difficulty> difficulty = new SimpleObjectProperty<>();
     private final StringProperty duration = new SimpleStringProperty();
     private final IntegerProperty rating = new SimpleIntegerProperty();
 
     @Setter
-    private TourEntity tour;
+    private Tour tour;
 
     @Setter
     private UUID tourLogId = null;
@@ -37,7 +37,7 @@ public class NewTourLogViewModel {
         this.service = service;
     }
 
-    public void setTourLogData(TourLogEntity tourLog){
+    public void setTourLogData(TourLog tourLog){
         this.tourLogId = tourLog.getId();
         this.date.set(tourLog.getDateTime());
         this.comment.set(tourLog.getComment());
@@ -54,7 +54,7 @@ public class NewTourLogViewModel {
         this.rating.set(0);
     }
     public void saveTourLog() throws IOException {
-        TourLogEntity tourLogEntity = new TourLogEntity(tourLogId!=null ? tourLogId : UUID.randomUUID(), date.get(),comment.get(),difficulty.get(), duration.get(),Integer.valueOf(rating.get()),tour);
-        service.createOrUpdateTourLog(tourLogEntity);
+        TourLog tourLog = new TourLog(tourLogId!=null ? tourLogId : UUID.randomUUID(), date.get(),comment.get(),difficulty.get(), duration.get(),Integer.valueOf(rating.get()),tour);
+        service.createOrUpdateTourLog(tourLog);
     }
 }

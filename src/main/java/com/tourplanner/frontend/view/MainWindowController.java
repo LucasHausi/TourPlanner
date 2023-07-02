@@ -1,11 +1,11 @@
 package com.tourplanner.frontend.view;
 
-import com.tourplanner.backend.dal.entity.TourEntity;
-import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.frontend.FXMLDependencyInjection;
 import com.tourplanner.frontend.bl.Subscriber;
 import com.tourplanner.frontend.viewmodel.MainWindowViewModel;
 import com.tourplanner.shared.enums.TransportType;
+import com.tourplanner.shared.model.Tour;
+import com.tourplanner.shared.model.TourLog;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,7 +40,7 @@ public class MainWindowController implements Initializable, Subscriber {
     public AnchorPane tourLogComp;
 
     @FXML
-    ListView<TourEntity> listView = new ListView();
+    ListView<Tour> listView = new ListView();
     @FXML
     TextField nameField;
     @FXML
@@ -55,16 +55,16 @@ public class MainWindowController implements Initializable, Subscriber {
     TextArea infoArea;
 
     @FXML
-    TableView<TourLogEntity> tourLogTable;
+    TableView<TourLog> tourLogTable;
 
     @FXML
-    TableColumn<TourLogEntity, LocalDateTime> dateColumn;
+    TableColumn<TourLog, LocalDateTime> dateColumn;
 
     @FXML
-    TableColumn<TourLogEntity, String> durationColumn;
+    TableColumn<TourLog, String> durationColumn;
 
     @FXML
-    TableColumn<TourLogEntity, Integer> distanceColumn;
+    TableColumn<TourLog, Integer> distanceColumn;
 
     @FXML
     Button saveBtn;
@@ -122,16 +122,16 @@ public class MainWindowController implements Initializable, Subscriber {
         try {
             listView.setItems(mainWindowViewModel.getTourList());
             listView.setOnMouseClicked(event -> {
-                TourEntity selectedTour = listView.getSelectionModel().getSelectedItem();
+                Tour selectedTour = listView.getSelectionModel().getSelectedItem();
                 mainWindowViewModel.updateEditInfos(selectedTour);
                 this.updateTourInfos(selectedTour);
                 try {
                     dateColumn.setCellValueFactory(
-                            new PropertyValueFactory<TourLogEntity, LocalDateTime>("dateTime"));
+                            new PropertyValueFactory<TourLog, LocalDateTime>("dateTime"));
                     durationColumn.setCellValueFactory(
-                            new PropertyValueFactory<TourLogEntity, String>("totalTime"));
+                            new PropertyValueFactory<TourLog, String>("totalTime"));
                     distanceColumn.setCellValueFactory(
-                            new PropertyValueFactory<TourLogEntity, Integer>("rating"));
+                            new PropertyValueFactory<TourLog, Integer>("rating"));
                     tourLogTable.setItems(mainWindowViewModel.getTourLogList(listView.getSelectionModel().getSelectedItem()));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -217,7 +217,7 @@ public class MainWindowController implements Initializable, Subscriber {
         searchToursButton.setOnAction(event -> {
             try {
                 listView.setItems(mainWindowViewModel.getTourList().stream()
-                        .filter(tourEntity -> tourEntity.getName().contains(searchField.getText()))
+                        .filter(tour -> tour.getName().contains(searchField.getText()))
                         .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
             } catch (IOException e) {
@@ -308,7 +308,7 @@ public class MainWindowController implements Initializable, Subscriber {
         this.primaryStage = primaryStage;
     }
 
-    public void updateTourInfos(TourEntity t){
+    public void updateTourInfos(Tour t){
         this.nameOvvLabel.setText(t.getName());
         this.descOvvLabel.setText(t.getDescription());
         this.fromOvvLabel.setText(t.getStartingPoint());
@@ -326,7 +326,7 @@ public class MainWindowController implements Initializable, Subscriber {
 
     @Override
     public void update(UUID id) {
-        TourEntity selectedTour = listView.getSelectionModel().getSelectedItem();
+        Tour selectedTour = listView.getSelectionModel().getSelectedItem();
             if(selectedTour.getId().equals(id)){
                 routeImage.setImage(new Image(System.getProperty("user.dir").toString()+"/images/Route"+id+".png"));
         }

@@ -22,5 +22,5 @@ public class TourLog {
 
     private int rating;
 
-    private Tour tourEntity;
+    private Tour tour;
 }

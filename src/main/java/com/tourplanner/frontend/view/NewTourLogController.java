@@ -1,9 +1,9 @@
 package com.tourplanner.frontend.view;
 
-import com.tourplanner.backend.dal.entity.TourEntity;
-import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.shared.enums.Difficulty;
 import com.tourplanner.frontend.viewmodel.NewTourLogViewModel;
+import com.tourplanner.shared.model.Tour;
+import com.tourplanner.shared.model.TourLog;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,7 +36,7 @@ public class NewTourLogController implements Initializable {
     @Setter
     Stage newTourLogDialogStage;
 
-    private TourEntity tour;
+    private Tour tour;
 
     public NewTourLogController(NewTourLogViewModel newTourLogViewModel){
         this.newTourLogViewModel =  newTourLogViewModel;
@@ -55,12 +55,12 @@ public class NewTourLogController implements Initializable {
         ratingSlider.valueProperty().bindBidirectional(newTourLogViewModel.getRating());
     }
 
-    public void setTour(TourEntity tour) {
+    public void setTour(Tour tour) {
         this.tour = tour;
         this.newTourLogViewModel.setTour(tour);
     }
 
-    public void setTourLogData(TourLogEntity tourLog){
+    public void setTourLogData(TourLog tourLog){
         newTourLogViewModel.setTourLogData(tourLog);
     }
 
