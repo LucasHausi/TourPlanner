@@ -17,7 +17,7 @@
          </font>
       </Text>
       <Label layoutX="19.0" layoutY="69.0" prefHeight="17.0" prefWidth="55.0" text="Filename" />
-      <Button fx:id="createButton" onAction="#printTourPdf" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" text="Create" />
+      <Button fx:id="createButton" onAction="#printPdf" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" text="Create" />
       <Button fx:id="closeButton" onAction="#closeDialog" layoutX="74.0" layoutY="119.0" mnemonicParsing="false" text="Close" />
    </children>
 </AnchorPane>

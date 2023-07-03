@@ -22,6 +22,8 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -120,6 +122,46 @@ public class TourServiceImpl implements TourService {
         document.add(new Paragraph("\n").setFontSize(2));
         document.add(new Paragraph("Route Image").setFontSize(14).setBold());
         document.add(new Image(ImageDataFactory.create("images/Route"+id+".png")).setAutoScale(true));
+        document.close();
+    }
+
+    @Override
+    public void printSummaryPdf() throws IOException {
+        Files.createDirectories(Paths.get("reports/"));
+        PdfWriter writer = new PdfWriter("reports/Summary"+ Instant.now().getNano()+".pdf");
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+        document.add(new Paragraph("Summary of all Tours from " + LocalDate.now()).setFontSize(18).setBold());
+
+        float [] pointColumnWidths = {200F, 200F, 200F, 200F};
+        List<Tour> tours = getAllTours();
+        Table tourValueTable = new Table(pointColumnWidths);
+
+        tourValueTable.addCell("Tour");
+        tourValueTable.addCell("average time");
+        tourValueTable.addCell("average distance");
+        tourValueTable.addCell("average rating");
+
+        for(Tour tour : tours){
+            List<Integer> ratings =  tour.getTourLogList().stream().map(TourLog::getRating).toList();
+            Double avgRating = 0.0;
+            for(Integer rating : ratings){
+                avgRating += rating;
+            }
+            avgRating /= ratings.size();
+
+            List<String> times =  tour.getTourLogList().stream().map(TourLog::getTotalTime).toList();
+            StringBuilder avgTime = new StringBuilder();
+            for(String time : times){
+                avgTime.append(time).append(" ");
+            }
+
+            tourValueTable.addCell(tour.getName());
+            tourValueTable.addCell(avgTime.toString());
+            tourValueTable.addCell(tour.getDistance()+"");
+            tourValueTable.addCell(avgRating+"");
+        }
+        document.add(tourValueTable);
         document.close();
     }
 }

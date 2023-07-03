@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -40,9 +41,22 @@ public class PDFGenerationController  implements Initializable {
         pdfNameTextField.textProperty().bindBidirectional(pdfGenerationViewModel.getPdfName());
     }
 
+    public void printPdf() throws IOException {
+        if(Objects.nonNull(pdfNameTextField.getText()) && !pdfNameTextField.getText().isEmpty()){
+            printTourPdf();
+        }
+        else {
+            printSummaryPdf();
+        }
+        closeDialog();
+    }
+
     public void printTourPdf() throws IOException {
         pdfGenerationViewModel.printTourPdf(tourToPrint);
-        closeDialog();
+    }
+
+    public void printSummaryPdf() throws IOException {
+        pdfGenerationViewModel.printSummaryPdf();
     }
 
     public void closeDialog() {
