@@ -183,7 +183,18 @@ public class MainWindowController implements Initializable, Subscriber {
         Button tourMisc = (Button)toolBar.getItems().get(3);
         tourMisc.setOnAction(event -> {
             try {
-                printTourPdf();
+                final Stage dialog = new Stage();
+
+                FXMLLoader loader =  FXMLDependencyInjection.getLoader("pdfGenerationDialog.fxml", Locale.ENGLISH, null);
+                Parent root  = loader.load();
+                Scene dialogScene = new Scene(root);
+                dialog.initModality(Modality.APPLICATION_MODAL);
+                dialog.initOwner(primaryStage);
+                dialog.setTitle("Generate Tour Pdf");
+                dialog.setScene(dialogScene);
+                loader.<PDFGenerationController>getController().setPdfGenerationDialogStage(dialog);
+                loader.<PDFGenerationController>getController().setTourToPrint(listView.getSelectionModel().getSelectedItem().getId());
+                dialog.showAndWait();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -267,9 +278,6 @@ public class MainWindowController implements Initializable, Subscriber {
     public void deleteTour() throws IOException {
         mainWindowViewModel.deleteTour(listView.getSelectionModel().getSelectedItem().getId());
         listView.setItems(mainWindowViewModel.getTourList());
-    }
-    public void printTourPdf() throws IOException {
-        mainWindowViewModel.printTourPdf(listView.getSelectionModel().getSelectedItem().getId());
     }
 
 

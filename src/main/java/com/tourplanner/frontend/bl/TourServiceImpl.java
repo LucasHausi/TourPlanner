@@ -16,7 +16,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -49,9 +52,10 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public void printTourPdf(UUID id) throws IOException {
+    public void printTourPdf(UUID id, String pdfName) throws IOException {
         Tour tour = tourApi.getTour(id).execute().body();
-        PdfWriter writer = new PdfWriter("RoutePdf_"+id+".pdf");
+        Files.createDirectories(Paths.get("reports/"));
+        PdfWriter writer = new PdfWriter("reports/"+(pdfName.endsWith(".pdf") ? pdfName : pdfName + ".pdf"));
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
         document.add(new Paragraph("Tour Report for \""+tour.getName()+"\"").setFontSize(24).setBold());
@@ -79,7 +83,7 @@ public class TourServiceImpl implements TourService {
         document.add(new Paragraph("Route Information").setFontSize(14).setBold());
         document.add(new Paragraph(tour.getRouteInformation()).setFontSize(12));
 
-        if(!tour.getTourLogList().isEmpty()) {
+        if(Objects.nonNull(tour.getTourLogList()) && !tour.getTourLogList().isEmpty()) {
             document.add(new Paragraph("Tour Logs").setFontSize(14).setBold());
             // Create tourLog table
             Table tourLogTable = new Table(UnitValue.createPercentArray(3));

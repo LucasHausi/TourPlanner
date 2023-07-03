@@ -5,10 +5,7 @@ import com.tourplanner.frontend.bl.MapServiceImp;
 import com.tourplanner.frontend.bl.Publisher;
 import com.tourplanner.frontend.bl.TourLogServiceImpl;
 import com.tourplanner.frontend.bl.TourServiceImpl;
-import com.tourplanner.frontend.viewmodel.MainWindowViewModel;
-import com.tourplanner.frontend.viewmodel.NewTourLogViewModel;
-import com.tourplanner.frontend.viewmodel.NewTourViewModel;
-import com.tourplanner.frontend.viewmodel.ReusableCompViewModel;
+import com.tourplanner.frontend.viewmodel.*;
 import org.springframework.context.ConfigurableApplicationContext;
 
 
@@ -18,12 +15,14 @@ public class ControllerFactory {
     private final MainWindowViewModel mainWindowViewModel;
     private final Publisher publisher;
     private final ReusableCompViewModel reusableCompViewModel;
+    private final PDFGenerationViewModel pdfGenerationViewModel;
 
     public ControllerFactory(ConfigurableApplicationContext applicationContext){
         newTourViewModel = new NewTourViewModel(new TourServiceImpl(), new MapServiceImp());
         newTourLogViewModel = new NewTourLogViewModel(new TourLogServiceImpl());
         mainWindowViewModel = new MainWindowViewModel();
         reusableCompViewModel = new ReusableCompViewModel();
+        pdfGenerationViewModel = new PDFGenerationViewModel(new TourServiceImpl());
         publisher = new Publisher();
     }
     public Object create(Class<?> controllerClass){
@@ -41,6 +40,9 @@ public class ControllerFactory {
         }
         if(controllerClass == ReusableCompController.class){
             return new ReusableCompController(reusableCompViewModel);
+        }
+        if(controllerClass == PDFGenerationController.class){
+            return new PDFGenerationController(pdfGenerationViewModel);
         }
         throw new IllegalArgumentException("Unknown controller class: " + controllerClass);
     }

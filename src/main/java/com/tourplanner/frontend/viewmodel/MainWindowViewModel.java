@@ -14,7 +14,6 @@ import lombok.Getter;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -79,9 +78,7 @@ public class MainWindowViewModel {
         tourService.deleteTour(id);
     }
 
-    public void printTourPdf(UUID id) throws IOException {
-        tourService.printTourPdf(id);
-    }
+
 
     public void deleteTourLog(UUID tourLogId) throws IOException {
         tourLogService.deleteTourLog(tourLogId);
