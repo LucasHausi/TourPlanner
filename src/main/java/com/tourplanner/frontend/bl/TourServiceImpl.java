@@ -8,8 +8,10 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.property.UnitValue;
 import com.tourplanner.frontend.dal.TourApi;
-import com.tourplanner.shared.model.Tour;
-import com.tourplanner.shared.model.TourLog;
+import com.tourplanner.frontend.mapper.TourMapper;
+import com.tourplanner.frontend.mapper.TourMapperImpl;
+import com.tourplanner.frontend.model.Tour;
+import com.tourplanner.frontend.model.TourLog;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
@@ -21,12 +23,15 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Component
 public class TourServiceImpl implements TourService {
     @Getter
     private final TourApi tourApi;
+
+    private TourMapper tourMapper = new TourMapperImpl();
     public TourServiceImpl(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://localhost:30019")
@@ -38,7 +43,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public void createOrUpdate(Tour tour) throws IOException {
-        tourApi.createOrUpdateTour(tour).execute();
+        tourApi.createOrUpdateTour(tourMapper.toDTO(tour)).execute();
     }
 
     @Override
@@ -48,12 +53,14 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public List<Tour> getAllTours() throws IOException {
-        return tourApi.getAllTours().execute().body();
+        return tourApi.getAllTours().execute().body().stream()
+                .map(tourLogDTO -> tourMapper.fromDTO(tourLogDTO))
+                .collect(Collectors.toList());
     }
 
     @Override
     public void printTourPdf(UUID id, String pdfName) throws IOException {
-        Tour tour = tourApi.getTour(id).execute().body();
+        Tour tour = tourMapper.fromDTO(tourApi.getTour(id).execute().body());
         Files.createDirectories(Paths.get("reports/"));
         PdfWriter writer = new PdfWriter("reports/"+(pdfName.endsWith(".pdf") ? pdfName : pdfName + ".pdf"));
         PdfDocument pdf = new PdfDocument(writer);

@@ -1,4 +1,4 @@
-package com.tourplanner.shared.model;
+package com.tourplanner.frontend.model;
 
 import com.tourplanner.shared.enums.Difficulty;
 import lombok.*;

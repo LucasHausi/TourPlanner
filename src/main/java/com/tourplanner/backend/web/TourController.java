@@ -4,7 +4,7 @@ import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.backend.dal.repository.TourLogRepository;
 import com.tourplanner.backend.dal.repository.TourRepository;
 import com.tourplanner.backend.mapper.TourMapper;
-import com.tourplanner.shared.model.Tour;
+import com.tourplanner.shared.model.TourDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -40,12 +40,12 @@ public class TourController {
     }
 
     @PostMapping(path = "/tour/save")
-    public ResponseEntity<Tour> createOrUpdateTour(@RequestBody Tour tour) {
-        TourEntity savedTourEntity = tourRepository.save(tourMapper.toEntity(tour));
+    public ResponseEntity<TourDTO> createOrUpdateTour(@RequestBody TourDTO tour) {
+        TourEntity savedTourEntity = tourRepository.save(tourMapper.fromDTO(tour));
         String path = "/tour/"+ savedTourEntity.getId();
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTourEntity);
         logger.info("Sucessfully created or updated tour: " + savedTourEntity.getId());
-        return ResponseEntity.created(uri).body(tourMapper.fromEntity(savedTourEntity));
+        return ResponseEntity.created(uri).body(tourMapper.toDTO(savedTourEntity));
     }
     @DeleteMapping(value = "/tour/{tourId}/delete")
     public ResponseEntity<UUID> deleteTour(@PathVariable UUID tourId) {
@@ -63,15 +63,15 @@ public class TourController {
     }
 
     @GetMapping(path = "/tour/{id}")
-    public Tour getTour(@PathVariable("id") UUID id){
+    public TourDTO getTour(@PathVariable("id") UUID id){
         logger.info("Fetching Tour: " + id);
-        return tourMapper.fromEntity(tourRepository.findById(id).orElseThrow());
+        return tourMapper.toDTO(tourRepository.findById(id).orElseThrow());
    }
 
     @GetMapping(path = "/allTours")
-    public List<Tour> getAllTours(){
+    public List<TourDTO> getAllTours(){
         logger.info("Fetching all existing Tours");
-        return tourRepository.findAll().stream().map(tourMapper::fromEntity)
+        return tourRepository.findAll().stream().map(tourMapper::toDTO)
                 .collect(Collectors.toList());
     }
 }

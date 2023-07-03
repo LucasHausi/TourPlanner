@@ -1,7 +1,7 @@
 package com.tourplanner.frontend.bl;
 
-import com.tourplanner.shared.model.Tour;
-import com.tourplanner.shared.model.TourLog;
+import com.tourplanner.frontend.model.Tour;
+import com.tourplanner.frontend.model.TourLog;
 
 import java.io.IOException;
 import java.util.List;

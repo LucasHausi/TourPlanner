@@ -4,20 +4,20 @@ import java.util.List;
 import java.util.UUID;
 
 
-import com.tourplanner.shared.model.Tour;
+import com.tourplanner.shared.model.TourDTO;
 import retrofit2.Call;
 import retrofit2.http.*;
 
 public interface TourApi {
     @POST("/tour/save")
-    Call<Tour> createOrUpdateTour(@Body Tour tour);
+    Call<TourDTO> createOrUpdateTour(@Body TourDTO tour);
 
     @DELETE( "/tour/{tourId}/delete")
     Call<UUID> deleteTour(@Path("tourId") UUID tourId);
 
     @GET("/tour/{id}")
-    Call<Tour> getTour(@Path("id") UUID id);
+    Call<TourDTO> getTour(@Path("id") UUID id);
 
     @GET("/allTours")
-    Call<List<Tour>> getAllTours();
+    Call<List<TourDTO>> getAllTours();
 }

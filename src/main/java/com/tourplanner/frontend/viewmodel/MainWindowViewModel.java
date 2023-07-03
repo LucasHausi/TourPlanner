@@ -2,8 +2,8 @@ package com.tourplanner.frontend.viewmodel;
 
 import com.tourplanner.frontend.bl.*;
 import com.tourplanner.shared.enums.TransportType;
-import com.tourplanner.shared.model.Tour;
-import com.tourplanner.shared.model.TourLog;
+import com.tourplanner.frontend.model.Tour;
+import com.tourplanner.frontend.model.TourLog;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;

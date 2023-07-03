@@ -6,7 +6,7 @@ import com.tourplanner.shared.enums.TransportType;
 import com.tourplanner.frontend.bl.TourService;
 import com.tourplanner.frontend.bl.TourServiceImpl;
 
-import com.tourplanner.shared.model.Tour;
+import com.tourplanner.frontend.model.Tour;
 import javafx.beans.property.*;
 import lombok.Getter;
 import org.springframework.stereotype.Component;

@@ -3,7 +3,7 @@ import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.backend.dal.repository.TourLogRepository;
 import com.tourplanner.backend.dal.repository.TourRepository;
 import com.tourplanner.backend.mapper.TourLogMapper;
-import com.tourplanner.shared.model.TourLog;
+import com.tourplanner.shared.model.TourLogDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -40,18 +40,18 @@ public class TourLogController {
     }
 
     @PostMapping(path = "/tourLog/save")
-    public ResponseEntity<TourLog> createOrUpdateTourLog(@RequestBody TourLog tourLog) {
-        TourLogEntity savedTourLogEntity = tourLogRepository.save(tourLogMapper.toEntity(tourLog));
+    public ResponseEntity<TourLogDTO> createOrUpdateTourLog(@RequestBody TourLogDTO tourLog) {
+        TourLogEntity savedTourLogEntity = tourLogRepository.save(tourLogMapper.fromDTO(tourLog));
         String path = "/tour/"+savedTourLogEntity.getId();
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTourLogEntity);
         logger.info("Sucessfully created or updated tourLog: " + savedTourLogEntity.getId());
-        return ResponseEntity.created(uri).body(tourLogMapper.fromEntity(savedTourLogEntity));
+        return ResponseEntity.created(uri).body(tourLogMapper.toDTO(savedTourLogEntity));
     }
 
     @GetMapping(path = "/tourLog/{id}")
-    public TourLog getTourLog(@PathVariable("id") UUID id){
+    public TourLogDTO getTourLog(@PathVariable("id") UUID id){
         logger.info("Fetching TourLog: " + id);
-        return tourLogMapper.fromEntity(tourLogRepository.findById(id).orElseThrow());
+        return tourLogMapper.toDTO(tourLogRepository.findById(id).orElseThrow());
    }
 
     @DeleteMapping(value = "/tourLog/{tourLogId}/delete")
@@ -66,16 +66,16 @@ public class TourLogController {
     }
 
     @GetMapping(path = "/tour/{tourId}/tourLogs")
-    public List<TourLog> getTourLogs(@PathVariable("tourId") UUID tourId){
+    public List<TourLogDTO> getTourLogs(@PathVariable("tourId") UUID tourId){
         logger.info("Fetching all TourLogs of Tour: " + tourId);
         return tourLogRepository.getTourLogEntityByTourEntity(tourRepository.findById(tourId).get())
-                .stream().map(tourLogMapper::fromEntity).collect(Collectors.toList());
+                .stream().map(tourLogMapper::toDTO).collect(Collectors.toList());
     }
 
     @GetMapping(path = "/tourLogs")
-    public List<TourLog> getAllTourLogs(){
+    public List<TourLogDTO> getAllTourLogs(){
         logger.info("Fetching all existing TourLogs");
-        return tourLogRepository.findAll().stream().map(tourLogMapper::fromEntity)
+        return tourLogRepository.findAll().stream().map(tourLogMapper::toDTO)
                 .collect(Collectors.toList());
     }
 }
