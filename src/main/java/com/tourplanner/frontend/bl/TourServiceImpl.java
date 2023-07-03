@@ -13,6 +13,8 @@ import com.tourplanner.frontend.mapper.TourMapperImpl;
 import com.tourplanner.frontend.model.Tour;
 import com.tourplanner.frontend.model.TourLog;
 import lombok.Getter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -30,8 +32,16 @@ import java.util.stream.Collectors;
 public class TourServiceImpl implements TourService {
     @Getter
     private final TourApi tourApi;
-
     private TourMapper tourMapper = new TourMapperImpl();
+    private static Logger logger;
+    static {
+        try {
+            // you need to do something like below instaed of Logger.getLogger(....);
+            logger = LogManager.getLogger(TourServiceImpl.class);
+        } catch (Throwable th) {
+            throw new IllegalArgumentException("Cannot load the log property file", th);
+        }
+    }
     public TourServiceImpl(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://localhost:30019")
@@ -60,6 +70,7 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public void printTourPdf(UUID id, String pdfName) throws IOException {
+        logger.info("printing TourReport pdf for Tour: " + id);
         Tour tour = tourMapper.fromDTO(tourApi.getTour(id).execute().body());
         Files.createDirectories(Paths.get("reports/"));
         PdfWriter writer = new PdfWriter("reports/"+(pdfName.endsWith(".pdf") ? pdfName : pdfName + ".pdf"));
