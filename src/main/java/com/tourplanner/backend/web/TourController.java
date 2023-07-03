@@ -1,5 +1,7 @@
 package com.tourplanner.backend.web;
 import com.tourplanner.backend.dal.entity.TourEntity;
+import com.tourplanner.backend.dal.entity.TourLogEntity;
+import com.tourplanner.backend.dal.repository.TourLogRepository;
 import com.tourplanner.backend.dal.repository.TourRepository;
 import com.tourplanner.backend.mapper.TourMapper;
 import com.tourplanner.shared.model.Tour;
@@ -16,10 +18,12 @@ import java.util.stream.Collectors;
 @RestController
 public class TourController {
     private final TourRepository tourRepository;
+    private final TourLogRepository tourLogRepository;
     private final TourMapper tourMapper;
 
-    public TourController(TourRepository tourRepository, TourMapper tourMapper) {
+    public TourController(TourRepository tourRepository, TourLogRepository tourLogRepository, TourMapper tourMapper) {
         this.tourRepository = tourRepository;
+        this.tourLogRepository = tourLogRepository;
         this.tourMapper = tourMapper;
     }
 
@@ -34,6 +38,9 @@ public class TourController {
     public ResponseEntity<UUID> deleteTour(@PathVariable UUID tourId) {
         if (!tourRepository.existsById(tourId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        for(TourLogEntity tourLog : tourLogRepository.getTourLogEntityByTourEntity(tourRepository.findById(tourId).orElseThrow())){
+            tourLogRepository.deleteById(tourLog.getId());
         }
         tourRepository.deleteById(tourId);
         return new ResponseEntity<>(tourId, HttpStatus.OK);
