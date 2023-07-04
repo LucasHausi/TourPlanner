@@ -16,6 +16,7 @@ public class ControllerFactory {
     private final Publisher publisher;
     private final ReusableCompViewModel reusableCompViewModel;
     private final PDFGenerationViewModel pdfGenerationViewModel;
+    private final TourLogCommentWindowViewModel tourLogCommentWindowViewModel;
 
     public ControllerFactory(ConfigurableApplicationContext applicationContext){
         newTourViewModel = new NewTourViewModel(new TourServiceImpl(), new MapServiceImp());
@@ -23,6 +24,7 @@ public class ControllerFactory {
         mainWindowViewModel = new MainWindowViewModel();
         reusableCompViewModel = new ReusableCompViewModel();
         pdfGenerationViewModel = new PDFGenerationViewModel(new TourServiceImpl());
+        tourLogCommentWindowViewModel = new TourLogCommentWindowViewModel();
         publisher = new Publisher();
     }
     public Object create(Class<?> controllerClass){
@@ -43,6 +45,9 @@ public class ControllerFactory {
         }
         if(controllerClass == PDFGenerationController.class){
             return new PDFGenerationController(pdfGenerationViewModel);
+        }
+        if(controllerClass == TourLogCommentWindowController.class){
+            return new TourLogCommentWindowController(tourLogCommentWindowViewModel);
         }
         throw new IllegalArgumentException("Unknown controller class: " + controllerClass);
     }

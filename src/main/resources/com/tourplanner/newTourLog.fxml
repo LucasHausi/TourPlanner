@@ -64,7 +64,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="durationInput" prefHeight="25.0" prefWidth="339.0">
+            <TextField fx:id="durationInput" prefWidth="339.0">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>

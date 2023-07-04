@@ -3,6 +3,7 @@ package com.tourplanner.frontend.view;
 import com.tourplanner.frontend.FXMLDependencyInjection;
 import com.tourplanner.frontend.bl.Subscriber;
 import com.tourplanner.frontend.viewmodel.MainWindowViewModel;
+import com.tourplanner.shared.enums.Difficulty;
 import com.tourplanner.shared.enums.TransportType;
 import com.tourplanner.frontend.model.Tour;
 import com.tourplanner.frontend.model.TourLog;
@@ -64,7 +65,10 @@ public class MainWindowController implements Initializable, Subscriber {
     TableColumn<TourLog, String> durationColumn;
 
     @FXML
-    TableColumn<TourLog, Integer> distanceColumn;
+    TableColumn<TourLog, Integer> ratingColumn;
+
+    @FXML
+    TableColumn<TourLog, Difficulty> difficultyColumn;
 
     @FXML
     Button saveBtn;
@@ -134,9 +138,32 @@ public class MainWindowController implements Initializable, Subscriber {
                             new PropertyValueFactory<TourLog, LocalDate>("date"));
                     durationColumn.setCellValueFactory(
                             new PropertyValueFactory<TourLog, String>("totalTime"));
-                    distanceColumn.setCellValueFactory(
+                    ratingColumn.setCellValueFactory(
                             new PropertyValueFactory<TourLog, Integer>("rating"));
+                    difficultyColumn.setCellValueFactory(
+                            new PropertyValueFactory<TourLog, Difficulty>("difficulty"));
                     tourLogTable.setItems(mainWindowViewModel.getTourLogList(listView.getSelectionModel().getSelectedItem()));
+                    tourLogTable.setOnMouseClicked(tableClickEvent -> {
+                        if(tableClickEvent.getClickCount() == 2) {
+                            final Stage dialog = new Stage();
+
+                            FXMLLoader loader =  FXMLDependencyInjection.getLoader("tourLogCommentWindow.fxml", Locale.ENGLISH, null);
+                            Parent root  = null;
+                            try {
+                                root = loader.load();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            loader.<TourLogCommentWindowController>getController().setTourLogCommentWindowStage(dialog);
+                            loader.<TourLogCommentWindowController>getController().setTourLogComment(tourLogTable.getSelectionModel().getSelectedItem().getComment());
+                            Scene dialogScene = new Scene(root);
+                            dialog.initModality(Modality.APPLICATION_MODAL);
+                            dialog.initOwner(primaryStage);
+                            dialog.setTitle("TourLog Comment Display");
+                            dialog.setScene(dialogScene);
+                            dialog.showAndWait();
+                        }
+                    });
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
