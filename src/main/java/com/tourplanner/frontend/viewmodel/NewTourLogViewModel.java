@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.UUID;
 
 //If deleted there's an error in the NewTourController.class
@@ -41,7 +39,7 @@ public class NewTourLogViewModel {
 
     public void setTourLogData(TourLog tourLog){
         this.tourLogId = tourLog.getId();
-        this.date.set(tourLog.getDateTime().toLocalDate());
+        this.date.set(tourLog.getDate());
         this.comment.set(tourLog.getComment());
         this.difficulty.set(tourLog.getDifficulty());
         this.duration.set(tourLog.getTotalTime());
@@ -56,7 +54,7 @@ public class NewTourLogViewModel {
         this.rating.set(0);
     }
     public void saveTourLog() throws IOException {
-        TourLog tourLog = new TourLog(tourLogId!=null ? tourLogId : UUID.randomUUID(), LocalDateTime.of(date.get(), LocalTime.now()),comment.get(),difficulty.get(), duration.get(),Integer.valueOf(rating.get()),tour);
+        TourLog tourLog = new TourLog(tourLogId!=null ? tourLogId : UUID.randomUUID(), date.get(),comment.get(),difficulty.get(), duration.get(),Integer.valueOf(rating.get()),tour);
         service.createOrUpdateTourLog(tourLog);
     }
 }

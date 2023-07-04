@@ -1,6 +1,5 @@
 package com.tourplanner.shared.model;
 
-import com.tourplanner.frontend.model.TourLog;
 import com.tourplanner.shared.enums.TransportType;
 import lombok.*;
 
@@ -21,6 +20,6 @@ public class TourDTO {
     private TransportType transportType;
     private double distance;
     private String estimatedTime;
-    private List<TourLog> tourLogList;
+    private List<TourLogDTO> tourLogList;
     private String routeInformation;
 }

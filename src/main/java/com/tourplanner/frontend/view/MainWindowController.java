@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -58,7 +58,7 @@ public class MainWindowController implements Initializable, Subscriber {
     TableView<TourLog> tourLogTable;
 
     @FXML
-    TableColumn<TourLog, LocalDateTime> dateColumn;
+    TableColumn<TourLog, LocalDate> dateColumn;
 
     @FXML
     TableColumn<TourLog, String> durationColumn;
@@ -131,7 +131,7 @@ public class MainWindowController implements Initializable, Subscriber {
                 this.updateTourInfos(selectedTour);
                 try {
                     dateColumn.setCellValueFactory(
-                            new PropertyValueFactory<TourLog, LocalDateTime>("dateTime"));
+                            new PropertyValueFactory<TourLog, LocalDate>("date"));
                     durationColumn.setCellValueFactory(
                             new PropertyValueFactory<TourLog, String>("totalTime"));
                     distanceColumn.setCellValueFactory(

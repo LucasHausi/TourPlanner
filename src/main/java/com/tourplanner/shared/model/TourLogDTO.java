@@ -1,10 +1,8 @@
 package com.tourplanner.shared.model;
 
-import com.tourplanner.frontend.model.Tour;
 import com.tourplanner.shared.enums.Difficulty;
 import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -14,7 +12,7 @@ import java.util.UUID;
 @Setter
 public class TourLogDTO {
     private UUID id;
-    private LocalDateTime dateTime;
+    private String dateTime;
     private String comment;
     private Difficulty difficulty;
 
@@ -22,5 +20,5 @@ public class TourLogDTO {
 
     private int rating;
 
-    private Tour tour;
+    private TourDTO tour;
 }

@@ -3,7 +3,7 @@ package com.tourplanner.frontend.model;
 import com.tourplanner.shared.enums.Difficulty;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class TourLog {
 
     private UUID id;
-    private LocalDateTime dateTime;
+    private LocalDate date;
     private String comment;
     private Difficulty difficulty;
 
