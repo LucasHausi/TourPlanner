@@ -151,10 +151,12 @@ public class TourServiceImpl implements TourService {
             avgRating /= ratings.size();
 
             List<String> times =  tour.getTourLogList().stream().map(TourLog::getTotalTime).toList();
-            StringBuilder avgTime = new StringBuilder();
+            Integer avgTime = 0;
             for(String time : times){
-                avgTime.append(time).append(" ");
+                var splitTime = time.split(":");
+                avgTime += Integer.valueOf(splitTime[0])*60 + Integer.valueOf(splitTime[1]);
             }
+            avgTime/=times.size();
 
             tourValueTable.addCell(tour.getName());
             tourValueTable.addCell(avgTime.toString());
