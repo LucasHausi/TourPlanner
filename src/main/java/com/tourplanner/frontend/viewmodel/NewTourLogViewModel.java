@@ -11,7 +11,9 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
 
 //If deleted there's an error in the NewTourController.class
@@ -20,7 +22,7 @@ import java.util.UUID;
 public class NewTourLogViewModel {
 
     private final TourLogService service;
-    private final ObjectProperty<LocalDateTime> date = new SimpleObjectProperty<>();
+    private final ObjectProperty<LocalDate> date = new SimpleObjectProperty<>();
     private final StringProperty comment = new SimpleStringProperty();
     private final ObjectProperty<Difficulty> difficulty = new SimpleObjectProperty<>();
     private final StringProperty duration = new SimpleStringProperty();
@@ -39,7 +41,7 @@ public class NewTourLogViewModel {
 
     public void setTourLogData(TourLog tourLog){
         this.tourLogId = tourLog.getId();
-        this.date.set(tourLog.getDateTime());
+        this.date.set(tourLog.getDateTime().toLocalDate());
         this.comment.set(tourLog.getComment());
         this.difficulty.set(tourLog.getDifficulty());
         this.duration.set(tourLog.getTotalTime());
@@ -54,7 +56,7 @@ public class NewTourLogViewModel {
         this.rating.set(0);
     }
     public void saveTourLog() throws IOException {
-        TourLog tourLog = new TourLog(tourLogId!=null ? tourLogId : UUID.randomUUID(), date.get(),comment.get(),difficulty.get(), duration.get(),Integer.valueOf(rating.get()),tour);
+        TourLog tourLog = new TourLog(tourLogId!=null ? tourLogId : UUID.randomUUID(), LocalDateTime.of(date.get(), LocalTime.now()),comment.get(),difficulty.get(), duration.get(),Integer.valueOf(rating.get()),tour);
         service.createOrUpdateTourLog(tourLog);
     }
 }

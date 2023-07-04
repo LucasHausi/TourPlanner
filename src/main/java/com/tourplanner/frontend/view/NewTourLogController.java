@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.Setter;
+import org.springframework.data.mapping.model.Property;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -48,7 +49,7 @@ public class NewTourLogController implements Initializable {
                 .collect(Collectors.toCollection(FXCollections::observableArrayList)));
 
         //Property binding
-        //dateInput.valueProperty().bindBidirectional(newTourLogViewModel.getDate());
+        dateInput.valueProperty().bindBidirectional(newTourLogViewModel.getDate());
         commentInput.textProperty().bindBidirectional(newTourLogViewModel.getComment());
         difficultyChoiceBox.valueProperty().bindBidirectional(newTourLogViewModel.getDifficulty());
         durationInput.textProperty().bindBidirectional(newTourLogViewModel.getDuration());
