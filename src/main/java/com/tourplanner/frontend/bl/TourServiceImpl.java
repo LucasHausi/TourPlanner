@@ -132,15 +132,15 @@ public class TourServiceImpl implements TourService {
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
         document.add(new Paragraph("Summary of all Tours from " + LocalDate.now()).setFontSize(18).setBold());
-
+        document.add(new Paragraph("\n"));
         float [] pointColumnWidths = {200F, 200F, 200F, 200F};
         List<Tour> tours = getAllTours();
         Table tourValueTable = new Table(pointColumnWidths);
 
-        tourValueTable.addCell("Tour");
-        tourValueTable.addCell("average time");
-        tourValueTable.addCell("average distance");
-        tourValueTable.addCell("average rating");
+        tourValueTable.addHeaderCell("Tour");
+        tourValueTable.addHeaderCell("Average time");
+        tourValueTable.addHeaderCell("Distance");
+        tourValueTable.addHeaderCell("Average rating");
 
         for(Tour tour : tours){
             List<Integer> ratings =  tour.getTourLogList().stream().map(TourLog::getRating).toList();

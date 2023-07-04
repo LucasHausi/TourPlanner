@@ -10,7 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import lombok.Setter;
-import org.springframework.data.mapping.model.Property;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -32,6 +31,16 @@ public class NewTourLogController implements Initializable {
     public TextField durationInput;
     @FXML
     public Slider ratingSlider;
+    @FXML
+    public Button saveButton;
+    @FXML
+    Label errFormField;
+    @FXML
+    Label dateErrorLabel;
+    @FXML
+    Label difficultyErrorLabel;
+    @FXML
+    Label durationErrorLabel;
 
     private final NewTourLogViewModel newTourLogViewModel;
     @Setter
@@ -54,6 +63,15 @@ public class NewTourLogController implements Initializable {
         difficultyChoiceBox.valueProperty().bindBidirectional(newTourLogViewModel.getDifficulty());
         durationInput.textProperty().bindBidirectional(newTourLogViewModel.getDuration());
         ratingSlider.valueProperty().bindBidirectional(newTourLogViewModel.getRating());
+
+        //Binding for the error labels
+        errFormField.visibleProperty().bind(newTourLogViewModel.getFormValidity().not());
+        dateErrorLabel.visibleProperty().bind(newTourLogViewModel.getDateValidity().not());
+        difficultyErrorLabel.visibleProperty().bind(newTourLogViewModel.getDifficultyValidity().not());
+        durationErrorLabel.visibleProperty().bind(newTourLogViewModel.getDurationValidity().not());
+
+        //Binding for save button
+        saveButton.visibleProperty().bind(newTourLogViewModel.getFormValidity());
     }
 
     public void setTour(Tour tour) {
