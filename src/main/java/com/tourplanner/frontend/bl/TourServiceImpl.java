@@ -34,8 +34,8 @@ import java.util.stream.Collectors;
 public class TourServiceImpl implements TourService {
     @Getter
     private final TourApi tourApi;
-    private TourMapper tourMapper = new TourMapperImpl();
-    private static Logger logger;
+    private final TourMapper tourMapper = new TourMapperImpl();
+    private static final Logger logger;
     static {
         try {
             // you need to do something like below instaed of Logger.getLogger(....);
@@ -65,8 +65,8 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public List<Tour> getAllTours() throws IOException {
-        return tourApi.getAllTours().execute().body().stream()
-                .map(tourLogDTO -> tourMapper.fromDTO(tourLogDTO))
+        return Objects.requireNonNull(tourApi.getAllTours().execute().body()).stream()
+                .map(tourMapper::fromDTO)
                 .collect(Collectors.toList());
     }
 
@@ -150,13 +150,8 @@ public class TourServiceImpl implements TourService {
             }
             avgRating /= ratings.size();
 
-            List<String> times =  tour.getTourLogList().stream().map(TourLog::getTotalTime).toList();
-            Integer avgTime = 0;
-            for(String time : times){
-                var splitTime = time.split(":");
-                avgTime += Integer.valueOf(splitTime[0])*60 + Integer.valueOf(splitTime[1]);
-            }
-            avgTime/=times.size();
+            Integer avgTime = tour.getAverageTime();
+
 
             tourValueTable.addCell(tour.getName());
             tourValueTable.addCell(avgTime.toString());
