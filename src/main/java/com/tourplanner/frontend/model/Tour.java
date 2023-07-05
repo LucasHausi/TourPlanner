@@ -68,7 +68,7 @@ public class Tour implements Serializable {
     }
     public Integer getAverageTime(){
         List<String> times =  tourLogList.stream().map(TourLog::getTotalTime).toList();
-        Integer avgTime = 0;
+        int avgTime = 0;
         for(String time : times){
             var splitTime = time.split(":");
             avgTime += Integer.parseInt(splitTime[0])*60 + Integer.parseInt(splitTime[1]);

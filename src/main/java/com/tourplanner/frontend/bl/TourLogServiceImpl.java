@@ -2,10 +2,10 @@ package com.tourplanner.frontend.bl;
 
 import com.tourplanner.frontend.dal.TourLogApi;
 import com.tourplanner.frontend.mapper.TourLogMapper;
-import com.tourplanner.frontend.mapper.TourLogMapperImpl;
 import com.tourplanner.frontend.model.Tour;
 import com.tourplanner.frontend.model.TourLog;
 import lombok.Getter;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -20,8 +20,7 @@ public class TourLogServiceImpl implements TourLogService {
     @Getter
     private final TourLogApi tourLogApi;
 
-
-    private TourLogMapper tourLogMapper = new TourLogMapperImpl();;
+    private final TourLogMapper tourLogMapper = Mappers.getMapper(TourLogMapper.class);
 
     public TourLogServiceImpl(){
         Retrofit retrofit = new Retrofit.Builder()

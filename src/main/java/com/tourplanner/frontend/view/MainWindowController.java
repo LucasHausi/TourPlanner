@@ -212,6 +212,7 @@ public class MainWindowController implements Initializable, Subscriber {
         });
 
         Button tourMisc = (Button)toolBar.getItems().get(3);
+        tourMisc.setText("generate PDF");
         tourMisc.setOnAction(event -> {
             try {
                 final Stage dialog = new Stage();

@@ -9,12 +9,12 @@ import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.property.UnitValue;
 import com.tourplanner.frontend.dal.TourApi;
 import com.tourplanner.frontend.mapper.TourMapper;
-import com.tourplanner.frontend.mapper.TourMapperImpl;
 import com.tourplanner.frontend.model.Tour;
 import com.tourplanner.frontend.model.TourLog;
 import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 public class TourServiceImpl implements TourService {
     @Getter
     private final TourApi tourApi;
-    private final TourMapper tourMapper = new TourMapperImpl();
+    private final TourMapper tourMapper = Mappers.getMapper(TourMapper.class);
     private static final Logger logger;
     static {
         try {
