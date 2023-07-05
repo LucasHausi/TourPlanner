@@ -90,9 +90,9 @@ public class TourServiceImpl implements TourService {
         tourValueTable.addCell("To");
         tourValueTable.addCell(tour.getDestination());
         tourValueTable.addCell("Estimated time");
-        tourValueTable.addCell(tour.getEstimatedTime());
+        tourValueTable.addCell(tour.getEstimatedTime() + " minutes");
         tourValueTable.addCell("Distance");
-        tourValueTable.addCell(String.valueOf(tour.getDistance()));
+        tourValueTable.addCell(String.valueOf(tour.getDistance()) + " km");
         tourValueTable.addCell("Transport Type");
         tourValueTable.addCell(tour.getTransportType().toString());
         document.add(tourValueTable);
@@ -106,16 +106,18 @@ public class TourServiceImpl implements TourService {
         if(Objects.nonNull(tour.getTourLogList()) && !tour.getTourLogList().isEmpty()) {
             document.add(new Paragraph("Tour Logs").setFontSize(14).setBold());
             // Create tourLog table
-            Table tourLogTable = new Table(UnitValue.createPercentArray(3));
+            Table tourLogTable = new Table(UnitValue.createPercentArray(4));
 
             tourLogTable.addHeaderCell("Date");
             tourLogTable.addHeaderCell("Duration");
-            tourLogTable.addHeaderCell("Distance");
+            tourLogTable.addHeaderCell("Rating");
+            tourLogTable.addHeaderCell("Difficulty");
 
             for (TourLog tourLog : tour.getTourLogList()) {
                 tourLogTable.addCell(tourLog.getDate().toString());
-                tourLogTable.addCell(tourLog.getTotalTime());
+                tourLogTable.addCell(tourLog.getTotalTime() + " h");
                 tourLogTable.addCell(tourLog.getRating() + "");
+                tourLogTable.addCell(tourLog.getDifficulty().toString());
             }
             document.add(tourLogTable);
         }
@@ -154,8 +156,8 @@ public class TourServiceImpl implements TourService {
 
 
             tourValueTable.addCell(tour.getName());
-            tourValueTable.addCell(avgTime.toString());
-            tourValueTable.addCell(tour.getDistance()+"");
+            tourValueTable.addCell(avgTime.toString() + " minutes");
+            tourValueTable.addCell(tour.getDistance()+" km");
             tourValueTable.addCell(avgRating+"");
         }
         document.add(tourValueTable);
