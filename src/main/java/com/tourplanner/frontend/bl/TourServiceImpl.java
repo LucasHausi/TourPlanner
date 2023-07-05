@@ -113,7 +113,7 @@ public class TourServiceImpl implements TourService {
             tourLogTable.addHeaderCell("Distance");
 
             for (TourLog tourLog : tour.getTourLogList()) {
-                tourLogTable.addCell("gibts nu ned");//tourLog.getDateTime().toLocalDate().toString());
+                tourLogTable.addCell(tourLog.getDate().toString());
                 tourLogTable.addCell(tourLog.getTotalTime());
                 tourLogTable.addCell(tourLog.getRating() + "");
             }
