@@ -44,14 +44,14 @@ public class TourLogServiceImpl implements TourLogService {
     @Override
     public List<TourLog> getAllTours() throws IOException {
         return tourLogApi.getAllTourLogs().execute().body().stream()
-                .map(tourLogDTO -> tourLogMapper.fromDTO(tourLogDTO))
+                .map(tourLogMapper::fromDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<TourLog> getAllTourLogsOfTour(Tour tour) throws IOException {
         return tourLogApi.getTourLogs(tour.getId()).execute().body().stream()
-                .map(tourLogDTO -> tourLogMapper.fromDTO(tourLogDTO))
+                .map(tourLogMapper::fromDTO)
                 .collect(Collectors.toList());
     }
 }
