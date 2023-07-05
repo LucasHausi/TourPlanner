@@ -6,6 +6,8 @@ import com.tourplanner.frontend.dal.MapApi;
 
 import javafx.util.Pair;
 import okhttp3.ResponseBody;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -17,7 +19,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.UUID;
-
+@Service
 public class MapServiceImp implements MapService{
 
     private final MapApi service;
@@ -33,7 +35,7 @@ public class MapServiceImp implements MapService{
     @Override
     public void getMap(UUID id, String from, String to) throws IOException {
         Call<ResponseBody> responseBodyCall = service.fetchRoute("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4", from, to, "390,360");
-
+        //System.out.println(apiKey);
         responseBodyCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -52,6 +54,7 @@ public class MapServiceImp implements MapService{
     @Override
     public String[] getDistanceAndTime(String from, String to) throws IOException {
         Response<ResponseBody> response = service.getDistanceAndTime("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4",from,to, "k").execute();
+        //System.out.println(apiKey);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode resultObj = mapper.readTree(response.body().string());
         String[] destAndTime = new String[2];
