@@ -5,7 +5,7 @@ import com.tourplanner.shared.enums.Difficulty;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -21,8 +21,8 @@ public class TourLogEntity {
     @Column(name="id")
     private UUID id;
 
-    @Column(name="dateTime")
-    private LocalDateTime dateTime;
+    @Column(name="date")
+    private LocalDate date;
 
     @Column(name="comment")
     private String comment;

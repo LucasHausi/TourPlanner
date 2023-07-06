@@ -6,6 +6,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -26,7 +27,7 @@
    <children>
       <VBox prefHeight="357.0" prefWidth="579.0" GridPane.columnSpan="2" GridPane.rowSpan="2">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tourplanner - New Tour Log">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tourplanner - Tour Log">
                <font>
                   <Font size="18.0" />
                </font>
@@ -38,16 +39,6 @@
             </Label>
             <DatePicker fx:id="dateInput" />
             <Label fx:id="dateErrorLabel" text="Date must not lie in the future!" textFill="RED" visible="false" />
-            <Label text="Comment">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Label>
-            <TextField fx:id="commentInput">
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </TextField>
             <Label text="Difficulty">
                <VBox.margin>
                   <Insets top="5.0" />
@@ -58,7 +49,6 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </ChoiceBox>
-            <Label fx:id="difficultyErrorLabel" text="There must be a difficulty selected!" textFill="RED" visible="false" />
             <Label text="Duration">
                <VBox.margin>
                   <Insets top="5.0" />
@@ -69,13 +59,20 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
-            <Label fx:id="durationErrorLabel" text="Duration must fit the format hh:mm!" textFill="RED" visible="false" />
             <Label text="Rating">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </Label>
             <Slider fx:id="ratingSlider" blockIncrement="1.0" majorTickUnit="1.0" max="5.0" maxWidth="-Infinity" min="1.0" minWidth="-Infinity" minorTickCount="0" prefHeight="33.0" prefWidth="333.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
+            <Label text="Comment">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextArea fx:id="comment" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
+            <Label fx:id="difficultyErrorLabel" text="There must be a difficulty selected!" textFill="RED" visible="false" />
+            <Label fx:id="durationErrorLabel" text="Duration must fit the format hh:mm!" textFill="RED" visible="false" />
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveTourLog" text="save">
                <opaqueInsets>
                   <Insets top="1000.0" />

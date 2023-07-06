@@ -6,7 +6,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="282.0" prefWidth="475.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tourplanner.frontend.view.TourLogCommentWindowController">
    <children>
       <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comment" wrappingWidth="215.4700584411621">
@@ -14,7 +13,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <TextArea fx:id="tourLogCommentField" editable="false" layoutX="14.0" layoutY="40.0" prefHeight="225.0" prefWidth="447.0" />
+      <TextArea fx:id="tourLogCommentField" editable="false" layoutX="14.0" layoutY="40.0" prefHeight="225.0" prefWidth="447.0" wrapText="true" />
       <Button layoutX="409.0" layoutY="6.0" mnemonicParsing="false" onAction="#closeCommentWindow" text="close" />
    </children>
 </AnchorPane>

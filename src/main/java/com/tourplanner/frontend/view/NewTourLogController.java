@@ -24,7 +24,7 @@ public class NewTourLogController implements Initializable {
     @FXML
     public DatePicker dateInput;
     @FXML
-    public TextField commentInput;
+    public TextArea comment;
     @FXML
     public ChoiceBox<Difficulty> difficultyChoiceBox;
     @FXML
@@ -59,7 +59,7 @@ public class NewTourLogController implements Initializable {
 
         //Property binding
         dateInput.valueProperty().bindBidirectional(newTourLogViewModel.getDate());
-        commentInput.textProperty().bindBidirectional(newTourLogViewModel.getComment());
+        comment.textProperty().bindBidirectional(newTourLogViewModel.getComment());
         difficultyChoiceBox.valueProperty().bindBidirectional(newTourLogViewModel.getDifficulty());
         durationInput.textProperty().bindBidirectional(newTourLogViewModel.getDuration());
         ratingSlider.valueProperty().bindBidirectional(newTourLogViewModel.getRating());

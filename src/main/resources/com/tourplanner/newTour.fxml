@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tourplanner.frontend.view.NewTourController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tourplanner.frontend.view.NewTourController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -42,16 +42,6 @@
          </VBox.margin>
       </TextField>
       <Label fx:id="nameErrLabel" text="The entered name is not valid!" textFill="RED" visible="false" />
-      <Label text="Description">
-         <VBox.margin>
-            <Insets top="5.0" />
-         </VBox.margin>
-      </Label>
-      <TextField fx:id="descriptionInput">
-         <VBox.margin>
-            <Insets top="5.0" />
-         </VBox.margin>
-      </TextField>
       <Label text="From">
          <VBox.margin>
             <Insets top="5.0" />
@@ -84,13 +74,19 @@
             <Insets top="5.0" />
          </VBox.margin>
       </ChoiceBox>
+      <Label text="Description">
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin>
+      </Label>
       <Label fx:id="transTypeErrLabel" text="You did not select a transport type" textFill="RED" visible="false" />
+      <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
       <Label text="Tour information">
          <VBox.margin>
             <Insets top="5.0" />
          </VBox.margin>
       </Label>
-      <TextArea fx:id="tourInfoInput" prefHeight="200.0" prefWidth="200.0">
+      <TextArea fx:id="tourInfoInput" prefHeight="200.0" prefWidth="200.0" wrapText="true">
          <VBox.margin>
             <Insets top="5.0" />
          </VBox.margin>

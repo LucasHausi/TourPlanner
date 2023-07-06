@@ -22,7 +22,7 @@ public class NewTourController implements Initializable {
     @FXML
     public TextField nameInput;
     @FXML
-    public TextField descriptionInput;
+    public TextArea description;
 
     @FXML
     public TextField fromInput;
@@ -61,7 +61,7 @@ public class NewTourController implements Initializable {
 
         //Property binding
         nameInput.textProperty().bindBidirectional(newTourViewModel.getName());
-        descriptionInput.textProperty().bindBidirectional(newTourViewModel.getDescription());
+        description.textProperty().bindBidirectional(newTourViewModel.getDescription());
         toInput.textProperty().bindBidirectional(newTourViewModel.getTo());
         fromInput.textProperty().bindBidirectional(newTourViewModel.getFrom());
         transportTypeInput.valueProperty().bindBidirectional(newTourViewModel.getTransportType());

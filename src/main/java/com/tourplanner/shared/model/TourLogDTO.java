@@ -12,7 +12,7 @@ import java.util.UUID;
 @Setter
 public class TourLogDTO {
     private UUID id;
-    private String dateTime;
+    private String date;
     private String comment;
     private Difficulty difficulty;
 

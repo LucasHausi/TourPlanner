@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = TourLogMapper.class)
 @Component
 public interface TourMapper {
     @Mapping(source = "tourLogList", target = "tourLogEntityList")

@@ -253,6 +253,7 @@ public class MainWindowController implements Initializable, Subscriber {
             }
         });
         Button tourLogModify = (Button)tourLogToolBar.getItems().get(3);
+        tourLogModify.setText("modify");
         tourLogModify.setOnAction(event -> {
             try {
                 modifyTourLog();
