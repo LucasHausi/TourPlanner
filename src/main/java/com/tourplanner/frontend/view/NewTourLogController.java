@@ -2,8 +2,8 @@ package com.tourplanner.frontend.view;
 
 import com.tourplanner.shared.enums.Difficulty;
 import com.tourplanner.frontend.viewmodel.NewTourLogViewModel;
-import com.tourplanner.frontend.model.Tour;
-import com.tourplanner.frontend.model.TourLog;
+import com.tourplanner.frontend.bl.model.Tour;
+import com.tourplanner.frontend.bl.model.TourLog;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

@@ -1,9 +1,9 @@
-package com.tourplanner.frontend.bl;
+package com.tourplanner.frontend.bl.service;
 
 import com.tourplanner.frontend.dal.TourLogApi;
-import com.tourplanner.frontend.mapper.TourLogMapper;
-import com.tourplanner.frontend.model.Tour;
-import com.tourplanner.frontend.model.TourLog;
+import com.tourplanner.frontend.bl.mapper.TourLogMapper;
+import com.tourplanner.frontend.bl.model.Tour;
+import com.tourplanner.frontend.bl.model.TourLog;
 import lombok.Getter;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;

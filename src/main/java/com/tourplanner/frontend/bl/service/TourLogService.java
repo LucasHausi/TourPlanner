@@ -1,7 +1,7 @@
-package com.tourplanner.frontend.bl;
+package com.tourplanner.frontend.bl.service;
 
-import com.tourplanner.frontend.model.Tour;
-import com.tourplanner.frontend.model.TourLog;
+import com.tourplanner.frontend.bl.model.Tour;
+import com.tourplanner.frontend.bl.model.TourLog;
 
 import java.io.IOException;
 import java.util.List;

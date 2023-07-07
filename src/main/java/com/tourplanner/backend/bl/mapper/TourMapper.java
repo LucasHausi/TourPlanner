@@ -1,4 +1,4 @@
-package com.tourplanner.backend.mapper;
+package com.tourplanner.backend.bl.mapper;
 
 import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.shared.model.TourDTO;

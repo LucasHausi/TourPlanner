@@ -1,6 +1,6 @@
-package com.tourplanner.frontend.mapper;
+package com.tourplanner.frontend.bl.mapper;
 
-import com.tourplanner.frontend.model.TourLog;
+import com.tourplanner.frontend.bl.model.TourLog;
 import com.tourplanner.shared.model.TourLogDTO;
 import org.mapstruct.Mapper;
 

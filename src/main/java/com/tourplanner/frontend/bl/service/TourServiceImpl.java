@@ -1,4 +1,4 @@
-package com.tourplanner.frontend.bl;
+package com.tourplanner.frontend.bl.service;
 
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -8,9 +8,9 @@ import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.property.UnitValue;
 import com.tourplanner.frontend.dal.TourApi;
-import com.tourplanner.frontend.mapper.TourMapper;
-import com.tourplanner.frontend.model.Tour;
-import com.tourplanner.frontend.model.TourLog;
+import com.tourplanner.frontend.bl.mapper.TourMapper;
+import com.tourplanner.frontend.bl.model.Tour;
+import com.tourplanner.frontend.bl.model.TourLog;
 import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -92,7 +92,7 @@ public class TourServiceImpl implements TourService {
         tourValueTable.addCell("Estimated time");
         tourValueTable.addCell(tour.getEstimatedTime() + " minutes");
         tourValueTable.addCell("Distance");
-        tourValueTable.addCell(String.valueOf(tour.getDistance()) + " km");
+        tourValueTable.addCell(tour.getDistance() + " km");
         tourValueTable.addCell("Transport Type");
         tourValueTable.addCell(tour.getTransportType().toString());
         document.add(tourValueTable);

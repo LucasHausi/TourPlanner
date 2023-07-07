@@ -1,11 +1,11 @@
 package com.tourplanner.frontend.viewmodel;
 
-import com.tourplanner.frontend.bl.ValidationService;
+import com.tourplanner.frontend.bl.service.ValidationService;
 import com.tourplanner.shared.enums.Difficulty;
-import com.tourplanner.frontend.bl.TourLogService;
-import com.tourplanner.frontend.bl.TourLogServiceImpl;
-import com.tourplanner.frontend.model.Tour;
-import com.tourplanner.frontend.model.TourLog;
+import com.tourplanner.frontend.bl.service.TourLogService;
+import com.tourplanner.frontend.bl.service.TourLogServiceImpl;
+import com.tourplanner.frontend.bl.model.Tour;
+import com.tourplanner.frontend.bl.model.TourLog;
 import javafx.beans.property.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,5 @@
-package com.tourplanner.frontend.bl;
+package com.tourplanner.frontend.bl.service;
 
-import javafx.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

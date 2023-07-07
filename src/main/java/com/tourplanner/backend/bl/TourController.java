@@ -1,9 +1,9 @@
-package com.tourplanner.backend.web;
+package com.tourplanner.backend.bl;
 import com.tourplanner.backend.dal.entity.TourEntity;
 import com.tourplanner.backend.dal.entity.TourLogEntity;
 import com.tourplanner.backend.dal.repository.TourLogRepository;
 import com.tourplanner.backend.dal.repository.TourRepository;
-import com.tourplanner.backend.mapper.TourMapper;
+import com.tourplanner.backend.bl.mapper.TourMapper;
 import com.tourplanner.shared.model.TourDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +23,7 @@ public class TourController {
     private final TourLogRepository tourLogRepository;
     private final TourMapper tourMapper;
 
-    private static Logger logger;
+    private static final Logger logger;
     static {
         try {
             // you need to do something like below instaed of Logger.getLogger(....);

@@ -1,7 +1,7 @@
 package com.tourplanner.frontend.viewmodel;
 
-import com.tourplanner.frontend.bl.TourService;
-import com.tourplanner.frontend.bl.TourServiceImpl;
+import com.tourplanner.frontend.bl.service.TourService;
+import com.tourplanner.frontend.bl.service.TourServiceImpl;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.Getter;

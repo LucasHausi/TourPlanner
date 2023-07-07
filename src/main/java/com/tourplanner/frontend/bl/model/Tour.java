@@ -1,4 +1,4 @@
-package com.tourplanner.frontend.model;
+package com.tourplanner.frontend.bl.model;
 
 import com.tourplanner.shared.enums.ChildFriendliness;
 import com.tourplanner.shared.enums.Difficulty;

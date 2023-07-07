@@ -1,10 +1,10 @@
 package com.tourplanner.frontend.view;
 
 
-import com.tourplanner.frontend.bl.MapServiceImp;
+import com.tourplanner.frontend.bl.service.MapServiceImpl;
 import com.tourplanner.frontend.bl.Publisher;
-import com.tourplanner.frontend.bl.TourLogServiceImpl;
-import com.tourplanner.frontend.bl.TourServiceImpl;
+import com.tourplanner.frontend.bl.service.TourLogServiceImpl;
+import com.tourplanner.frontend.bl.service.TourServiceImpl;
 import com.tourplanner.frontend.viewmodel.*;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -19,7 +19,7 @@ public class ControllerFactory {
     private final TourLogCommentWindowViewModel tourLogCommentWindowViewModel;
 
     public ControllerFactory(ConfigurableApplicationContext applicationContext){
-        newTourViewModel = new NewTourViewModel(new TourServiceImpl(), new MapServiceImp());
+        newTourViewModel = new NewTourViewModel(new TourServiceImpl(), new MapServiceImpl());
         newTourLogViewModel = new NewTourLogViewModel(new TourLogServiceImpl());
         mainWindowViewModel = new MainWindowViewModel();
         reusableCompViewModel = new ReusableCompViewModel();

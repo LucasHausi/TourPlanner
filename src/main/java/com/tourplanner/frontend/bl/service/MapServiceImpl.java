@@ -1,12 +1,11 @@
-package com.tourplanner.frontend.bl;
+package com.tourplanner.frontend.bl.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tourplanner.frontend.bl.Publisher;
 import com.tourplanner.frontend.dal.MapApi;
 
-import javafx.util.Pair;
 import okhttp3.ResponseBody;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -14,17 +13,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
-import java.io.BufferedWriter;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.UUID;
 @Service
-public class MapServiceImp implements MapService{
+public class MapServiceImpl implements MapService {
 
     private final MapApi service;
 
-    public MapServiceImp(){
+    public MapServiceImpl(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.mapquestapi.com")
                 .addConverterFactory(JacksonConverterFactory.create())
@@ -33,9 +30,8 @@ public class MapServiceImp implements MapService{
         service = retrofit.create(MapApi.class);
     }
     @Override
-    public void getMap(UUID id, String from, String to) throws IOException {
+    public void getMap(UUID id, String from, String to) {
         Call<ResponseBody> responseBodyCall = service.fetchRoute("yaHxV4XvjwMdBRxa1tkcXOs6dgaw3vg4", from, to, "390,360");
-        //System.out.println(apiKey);
         responseBodyCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -1,12 +1,12 @@
 package com.tourplanner.frontend.viewmodel;
 
-import com.tourplanner.frontend.bl.MapService;
-import com.tourplanner.frontend.bl.ValidationService;
+import com.tourplanner.frontend.bl.service.MapService;
+import com.tourplanner.frontend.bl.service.ValidationService;
 import com.tourplanner.shared.enums.TransportType;
-import com.tourplanner.frontend.bl.TourService;
-import com.tourplanner.frontend.bl.TourServiceImpl;
+import com.tourplanner.frontend.bl.service.TourService;
+import com.tourplanner.frontend.bl.service.TourServiceImpl;
 
-import com.tourplanner.frontend.model.Tour;
+import com.tourplanner.frontend.bl.model.Tour;
 import javafx.beans.property.*;
 import lombok.Getter;
 import org.springframework.stereotype.Component;

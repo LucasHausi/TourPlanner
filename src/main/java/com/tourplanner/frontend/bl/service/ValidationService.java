@@ -1,4 +1,4 @@
-package com.tourplanner.frontend.bl;
+package com.tourplanner.frontend.bl.service;
 
 import com.tourplanner.shared.enums.Difficulty;
 import com.tourplanner.shared.enums.TransportType;
