@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TourService {
-     void createOrUpdate(Tour tour) throws IOException;
+     UUID createOrUpdate(Tour tour) throws IOException;
 
      void deleteTour(UUID id) throws IOException;
      List<Tour> getAllTours() throws IOException;
