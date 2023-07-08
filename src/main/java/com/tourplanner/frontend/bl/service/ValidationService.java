@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class ValidationService {
     private static final String NAME_REGEX = "^[A-Za-zß\\s0-9]+$";
-    private static final String DESTINATION_REGEX = "^[A-Za-z\\s0-9ß]+$";
+    private static final String DESTINATION_REGEX = "^[A-Za-z\\s0-9ßüöä\\/]+$";
     private static final String TIME_REGEX = "^[0-9]*:[0-59]{2}$";
 
     public static boolean isValidName(String name) {
