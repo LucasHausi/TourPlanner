@@ -11,8 +11,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TourTest {
-
-
     @Test
     void testGetPopularityUnpopular() {
         Tour tour = getEmptyTourWithTourLogs(2);
@@ -133,7 +131,21 @@ class TourTest {
         assertThat(tour.getAverageTime()).isEqualTo(0);
     }
 
-    Tour getEmptyTourWithTourLogs(Integer numberOfTourLogs){
+    @Test
+    void testGetAverageRating_WithTourLogs() {
+        Tour tour = getEmptyTourWithTourLogs(2);
+        tour.getTourLogList().get(0).setRating(1);
+        tour.getTourLogList().get(1).setRating(2);
+        assertThat(tour.getAverageRating()).isEqualTo(1.5);
+    }
+
+    @Test
+    void testGetAverageRating_WithoutTourLogs() {
+        Tour tour = getEmptyTourWithTourLogs(0);
+        assertThat(tour.getAverageRating()).isEqualTo(0);
+    }
+
+    private Tour getEmptyTourWithTourLogs(Integer numberOfTourLogs){
         Tour tour = new Tour();
         List<TourLog> tourLogList = new ArrayList<>();
         for (int i=0; i<numberOfTourLogs; i++){
@@ -143,7 +155,7 @@ class TourTest {
         return tour;
     }
 
-    Tour getEmptyTourWithTourLog(){
+    private Tour getEmptyTourWithTourLog(){
         return getEmptyTourWithTourLogs(1);
     }
 }

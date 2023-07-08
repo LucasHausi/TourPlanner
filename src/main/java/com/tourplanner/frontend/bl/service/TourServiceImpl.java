@@ -78,7 +78,9 @@ public class TourServiceImpl implements TourService {
             Files.createDirectories(Paths.get("reports/"));
             logger.info("Created path to save reports");
         }
+
         Tour tour = tourMapper.fromDTO(tourApi.getTour(id).execute().body());
+
         Files.createDirectories(Paths.get("reports/"));
         String filename;
         if(Objects.nonNull(pdfName) && !pdfName.isEmpty()){
@@ -88,6 +90,7 @@ public class TourServiceImpl implements TourService {
             filename = "reports/"+tour.getName()+"_report_"+Instant.now().getNano()+".pdf";
 
         }
+
         PdfWriter writer = new PdfWriter(filename);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
@@ -156,10 +159,12 @@ public class TourServiceImpl implements TourService {
         else {
             writer = new PdfWriter("reports/summary_"+ Instant.now().getNano()+".pdf");
         }
+
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
         document.add(new Paragraph("Summary of all Tours from " + LocalDate.now()).setFontSize(18).setBold());
         document.add(new Paragraph("\n"));
+
         float [] pointColumnWidths = {200F, 200F, 200F, 200F};
         List<Tour> tours = getAllTours();
         Table tourValueTable = new Table(pointColumnWidths);
@@ -170,20 +175,10 @@ public class TourServiceImpl implements TourService {
         tourValueTable.addHeaderCell("Average rating");
 
         for(Tour tour : tours){
-            List<Integer> ratings =  tour.getTourLogList().stream().map(TourLog::getRating).toList();
-            Double avgRating = 0.0;
-            for(Integer rating : ratings){
-                avgRating += rating;
-            }
-            avgRating /= ratings.size();
-
-            Integer avgTime = tour.getAverageTime();
-
-
             tourValueTable.addCell(tour.getName());
-            tourValueTable.addCell(avgTime.toString() + " minutes");
+            tourValueTable.addCell(tour.getAverageTime().toString() + " minutes");
             tourValueTable.addCell(tour.getDistance()+" km");
-            tourValueTable.addCell(avgRating+"");
+            tourValueTable.addCell(tour.getAverageRating().toString());
         }
         document.add(tourValueTable);
         document.close();

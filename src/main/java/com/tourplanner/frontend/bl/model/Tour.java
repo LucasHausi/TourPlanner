@@ -26,7 +26,7 @@ public class Tour implements Serializable {
     private double distance;
     private String estimatedTime;
     private List<TourLog> tourLogList;
-    private String routeInformation;//ToDO soll irgendwie eine Map oder ein Bild einer Map oder so sein
+    private String routeInformation;
 
     public Popularity getPopularity(){
        if(tourLogList.size()<3){
@@ -79,6 +79,16 @@ public class Tour implements Serializable {
         }
         return avgTime;
     }
+
+    public Double getAverageRating(){
+        List<Integer> ratings =  this.getTourLogList().stream().map(TourLog::getRating).toList();
+        Double ratingSum = 0.0;
+        for(Integer rating : ratings){
+            ratingSum += rating;
+        }
+        return ratings.size() != 0 ? ratingSum / ratings.size() : 0;
+    }
+
     @Override
     public String toString() {
         return name;
