@@ -13,5 +13,5 @@ public interface TourService {
      List<Tour> getAllTours() throws IOException;
     void printTourPdf(UUID id, String pdfName) throws IOException;
 
-    void printSummaryPdf() throws IOException;
+    void printSummaryPdf(String pdfName) throws IOException;
 }

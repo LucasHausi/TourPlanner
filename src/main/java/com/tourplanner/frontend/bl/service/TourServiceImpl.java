@@ -73,9 +73,22 @@ public class TourServiceImpl implements TourService {
     @Override
     public void printTourPdf(UUID id, String pdfName) throws IOException {
         logger.info("printing TourReport pdf for Tour: " + id);
+        if(!Files.exists(Paths.get("reports/"))){
+            logger.warn("Path for report saving not found!");
+            Files.createDirectories(Paths.get("reports/"));
+            logger.info("Created path to save reports");
+        }
         Tour tour = tourMapper.fromDTO(tourApi.getTour(id).execute().body());
         Files.createDirectories(Paths.get("reports/"));
-        PdfWriter writer = new PdfWriter("reports/"+(pdfName.endsWith(".pdf") ? pdfName : pdfName + ".pdf"));
+        String filename;
+        if(Objects.nonNull(pdfName) && !pdfName.isEmpty()){
+            filename = "reports/"+(pdfName.endsWith(".pdf") ? pdfName : pdfName + ".pdf");
+        }
+        else {
+            filename = "reports/"+tour.getName()+"_report_"+Instant.now().getNano()+".pdf";
+
+        }
+        PdfWriter writer = new PdfWriter(filename);
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
         document.add(new Paragraph("Tour Report for \""+tour.getName()+"\"").setFontSize(24).setBold());
@@ -128,9 +141,21 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public void printSummaryPdf() throws IOException {
-        Files.createDirectories(Paths.get("reports/"));
-        PdfWriter writer = new PdfWriter("reports/Summary"+ Instant.now().getNano()+".pdf");
+    public void printSummaryPdf(String pdfName) throws IOException {
+        logger.info("Printing summary report of all Tours!");
+        if(!Files.exists(Paths.get("reports/"))){
+            logger.warn("Path for report saving not found!");
+            Files.createDirectories(Paths.get("reports/"));
+            logger.info("Created path to save reports");
+        }
+
+        PdfWriter writer;
+        if(Objects.nonNull(pdfName) && !pdfName.isEmpty()){
+            writer = new PdfWriter("reports/"+(pdfName.endsWith(".pdf") ? pdfName : pdfName + ".pdf"));
+        }
+        else {
+            writer = new PdfWriter("reports/summary_"+ Instant.now().getNano()+".pdf");
+        }
         PdfDocument pdf = new PdfDocument(writer);
         Document document = new Document(pdf);
         document.add(new Paragraph("Summary of all Tours from " + LocalDate.now()).setFontSize(18).setBold());

@@ -133,6 +133,7 @@ public class MainWindowController implements Initializable, Subscriber {
         //load older tours from the DB
         try {
             listView.setItems(mainWindowViewModel.getTourList());
+            listView.getSelectionModel().select(0);
             listView.setOnMouseClicked(event -> {
                 Tour selectedTour = listView.getSelectionModel().getSelectedItem();
                 mainWindowViewModel.updateEditInfos(selectedTour);

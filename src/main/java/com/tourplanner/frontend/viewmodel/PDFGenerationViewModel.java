@@ -25,6 +25,6 @@ public class PDFGenerationViewModel {
     }
 
     public void printSummaryPdf() throws IOException {
-        tourService.printSummaryPdf();
+        tourService.printSummaryPdf(pdfName.get());
     }
 }
