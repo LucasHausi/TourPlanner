@@ -118,6 +118,21 @@ class TourTest {
         tourLog.setDifficulty(Difficulty.EASY);
         assertThat(tour.getChildFriendliness()).isEqualTo(ChildFriendliness.VERY_FRIENDLY);
     }
+
+    @Test
+    void testGetAverageTime_WithTourLogs() {
+        Tour tour = getEmptyTourWithTourLogs(2);
+        tour.getTourLogList().get(0).setTotalTime("02:00");
+        tour.getTourLogList().get(1).setTotalTime("01:00");
+        assertThat(tour.getAverageTime()).isEqualTo(90);
+    }
+
+    @Test
+    void testGetAverageTime_WithoutTourLogs() {
+        Tour tour = getEmptyTourWithTourLogs(0);
+        assertThat(tour.getAverageTime()).isEqualTo(0);
+    }
+
     Tour getEmptyTourWithTourLogs(Integer numberOfTourLogs){
         Tour tour = new Tour();
         List<TourLog> tourLogList = new ArrayList<>();
