@@ -146,54 +146,56 @@ public class MainWindowController implements Initializable, Subscriber {
             listView.setItems(mainWindowViewModel.getTourList());
             listView.setOnMouseClicked(event -> {
                 Tour selectedTour = listView.getSelectionModel().getSelectedItem();
-                mainWindowViewModel.updateEditInfos(selectedTour);
-                this.updateTourInfos(selectedTour);
-                try {
-                    dateColumn.setCellValueFactory(
-                            new PropertyValueFactory<>("date"));
-                    durationColumn.setCellValueFactory(
-                            new PropertyValueFactory<>("totalTime"));
-                    ratingColumn.setCellValueFactory(
-                            new PropertyValueFactory<>("rating"));
-                    difficultyColumn.setCellValueFactory(
-                            new PropertyValueFactory<>("difficulty"));
-                    tourLogTable.setItems(mainWindowViewModel.getTourLogList(listView.getSelectionModel().getSelectedItem()));
-                    tourLogTable.setOnMouseClicked(tableClickEvent -> {
-                        if(tableClickEvent.getClickCount() == 2) {
-                            final Stage dialog = new Stage();
-
-                            FXMLLoader loader =  FXMLDependencyInjection.getLoader("tourLogCommentWindow.fxml", Locale.ENGLISH, null);
-                            Parent root  = null;
-                            try {
-                                root = loader.load();
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            loader.<TourLogCommentWindowController>getController().setTourLogCommentWindowStage(dialog);
-                            loader.<TourLogCommentWindowController>getController().setTourLogComment(tourLogTable.getSelectionModel().getSelectedItem().getComment());
-                            Scene dialogScene = new Scene(root);
-                            dialog.initModality(Modality.APPLICATION_MODAL);
-                            dialog.initOwner(primaryStage);
-                            dialog.setTitle("TourLog Comment Display");
-                            dialog.setScene(dialogScene);
-                            dialog.showAndWait();
-                        }
-                    });
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-                //Try to set the image first maybe it is in the cache
-                try {
-                    routeImage.setImage(new Image("images/Route"+selectedTour.getId()+".png"));
-                }
-                //If not found, load the image
-                catch (IllegalArgumentException ex2){
+                if (selectedTour != null) {
+                    mainWindowViewModel.updateEditInfos(selectedTour);
+                    this.updateTourInfos(selectedTour);
                     try {
-                        mainWindowViewModel.fetchRouteImage(selectedTour.getId(),toField.getText(), fromField.getText());
+                        dateColumn.setCellValueFactory(
+                                new PropertyValueFactory<>("date"));
+                        durationColumn.setCellValueFactory(
+                                new PropertyValueFactory<>("totalTime"));
+                        ratingColumn.setCellValueFactory(
+                                new PropertyValueFactory<>("rating"));
+                        difficultyColumn.setCellValueFactory(
+                                new PropertyValueFactory<>("difficulty"));
+                        tourLogTable.setItems(mainWindowViewModel.getTourLogList(listView.getSelectionModel().getSelectedItem()));
+                        tourLogTable.setOnMouseClicked(tableClickEvent -> {
+                            if (tableClickEvent.getClickCount() == 2) {
+                                final Stage dialog = new Stage();
+
+                                FXMLLoader loader = FXMLDependencyInjection.getLoader("tourLogCommentWindow.fxml", Locale.ENGLISH, null);
+                                Parent root = null;
+                                try {
+                                    root = loader.load();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                loader.<TourLogCommentWindowController>getController().setTourLogCommentWindowStage(dialog);
+                                loader.<TourLogCommentWindowController>getController().setTourLogComment(tourLogTable.getSelectionModel().getSelectedItem().getComment());
+                                Scene dialogScene = new Scene(root);
+                                dialog.initModality(Modality.APPLICATION_MODAL);
+                                dialog.initOwner(primaryStage);
+                                dialog.setTitle("TourLog Comment Display");
+                                dialog.setScene(dialogScene);
+                                dialog.showAndWait();
+                            }
+                        });
                     } catch (IOException e) {
-                        //fetching image failed
-                        System.err.println("Error when loading image");
+                        throw new RuntimeException(e);
+                    }
+
+                    //Try to set the image first maybe it is in the cache
+                    try {
+                        routeImage.setImage(new Image("images/Route" + selectedTour.getId() + ".png"));
+                    }
+                    //If not found, load the image
+                    catch (IllegalArgumentException ex2) {
+                        try {
+                            mainWindowViewModel.fetchRouteImage(selectedTour.getId(), toField.getText(), fromField.getText());
+                        } catch (IOException e) {
+                            //fetching image failed
+                            System.err.println("Error when loading image");
+                        }
                     }
                 }
             });
@@ -203,9 +205,9 @@ public class MainWindowController implements Initializable, Subscriber {
         }
 
         ToolBar toolBar = (ToolBar) tourComp.getChildren().get(0);
-        Text text = (Text)toolBar.getItems().get(0);
+        Text text = (Text) toolBar.getItems().get(0);
         text.setText("Tours");
-        Button tourAdd = (Button)toolBar.getItems().get(1);
+        Button tourAdd = (Button) toolBar.getItems().get(1);
         tourAdd.setOnAction(event -> {
             try {
                 addItem();
@@ -213,7 +215,7 @@ public class MainWindowController implements Initializable, Subscriber {
                 throw new RuntimeException(e);
             }
         });
-        Button tourDelete = (Button)toolBar.getItems().get(2);
+        Button tourDelete = (Button) toolBar.getItems().get(2);
         tourDelete.setOnAction(event -> {
             try {
                 deleteTour();
@@ -222,14 +224,14 @@ public class MainWindowController implements Initializable, Subscriber {
             }
         });
 
-        Button tourMisc = (Button)toolBar.getItems().get(3);
+        Button tourMisc = (Button) toolBar.getItems().get(3);
         tourMisc.setText("generate PDF");
         tourMisc.setOnAction(event -> {
             try {
                 final Stage dialog = new Stage();
 
-                FXMLLoader loader =  FXMLDependencyInjection.getLoader("pdfGenerationDialog.fxml", Locale.ENGLISH, null);
-                Parent root  = loader.load();
+                FXMLLoader loader = FXMLDependencyInjection.getLoader("pdfGenerationDialog.fxml", Locale.ENGLISH, null);
+                Parent root = loader.load();
                 Scene dialogScene = new Scene(root);
                 dialog.initModality(Modality.APPLICATION_MODAL);
                 dialog.initOwner(primaryStage);
@@ -244,9 +246,9 @@ public class MainWindowController implements Initializable, Subscriber {
         });
 
         ToolBar tourLogToolBar = (ToolBar) tourLogComp.getChildren().get(0);
-        Text tourLogText = (Text)tourLogToolBar.getItems().get(0);
+        Text tourLogText = (Text) tourLogToolBar.getItems().get(0);
         tourLogText.setText("TourLogs");
-        Button tourLogAdd = (Button)tourLogToolBar.getItems().get(1);
+        Button tourLogAdd = (Button) tourLogToolBar.getItems().get(1);
         tourLogAdd.setOnAction(event -> {
             try {
                 addTourLog();
@@ -255,7 +257,7 @@ public class MainWindowController implements Initializable, Subscriber {
             }
         });
 
-        Button tourLogDelete = (Button)tourLogToolBar.getItems().get(2);
+        Button tourLogDelete = (Button) tourLogToolBar.getItems().get(2);
         tourLogDelete.setOnAction(event -> {
             try {
                 deleteTourLog();
@@ -263,7 +265,7 @@ public class MainWindowController implements Initializable, Subscriber {
                 throw new RuntimeException(e);
             }
         });
-        Button tourLogModify = (Button)tourLogToolBar.getItems().get(3);
+        Button tourLogModify = (Button) tourLogToolBar.getItems().get(3);
         tourLogModify.setText("modify");
         tourLogModify.setOnAction(event -> {
             try {
@@ -289,8 +291,8 @@ public class MainWindowController implements Initializable, Subscriber {
     public void addItem() throws IOException {
         final Stage dialog = new Stage();
 
-        FXMLLoader loader =  FXMLDependencyInjection.getLoader("newTour.fxml", Locale.ENGLISH, null);
-        Parent root  = loader.load();
+        FXMLLoader loader = FXMLDependencyInjection.getLoader("newTour.fxml", Locale.ENGLISH, null);
+        Parent root = loader.load();
         Scene dialogScene = new Scene(root);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
@@ -305,8 +307,8 @@ public class MainWindowController implements Initializable, Subscriber {
     public void addTourLog() throws IOException {
         final Stage dialog = new Stage();
 
-        FXMLLoader loader =  FXMLDependencyInjection.getLoader("newTourLog.fxml", Locale.ENGLISH, null);
-        Parent root  = loader.load();
+        FXMLLoader loader = FXMLDependencyInjection.getLoader("newTourLog.fxml", Locale.ENGLISH, null);
+        Parent root = loader.load();
         Scene dialogScene = new Scene(root);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
@@ -320,7 +322,10 @@ public class MainWindowController implements Initializable, Subscriber {
     }
 
     public void deleteTour() throws IOException {
-        mainWindowViewModel.deleteTour(listView.getSelectionModel().getSelectedItem().getId());
+        Tour tour = listView.getSelectionModel().getSelectedItem();
+        if(tour!=null){
+            mainWindowViewModel.deleteTour(tour.getId());
+        }
         listView.setItems(mainWindowViewModel.getTourList());
     }
 
@@ -333,8 +338,8 @@ public class MainWindowController implements Initializable, Subscriber {
     public void modifyTourLog() throws IOException {
         final Stage dialog = new Stage();
 
-        FXMLLoader loader =  FXMLDependencyInjection.getLoader("newTourLog.fxml", Locale.ENGLISH, null);
-        Parent root  = loader.load();
+        FXMLLoader loader = FXMLDependencyInjection.getLoader("newTourLog.fxml", Locale.ENGLISH, null);
+        Parent root = loader.load();
         Scene dialogScene = new Scene(root);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(primaryStage);
@@ -364,16 +369,16 @@ public class MainWindowController implements Initializable, Subscriber {
         this.primaryStage = primaryStage;
     }
 
-    public void updateTourInfos(Tour t){
+    public void updateTourInfos(Tour t) {
         mainWindowViewModel.updateTourInfos(t);
     }
 
     @Override
     public void update(UUID id) {
         Tour selectedTour = listView.getSelectionModel().getSelectedItem();
-        if(selectedTour!=null){
-            if(selectedTour.getId().equals(id)){
-                routeImage.setImage(new Image(System.getProperty("user.dir")+"/images/Route"+id+".png"));
+        if (selectedTour != null) {
+            if (selectedTour.getId().equals(id)) {
+                routeImage.setImage(new Image(System.getProperty("user.dir") + "/images/Route" + id + ".png"));
             }
         }
     }
@@ -382,6 +387,7 @@ public class MainWindowController implements Initializable, Subscriber {
         mainWindowViewModel.importFile();
         listView.setItems(mainWindowViewModel.getTourList());
     }
+
     public void exportFile() throws IOException {
         mainWindowViewModel.exportFile(this.listView.getSelectionModel().getSelectedItem());
     }
