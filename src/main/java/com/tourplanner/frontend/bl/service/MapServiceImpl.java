@@ -6,6 +6,10 @@ import com.tourplanner.frontend.bl.Publisher;
 import com.tourplanner.frontend.dal.MapApi;
 
 import okhttp3.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,10 +21,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 @Service
+@Configuration
+@PropertySource("classpath:application.properties")
 public class MapServiceImpl implements MapService {
 
     private final MapApi service;
 
+    @Value("${apiKey}")
+    private String apiKey;
+    @Autowired
     public MapServiceImpl(){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://www.mapquestapi.com")

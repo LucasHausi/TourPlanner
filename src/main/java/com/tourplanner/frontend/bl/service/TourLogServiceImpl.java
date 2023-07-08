@@ -50,7 +50,8 @@ public class TourLogServiceImpl implements TourLogService {
 
     @Override
     public List<TourLog> getAllTourLogsOfTour(Tour tour) throws IOException {
-        return tourLogApi.getTourLogs(tour.getId()).execute().body().stream()
+        return tourLogApi.getTourLogs(
+                tour.getId()).execute().body().stream()
                 .map(tourLogMapper::fromDTO)
                 .collect(Collectors.toList());
     }
