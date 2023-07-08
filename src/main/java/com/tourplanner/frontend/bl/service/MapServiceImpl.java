@@ -44,7 +44,7 @@ public class MapServiceImpl implements MapService {
         responseBodyCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                storeResponseInFile(response,id, from,to);
+                storeResponseInFile(response,id);
             }
 
             @Override
@@ -74,10 +74,10 @@ public class MapServiceImpl implements MapService {
         return destAndTime;
     }
 
-    private static void storeResponseInFile(Response<ResponseBody> response,UUID id, String from, String to) {
+    private static void storeResponseInFile(Response<ResponseBody> response,UUID id) {
         try (ResponseBody body = response.body()) {
             byte[] bytes = body.bytes();
-            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir").toString()+"/images/Route"+id+".png");
+            FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"/images/Route"+id+".png");
             fos.write(bytes);
             fos.close();
             Publisher.notifySubscribers(id);

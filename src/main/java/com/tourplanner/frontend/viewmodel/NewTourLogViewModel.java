@@ -26,9 +26,7 @@ public class NewTourLogViewModel {
     private final ObjectProperty<Difficulty> difficulty = new SimpleObjectProperty<>();
     private final StringProperty duration = new SimpleStringProperty();
     private final IntegerProperty rating = new SimpleIntegerProperty();
-
     private final SimpleBooleanProperty formValidity = new SimpleBooleanProperty(false);
-
     private final SimpleBooleanProperty dateValidity = new SimpleBooleanProperty(false);
     private final SimpleBooleanProperty durationValidity = new SimpleBooleanProperty(false);
     private final SimpleBooleanProperty difficultyValidity = new SimpleBooleanProperty(false);
@@ -62,6 +60,7 @@ public class NewTourLogViewModel {
         this.duration.set(null);
         this.rating.set(0);
     }
+
     public void saveTourLog() throws IOException {
         TourLog tourLog = new TourLog(tourLogId!=null ? tourLogId : UUID.randomUUID(), date.get(),comment.get(),difficulty.get(), duration.get(), rating.get() != 0 ? rating.get() : 1,tour);
         service.createOrUpdateTourLog(tourLog);

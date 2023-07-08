@@ -77,9 +77,20 @@ public class NewTourController implements Initializable {
         saveButton.visibleProperty().bind(newTourViewModel.getFormValidity());
 
     }
+
     public void saveTour() throws IOException{
         newTourViewModel.saveTour();
+        clearInputFields();
         //close dialog
         newTourDialogStage.close();
+    }
+
+    public void clearInputFields(){
+        nameInput.clear();
+        description.clear();
+        toInput.clear();
+        fromInput.clear();
+        transportTypeInput.setValue(null);
+        tourInfoInput.clear();
     }
 }

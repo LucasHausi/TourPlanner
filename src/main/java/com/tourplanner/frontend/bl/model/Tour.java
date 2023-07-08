@@ -28,6 +28,11 @@ public class Tour implements Serializable {
     private List<TourLog> tourLogList;
     private String routeInformation;
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     public Popularity getPopularity(){
        if(tourLogList.size()<3){
            return Popularity.UNPOPULAR;
@@ -67,6 +72,7 @@ public class Tour implements Serializable {
             return ChildFriendliness.FRIENDLY;
         }
     }
+
     public Integer getAverageTime(){
         List<String> times =  tourLogList.stream().map(TourLog::getTotalTime).toList();
         int avgTime = 0;
@@ -87,11 +93,6 @@ public class Tour implements Serializable {
             ratingSum += rating;
         }
         return ratings.size() != 0 ? ratingSum / ratings.size() : 0;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     public boolean fulltextSearch(String searchString) {

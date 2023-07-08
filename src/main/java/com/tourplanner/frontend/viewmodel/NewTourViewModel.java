@@ -22,7 +22,6 @@ public class NewTourViewModel {
 
     private final TourService tourService;
     private final MapService mapService;
-
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty description = new SimpleStringProperty();
     private final  StringProperty from = new SimpleStringProperty();
@@ -35,7 +34,6 @@ public class NewTourViewModel {
     private final  BooleanProperty endDestinationErrorVisible = new SimpleBooleanProperty(false);
     private final  BooleanProperty formValidity= new SimpleBooleanProperty(false);
     private final BooleanProperty transportTypeErrorVisible = new SimpleBooleanProperty(true);
-
 
     public NewTourViewModel(TourServiceImpl tourService, MapService mapService){
         this.tourService = tourService;
@@ -51,6 +49,7 @@ public class NewTourViewModel {
         nameErrorVisible.set(!isValid);
         upDateFormValidity();
     }
+
     private void validateTransType(TransportType transportType){
         boolean isValid = ValidationService.isValidTransType(transportType);
         transportTypeErrorVisible.set(!isValid);
@@ -62,6 +61,7 @@ public class NewTourViewModel {
         startDestinationErrorVisible.set(!isValid);
         upDateFormValidity();
     }
+
     private void validateTODestination(String city) {
         boolean isValid = ValidationService.isValidDestination(city);
         endDestinationErrorVisible.set(!isValid);
@@ -71,6 +71,7 @@ public class NewTourViewModel {
     private void upDateFormValidity(){
         formValidity.set(!nameErrorVisible.get() && !startDestinationErrorVisible.get() && !endDestinationErrorVisible.get()&& !transportTypeErrorVisible.get());
     }
+
     private String[] fetchDistanceAndTime(String from, String to) throws IOException {
         return mapService.getDistanceAndTime(from,to);
     }

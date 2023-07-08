@@ -20,7 +20,6 @@ public class TourLog {
     private Difficulty difficulty;
     private String totalTime;
     private int rating;
-
     private Tour tour;
 
     public boolean fitsFulltextSearchCriteria(String searchString) {

@@ -5,6 +5,7 @@ import com.tourplanner.backend.dal.repository.TourLogRepository;
 import com.tourplanner.backend.dal.repository.TourRepository;
 import com.tourplanner.backend.bl.mapper.TourMapper;
 import com.tourplanner.shared.model.TourDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -41,11 +42,21 @@ public class TourController {
 
     @PostMapping(path = "/tour/save")
     public ResponseEntity<TourDTO> createOrUpdateTour(@RequestBody TourDTO tour) {
-        TourEntity savedTourEntity = tourRepository.save(tourMapper.fromDTO(tour));
-        String path = "/tour/"+ savedTourEntity.getId();
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTourEntity);
-        logger.info("Sucessfully created or updated tour: " + savedTourEntity.getId());
-        return ResponseEntity.created(uri).body(tourMapper.toDTO(savedTourEntity));
+        try {
+            TourEntity savedTourEntity = tourRepository.save(tourMapper.fromDTO(tour));
+            String path = "/tour/"+ savedTourEntity.getId();
+            URI uri = ServletUriComponentsBuilder.fromCurrentRequest().replacePath(path).build(savedTourEntity);
+            logger.info("Sucessfully created or updated tour: " + savedTourEntity.getId());
+            return ResponseEntity.created(uri).body(tourMapper.toDTO(savedTourEntity));
+        } catch (EntityNotFoundException e){
+            if(e.getMessage().equals("Unable to find com.tourplanner.backend.dal.entity.TourLogEntity with id")){
+                logger.warn("Unable to createOrUpdate Tour because: " + e.getMessage());
+            }
+            else {
+                logger.warn("Unable to createOrUpdate Tour due to an unfindable Entity");
+            }
+            return ResponseEntity.internalServerError().body(null);
+        }
     }
     @DeleteMapping(value = "/tour/{tourId}/delete")
     public ResponseEntity<UUID> deleteTour(@PathVariable UUID tourId) {

@@ -27,11 +27,11 @@ public class TourLogCommentWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        tourLogCommentField.textProperty().bindBidirectional(tourLogCommentWindowViewModel.getTourLogComment());
     }
 
     public void setTourLogComment(String tourLogComment) {
-        tourLogCommentField.setText(tourLogComment);
+        tourLogCommentWindowViewModel.setTourLogComment(tourLogComment);
     }
 
     public void closeCommentWindow(){

@@ -17,7 +17,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
-import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -58,8 +57,8 @@ public class TourServiceImpl implements TourService {
 
     @Override
     public UUID createOrUpdate(Tour tour) throws IOException {
-        Response<TourDTO> response= tourApi.createOrUpdateTour(tourMapper.toDTO(tour)).execute();
-        return response.body().getId();
+        Response<TourDTO> response = tourApi.createOrUpdateTour(tourMapper.toDTO(tour)).execute();
+        return Objects.nonNull(response.body()) ? response.body().getId() : tour.getId();
     }
 
     @Override

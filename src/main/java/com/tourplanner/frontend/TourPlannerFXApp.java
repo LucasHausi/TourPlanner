@@ -14,18 +14,18 @@ import java.util.List;
 import java.util.Locale;
 
 @SpringBootApplication
-public class Main extends Application {
+public class TourPlannerFXApp extends Application {
     private ConfigurableApplicationContext applicationContext;
+
     @Override
-    public void init() throws Exception {
+    public void init() {
         SpringApplicationBuilder builder = new
-                SpringApplicationBuilder(Main.class);
+                SpringApplicationBuilder(TourPlannerFXApp.class);
         builder.application()
                 .setWebApplicationType(WebApplicationType.NONE);
         builder.headless(false);
         List<String> args = getParameters().getRaw(); // passed from command line
-        applicationContext
-                = builder.run(args.toArray(String[]::new));
+        applicationContext = builder.run(args.toArray(String[]::new));
     }
 
     @Override
@@ -33,17 +33,14 @@ public class Main extends Application {
         super.stop();
         applicationContext.stop();
     }
+
     @Override
     public void start(Stage stage) throws IOException {
-        //MainWindowController mainWindowController = new MainWindowController();
-        /*FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("mainWindow.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 750, 650);*/
         Parent root  = FXMLDependencyInjection.load("mainWindow.fxml", Locale.ENGLISH, applicationContext);
         Scene scene = new Scene(root);
         stage.setTitle("Tourplanner!");
         stage.setScene(scene);
         stage.show();
-        //mainWindowController.setPrimaryStage(stage);
     }
 
     public static void main(String[] args) {

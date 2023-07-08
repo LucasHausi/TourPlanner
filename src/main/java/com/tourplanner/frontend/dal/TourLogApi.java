@@ -19,7 +19,4 @@ public interface TourLogApi {
 
     @DELETE( "/tourLog/{tourLogId}/delete")
     Call<UUID> deleteTourLog(@Path("tourLogId") UUID tourLogId);
-
-    @GET("/tourLogs")
-    Call<List<TourLogDTO>> getAllTourLogs();
 }

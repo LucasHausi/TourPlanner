@@ -46,8 +46,6 @@ public class NewTourLogController implements Initializable {
     @Setter
     Stage newTourLogDialogStage;
 
-    private Tour tour;
-
     public NewTourLogController(NewTourLogViewModel newTourLogViewModel){
         this.newTourLogViewModel =  newTourLogViewModel;
     }
@@ -75,7 +73,6 @@ public class NewTourLogController implements Initializable {
     }
 
     public void setTour(Tour tour) {
-        this.tour = tour;
         this.newTourLogViewModel.setTour(tour);
     }
 

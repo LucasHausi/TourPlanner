@@ -30,7 +30,6 @@ public class MainWindowViewModel {
     MapService mapService;
     private final TourMapper tourMapper = Mappers.getMapper(TourMapper.class);
     private final ObjectMapper objectMapper = new ObjectMapper();
-
     private final SimpleStringProperty nameField = new SimpleStringProperty();
     private final SimpleStringProperty descField = new SimpleStringProperty();
     private final SimpleStringProperty fromField = new SimpleStringProperty();
@@ -51,6 +50,7 @@ public class MainWindowViewModel {
     private final SimpleStringProperty infoOvvLabel = new SimpleStringProperty();
     private final SimpleStringProperty popularityOvvLabel = new SimpleStringProperty();
     private final SimpleStringProperty childFriendlinessOvvLabel = new SimpleStringProperty();
+
     public MainWindowViewModel() {
 
         mapService = new MapServiceImpl();
@@ -61,6 +61,7 @@ public class MainWindowViewModel {
         this.toField.addListener((observable, oldValue, newValue) -> validateTODestination(newValue));
         this.transTypeField.addListener((observable, oldValue, newValue) -> validateTransType(newValue));
     }
+
     private void validateName(String name) {
         boolean isValid = ValidationService.isValidName(name);
         nameErr = !isValid;
@@ -72,6 +73,7 @@ public class MainWindowViewModel {
         startDestEr = !isValid;
         upDateFormValidity();
     }
+
     private void validateTODestination(String city) {
         boolean isValid = ValidationService.isValidDestination(city);
         toDestErr = !isValid;
@@ -83,6 +85,7 @@ public class MainWindowViewModel {
         transTypErr = !isValid;
         upDateFormValidity();
     }
+
     private void upDateFormValidity(){
         formValidity.set(!this.nameErr && !startDestEr && !toDestErr && !transTypErr);
     }
@@ -90,21 +93,22 @@ public class MainWindowViewModel {
     public ObservableList<Tour> getTourList() throws IOException {
         return tourService.getAllTours().stream().collect(Collectors.toCollection(FXCollections::observableArrayList));
     }
+
     public void deleteTour(UUID id) throws IOException {
         tourService.deleteTour(id);
     }
 
-
-
     public void deleteTourLog(UUID tourLogId) throws IOException {
         tourLogService.deleteTourLog(tourLogId);
     }
+
     public void updateTour(Tour t) throws IOException {
         String[] distAndTime = mapService.getDistanceAndTime(t.getStartingPoint(),t.getDestination());
         Tour tour = new Tour(t.getId(), nameField.get(), descField.get(), fromField.get(),
                 toField.get(), transTypeField.get(),Double.parseDouble(distAndTime[0]), distAndTime[1],t.getTourLogList(), infoArea.get());
         tourService.createOrUpdate(tour);
     }
+
     public void updateEditInfos(Tour t){
         if(t!=null){
             this.nameField.set(t.getName());
@@ -116,6 +120,7 @@ public class MainWindowViewModel {
         }
 
     }
+
     public void updateTourInfos(Tour t){
         if(t!=null){
             this.nameOvvLabel.set(t.getName());
@@ -136,11 +141,9 @@ public class MainWindowViewModel {
         }
     }
 
-
     public void fetchRouteImage(UUID id, String to, String from) throws IOException {
         mapService.getMap(id, to, from);
     }
-
 
     public ObservableList<TourLog> getTourLogList(Tour tour) throws IOException {
         if(tour!=null){
@@ -148,6 +151,7 @@ public class MainWindowViewModel {
         }
         return null;
     }
+
     public void exportFile(Tour tour) throws IOException {
         JFileChooser chooser = new JFileChooser();
         TourDTO tourDTO = tourMapper.toDTO(tour);
@@ -157,7 +161,8 @@ public class MainWindowViewModel {
             objectMapper.writeValue(new File(chooser.getSelectedFile().getAbsolutePath()+".json"),tourDTO);
         }
     }
-    public void importFile() throws IOException, ClassNotFoundException {
+
+    public void importFile() throws IOException {
         JFileChooser chooser = new JFileChooser();
         int returnVal = chooser.showSaveDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {

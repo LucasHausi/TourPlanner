@@ -74,12 +74,12 @@
             <Insets top="5.0" />
          </VBox.margin>
       </ChoiceBox>
+      <Label fx:id="transTypeErrLabel" text="You did not select a transport type" textFill="RED" visible="false" />
       <Label text="Description">
          <VBox.margin>
             <Insets top="5.0" />
          </VBox.margin>
       </Label>
-      <Label fx:id="transTypeErrLabel" text="You did not select a transport type" textFill="RED" visible="false" />
       <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
       <Label text="Tour information">
          <VBox.margin>

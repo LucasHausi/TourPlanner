@@ -8,10 +8,8 @@ import java.util.UUID;
 
 public interface TourService {
      UUID createOrUpdate(Tour tour) throws IOException;
-
      void deleteTour(UUID id) throws IOException;
      List<Tour> getAllTours() throws IOException;
     void printTourPdf(UUID id, String pdfName) throws IOException;
-
     void printSummaryPdf(String pdfName) throws IOException;
 }

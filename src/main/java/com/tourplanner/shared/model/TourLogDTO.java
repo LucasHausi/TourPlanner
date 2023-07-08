@@ -15,10 +15,7 @@ public class TourLogDTO {
     private String date;
     private String comment;
     private Difficulty difficulty;
-
     private String totalTime;
-
     private int rating;
-
     private TourDTO tour;
 }

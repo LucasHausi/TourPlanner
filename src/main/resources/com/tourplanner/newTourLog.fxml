@@ -49,6 +49,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </ChoiceBox>
+            <Label fx:id="difficultyErrorLabel" text="There must be a difficulty selected!" textFill="RED" visible="false" />
             <Label text="Duration">
                <VBox.margin>
                   <Insets top="5.0" />
@@ -59,6 +60,7 @@
                   <Insets top="5.0" />
                </VBox.margin>
             </TextField>
+            <Label fx:id="durationErrorLabel" text="Duration must fit the format hh:mm!" textFill="RED" visible="false" />
             <Label text="Rating">
                <VBox.margin>
                   <Insets top="5.0" />
@@ -71,8 +73,6 @@
                </VBox.margin>
             </Label>
             <TextArea fx:id="comment" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
-            <Label fx:id="difficultyErrorLabel" text="There must be a difficulty selected!" textFill="RED" visible="false" />
-            <Label fx:id="durationErrorLabel" text="Duration must fit the format hh:mm!" textFill="RED" visible="false" />
             <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveTourLog" text="save">
                <opaqueInsets>
                   <Insets top="1000.0" />

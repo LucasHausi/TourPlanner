@@ -46,5 +46,6 @@ public class TourEntity {
     @JsonManagedReference
     private List<TourLogEntity> tourLogEntityList;
 
-    private String routeInformation; //ToDO soll irgendwie eine Map oder ein Bild einer Map oder so sein
+    @Column(name="routeInformation")
+    private String routeInformation;
 }

@@ -56,11 +56,16 @@
               <content>
                 <AnchorPane>
                      <children>
-                        <HBox>
+                        <Label fx:id="nameOvvLabel" prefHeight="36.0" prefWidth="369.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Label>
+                        <HBox layoutX="4.0" layoutY="2.0">
                            <children>
                               <VBox prefHeight="319.0" prefWidth="151.0" spacing="20.0">
                                  <children>
-                                    <Label fx:id="nameOvvLabel" prefHeight="16.0" prefWidth="151.0">
+                                    <Label prefHeight="36.0" prefWidth="179.0">
                                        <font>
                                           <Font size="25.0" />
                                        </font>
@@ -194,16 +199,6 @@
                   <items>
                         <MenuItem fx:id="importBtn" mnemonicParsing="false" onAction="#importFile" text="Import" />
                     <MenuItem fx:id="exportBtn" mnemonicParsing="false" onAction="#exportFile" text="Export" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Options">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
                   </items>
                 </Menu>
               </menus>

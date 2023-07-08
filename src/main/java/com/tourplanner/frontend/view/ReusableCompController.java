@@ -31,8 +31,4 @@ public class ReusableCompController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         buttonGroupText.setText("Tour");
     }
-
-    public void add(){
-
-    }
 }

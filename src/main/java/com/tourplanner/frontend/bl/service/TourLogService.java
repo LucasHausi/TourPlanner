@@ -9,9 +9,6 @@ import java.util.UUID;
 
 public interface TourLogService {
      void createOrUpdateTourLog(TourLog tour) throws IOException;
-
      void deleteTourLog(UUID tourLogId) throws IOException;
-     List<TourLog> getAllTours() throws IOException;
-
      List<TourLog> getAllTourLogsOfTour(Tour tour) throws IOException;
 }

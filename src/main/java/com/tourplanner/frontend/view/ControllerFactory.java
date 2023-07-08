@@ -6,6 +6,8 @@ import com.tourplanner.frontend.bl.Publisher;
 import com.tourplanner.frontend.bl.service.TourLogServiceImpl;
 import com.tourplanner.frontend.bl.service.TourServiceImpl;
 import com.tourplanner.frontend.viewmodel.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.ConfigurableApplicationContext;
 
 
@@ -17,6 +19,16 @@ public class ControllerFactory {
     private final ReusableCompViewModel reusableCompViewModel;
     private final PDFGenerationViewModel pdfGenerationViewModel;
     private final TourLogCommentWindowViewModel tourLogCommentWindowViewModel;
+
+    private static final Logger logger;
+    static {
+        try {
+            // you need to do something like below instaed of Logger.getLogger(....);
+            logger = LogManager.getLogger(TourServiceImpl.class);
+        } catch (Throwable th) {
+            throw new IllegalArgumentException("Cannot load the log property file", th);
+        }
+    }
 
     public ControllerFactory(ConfigurableApplicationContext applicationContext){
         newTourViewModel = new NewTourViewModel(new TourServiceImpl(), new MapServiceImpl());
@@ -49,11 +61,13 @@ public class ControllerFactory {
         if(controllerClass == TourLogCommentWindowController.class){
             return new TourLogCommentWindowController(tourLogCommentWindowViewModel);
         }
+        logger.error("unknown controller class: " + controllerClass);
         throw new IllegalArgumentException("Unknown controller class: " + controllerClass);
     }
     private static ControllerFactory instance;
     public static ControllerFactory getInstance(ConfigurableApplicationContext applicationContext) {
         if (instance == null) {
+            logger.info("creating new controller factory instance");
             instance = new ControllerFactory(applicationContext);
         }
         return instance;
