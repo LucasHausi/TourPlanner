@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -85,20 +86,24 @@ public class Tour implements Serializable {
 
     public boolean fulltextSearch(String searchString) {
         for(String searchKeyword : searchString.split(" ")){
-            if(fitsFulltextSearchCriteria(searchKeyword)){
-                return fitsFulltextSearchCriteria(searchKeyword);
+            if(this.fitsFulltextSearchCriteria(searchKeyword)){
+                return true;
+            }
+
+            if(tourLogList.stream().anyMatch(tourLog -> tourLog.fitsFulltextSearchCriteria(searchKeyword))){
+                return true;
             }
         }
         return false;
     }
     public boolean fitsFulltextSearchCriteria(String searchString) {
-        return  this.description.contains(searchString) ||
-                this.destination.contains(searchString) ||
-                this.startingPoint.contains(searchString) ||
-                this.name.contains(searchString) ||
-                this.estimatedTime.contains(searchString) ||
-                this.routeInformation.contains(searchString) ||
-                this.transportType.toString().contains(searchString) ||
+        return (Objects.nonNull(this.description) && this.description.contains(searchString)) ||
+                (Objects.nonNull(this.destination) && this.destination.contains(searchString)) ||
+                (Objects.nonNull(this.startingPoint) && this.startingPoint.contains(searchString)) ||
+                (Objects.nonNull(this.name) && this.name.contains(searchString)) ||
+                (Objects.nonNull(this.estimatedTime) && this.estimatedTime.contains(searchString)) ||
+                (Objects.nonNull(this.routeInformation) && this.routeInformation.contains(searchString)) ||
+                (Objects.nonNull(this.transportType) && this.transportType.toString().contains(searchString)) ||
                 this.getPopularity().label.contains(searchString) ||
                 this.getPopularity().toString().contains(searchString) ||
                 this.getChildFriendliness().label.contains(searchString) ||
