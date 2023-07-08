@@ -60,7 +60,7 @@ public class Tour implements Serializable {
         else if(avgTime > 120 || distance > 20){
             return ChildFriendliness.FEASIBLE;
         }
-        else if(numberOfFriendlyLogs > numberOfUnfriendlyLogs*2 || avgTime <= 60 || distance <= 10){
+        else if(avgTime <= 60 || distance <= 10){
             return ChildFriendliness.VERY_FRIENDLY;
         }
         else {
