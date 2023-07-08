@@ -127,6 +127,17 @@ public class MainWindowController implements Initializable, Subscriber {
         transTypeField.valueProperty().bindBidirectional(mainWindowViewModel.getTransTypeField());
         infoArea.textProperty().bindBidirectional(mainWindowViewModel.getInfoArea());
 
+        nameOvvLabel.textProperty().bindBidirectional(mainWindowViewModel.getNameOvvLabel());
+        descOvvLabel.textProperty().bindBidirectional(mainWindowViewModel.getDistOvvLabel());
+        fromOvvLabel.textProperty().bindBidirectional(mainWindowViewModel.getFromOvvLabel());
+        toOvvLabel.textProperty().bindBidirectional(mainWindowViewModel.getToOvvLabel());
+        distOvvLabel.textProperty().bindBidirectional(mainWindowViewModel.getDistOvvLabel());
+        timeOvvLabel.textProperty().bindBidirectional(mainWindowViewModel.getTimeOvvLabel());
+        infoOvvLabel.textProperty().bindBidirectional(mainWindowViewModel.getInfoOvvLabel());
+        popularityOvvLabel.textProperty().bindBidirectional(mainWindowViewModel.getPopularityOvvLabel());
+        childFriendlinessOvvLabel.textProperty().bindBidirectional(mainWindowViewModel.getChildFriendlinessOvvLabel());
+
+
         //Binding for saveBtn & errorLabel
         saveBtn.visibleProperty().bindBidirectional(mainWindowViewModel.getFormValidity());
         errFormField.visibleProperty().bind(mainWindowViewModel.getFormValidity().not());
@@ -354,28 +365,16 @@ public class MainWindowController implements Initializable, Subscriber {
     }
 
     public void updateTourInfos(Tour t){
-        this.nameOvvLabel.setText(t.getName());
-        this.descOvvLabel.setText(t.getDescription());
-        this.fromOvvLabel.setText(t.getStartingPoint());
-        this.toOvvLabel.setText(t.getDestination());
-        this.distOvvLabel.setText(t.getDistance()+"km");
-        int sec = Integer.valueOf(t.getEstimatedTime());
-        Duration duration = Duration.ofSeconds(sec);
-        long HH = duration.toHours();
-        long MM = duration.toMinutesPart();
-        long SS = duration.toSecondsPart();
-        String timeInHHMMSS = String.format("%02d:%02d:%02d", HH, MM, SS);
-        this.timeOvvLabel.setText(timeInHHMMSS);
-        this.infoOvvLabel.setText(t.getRouteInformation());
-        this.popularityOvvLabel.setText(t.getPopularity().label);
-        this.childFriendlinessOvvLabel.setText(t.getChildFriendliness().label);
+        mainWindowViewModel.updateTourInfos(t);
     }
 
     @Override
     public void update(UUID id) {
         Tour selectedTour = listView.getSelectionModel().getSelectedItem();
+        if(selectedTour!=null){
             if(selectedTour.getId().equals(id)){
                 routeImage.setImage(new Image(System.getProperty("user.dir")+"/images/Route"+id+".png"));
+            }
         }
     }
 

@@ -14,6 +14,7 @@ import lombok.Getter;
 
 import javax.swing.*;
 import java.io.*;
+import java.time.Duration;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,15 @@ public class MainWindowViewModel {
     private boolean startDestEr;
     private boolean toDestErr;
     private boolean transTypErr;
-
+    private final SimpleStringProperty nameOvvLabel = new SimpleStringProperty();
+    private final SimpleStringProperty descOvvLabel = new SimpleStringProperty();
+    private final SimpleStringProperty fromOvvLabel = new SimpleStringProperty();
+    private final SimpleStringProperty toOvvLabel = new SimpleStringProperty();
+    private final SimpleStringProperty distOvvLabel = new SimpleStringProperty();
+    private final SimpleStringProperty timeOvvLabel = new SimpleStringProperty();
+    private final SimpleStringProperty infoOvvLabel = new SimpleStringProperty();
+    private final SimpleStringProperty popularityOvvLabel = new SimpleStringProperty();
+    private final SimpleStringProperty childFriendlinessOvvLabel = new SimpleStringProperty();
     public MainWindowViewModel() {
 
         mapService = new MapServiceImpl();
@@ -90,12 +99,34 @@ public class MainWindowViewModel {
         tourService.createOrUpdate(tour);
     }
     public void updateEditInfos(Tour t){
-        this.nameField.set(t.getName());
-        this.descField.set(t.getDescription());
-        this.fromField.set(t.getStartingPoint());
-        this.toField.set(t.getDestination());
-        this.transTypeField.set(t.getTransportType());
-        this.infoArea.set(t.getRouteInformation());
+        if(t!=null){
+            this.nameField.set(t.getName());
+            this.descField.set(t.getDescription());
+            this.fromField.set(t.getStartingPoint());
+            this.toField.set(t.getDestination());
+            this.transTypeField.set(t.getTransportType());
+            this.infoArea.set(t.getRouteInformation());
+        }
+
+    }
+    public void updateTourInfos(Tour t){
+        if(t!=null){
+            this.nameOvvLabel.set(t.getName());
+            this.descOvvLabel.set(t.getDescription());
+            this.fromOvvLabel.set(t.getStartingPoint());
+            this.toOvvLabel.set(t.getDestination());
+            this.distOvvLabel.set(t.getDistance()+"km");
+            int sec = Integer.valueOf(t.getEstimatedTime());
+            Duration duration = Duration.ofSeconds(sec);
+            long HH = duration.toHours();
+            long MM = duration.toMinutesPart();
+            long SS = duration.toSecondsPart();
+            String timeInHHMMSS = String.format("%02d:%02d:%02d", HH, MM, SS);
+            this.timeOvvLabel.set(timeInHHMMSS);
+            this.infoOvvLabel.set(t.getRouteInformation());
+            this.popularityOvvLabel.set(t.getPopularity().label);
+            this.childFriendlinessOvvLabel.set(t.getChildFriendliness().label);
+        }
     }
 
 
@@ -105,7 +136,10 @@ public class MainWindowViewModel {
 
 
     public ObservableList<TourLog> getTourLogList(Tour tour) throws IOException {
-        return tourLogService.getAllTourLogsOfTour(tour).stream().collect(Collectors.toCollection(FXCollections::observableArrayList));
+        if(tour!=null){
+            return tourLogService.getAllTourLogsOfTour(tour).stream().collect(Collectors.toCollection(FXCollections::observableArrayList));
+        }
+        return null;
     }
     public void exportFile(Tour t) throws IOException {
         JFileChooser chooser = new JFileChooser();
