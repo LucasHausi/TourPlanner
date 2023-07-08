@@ -11,11 +11,14 @@ import com.tourplanner.frontend.dal.TourApi;
 import com.tourplanner.frontend.bl.mapper.TourMapper;
 import com.tourplanner.frontend.bl.model.Tour;
 import com.tourplanner.frontend.bl.model.TourLog;
+import com.tourplanner.shared.model.TourDTO;
 import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
+import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -54,8 +57,9 @@ public class TourServiceImpl implements TourService {
     }
 
     @Override
-    public void createOrUpdate(Tour tour) throws IOException {
-        tourApi.createOrUpdateTour(tourMapper.toDTO(tour)).execute();
+    public UUID createOrUpdate(Tour tour) throws IOException {
+        Response<TourDTO> response= tourApi.createOrUpdateTour(tourMapper.toDTO(tour)).execute();
+        return response.body().getId();
     }
 
     @Override

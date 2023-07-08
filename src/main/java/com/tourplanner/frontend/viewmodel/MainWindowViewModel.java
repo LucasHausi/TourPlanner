@@ -1,9 +1,12 @@
 package com.tourplanner.frontend.viewmodel;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tourplanner.frontend.bl.mapper.TourMapper;
 import com.tourplanner.frontend.bl.service.*;
 import com.tourplanner.shared.enums.TransportType;
 import com.tourplanner.frontend.bl.model.Tour;
 import com.tourplanner.frontend.bl.model.TourLog;
+import com.tourplanner.shared.model.TourDTO;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -11,10 +14,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
+import org.mapstruct.factory.Mappers;
 
 import javax.swing.*;
 import java.io.*;
 import java.time.Duration;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -23,6 +28,8 @@ public class MainWindowViewModel {
     TourService tourService;
     TourLogService tourLogService;
     MapService mapService;
+    private final TourMapper tourMapper = Mappers.getMapper(TourMapper.class);
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private final SimpleStringProperty nameField = new SimpleStringProperty();
     private final SimpleStringProperty descField = new SimpleStringProperty();
@@ -141,26 +148,33 @@ public class MainWindowViewModel {
         }
         return null;
     }
-    public void exportFile(Tour t) throws IOException {
+    public void exportFile(Tour tour) throws IOException {
         JFileChooser chooser = new JFileChooser();
+        TourDTO tourDTO = tourMapper.toDTO(tour);
         int returnVal = chooser.showSaveDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-            FileOutputStream fileOutputStream = new FileOutputStream(chooser.getSelectedFile().getAbsolutePath());
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-            objectOutputStream.writeObject(t);
-            objectOutputStream.flush();
-            objectOutputStream.close();
+            System.out.println(chooser.getSelectedFile().getAbsolutePath());
+            objectMapper.writeValue(new File(chooser.getSelectedFile().getAbsolutePath()+".json"),tourDTO);
         }
     }
     public void importFile() throws IOException, ClassNotFoundException {
         JFileChooser chooser = new JFileChooser();
         int returnVal = chooser.showSaveDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-            FileInputStream fileInputStream = new FileInputStream(chooser.getSelectedFile().getAbsolutePath());
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            Tour t = (Tour) objectInputStream.readObject();
-            tourService.createOrUpdate(t);
-            objectInputStream.close();
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(chooser.getSelectedFile().getAbsolutePath()));
+            String serializedTour = bufferedReader.readLine();
+            TourDTO tourDTO = new ObjectMapper().readValue(serializedTour,TourDTO.class);
+            Tour tour = tourMapper.fromDTO(tourDTO);
+            List<TourLog> tempTourLogs = tour.getTourLogList();
+            tour.setTourLogList(null);
+            UUID id = tourService.createOrUpdate(tour);
+            tour.setId(id);
+            for(TourLog tourLog : tempTourLogs)
+            {
+                tourLog.setTour(tour);
+                tourLogService.createOrUpdateTourLog(tourLog);
+            }
+            bufferedReader.close();
         }
     }
 }
