@@ -152,7 +152,10 @@ public class MainWindowController implements Initializable, Subscriber {
                                     throw new RuntimeException(e);
                                 }
                                 loader.<TourLogCommentWindowController>getController().setTourLogCommentWindowStage(dialog);
-                                loader.<TourLogCommentWindowController>getController().setTourLogComment(tourLogTable.getSelectionModel().getSelectedItem().getComment());
+                                TourLog selectedTourLog = tourLogTable.getSelectionModel().getSelectedItem();
+                                if(selectedTourLog != null){
+                                    loader.<TourLogCommentWindowController>getController().setTourLogComment(selectedTourLog.getComment());
+                                }
                                 Scene dialogScene = new Scene(root);
                                 dialog.initModality(Modality.APPLICATION_MODAL);
                                 dialog.setTitle("TourLog Comment Display");
