@@ -288,7 +288,7 @@ public class MainWindowController implements Initializable, Subscriber {
         }
     }
 
-    public void importFile() throws IOException, ClassNotFoundException {
+    public void importFile() throws IOException {
         mainWindowViewModel.importFile();
         listView.setItems(mainWindowViewModel.getTourList());
     }
@@ -381,6 +381,8 @@ public class MainWindowController implements Initializable, Subscriber {
                 }
                 else {
                     addTourLog();
+                    //refresh to listView
+                    listView.setItems(mainWindowViewModel.getTourList());
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);

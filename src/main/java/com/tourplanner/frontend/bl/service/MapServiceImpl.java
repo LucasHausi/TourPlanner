@@ -6,6 +6,8 @@ import com.tourplanner.frontend.bl.Publisher;
 import com.tourplanner.frontend.dal.MapApi;
 
 import okhttp3.ResponseBody;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,15 @@ import java.util.UUID;
 public class MapServiceImpl implements MapService {
 
     private final MapApi service;
+    private static final Logger logger;
+    static {
+        try {
+            // you need to do something like below instaed of Logger.getLogger(....);
+            logger = LogManager.getLogger(TourServiceImpl.class);
+        } catch (Throwable th) {
+            throw new IllegalArgumentException("Cannot load the log property file", th);
+        }
+    }
 
     @Value("${apiKey}")
     private String apiKey;
@@ -49,8 +60,7 @@ public class MapServiceImpl implements MapService {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                System.err.println("API route call failed");
-                t.printStackTrace();
+                logger.warn("API route call failed for route"+id.toString());
             }
         });
 
@@ -82,7 +92,8 @@ public class MapServiceImpl implements MapService {
             fos.close();
             Publisher.notifySubscribers(id);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            //add Logger
+            logger.warn("The picture for the tour"+id.toString()+" could not be stored");
         }
     }
 }

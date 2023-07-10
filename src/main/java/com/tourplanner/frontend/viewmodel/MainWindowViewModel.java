@@ -157,7 +157,6 @@ public class MainWindowViewModel {
         TourDTO tourDTO = tourMapper.toDTO(tour);
         int returnVal = chooser.showSaveDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-            System.out.println(chooser.getSelectedFile().getAbsolutePath());
             objectMapper.writeValue(new File(chooser.getSelectedFile().getAbsolutePath()+".json"),tourDTO);
         }
     }

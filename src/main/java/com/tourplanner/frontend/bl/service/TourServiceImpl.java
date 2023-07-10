@@ -24,6 +24,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
@@ -109,7 +110,13 @@ public class TourServiceImpl implements TourService {
         tourValueTable.addCell("To");
         tourValueTable.addCell(tour.getDestination());
         tourValueTable.addCell("Estimated time");
-        tourValueTable.addCell(tour.getEstimatedTime() + " minutes");
+        int timeInSeconds = Integer.parseInt(tour.getEstimatedTime());
+        Duration duration = Duration.ofSeconds(timeInSeconds);
+        long HH = duration.toHours();
+        long MM = duration.toMinutesPart();
+        long SS = duration.toSecondsPart();
+        String timeInHHMMSS = String.format("%02d:%02d:%02d", HH, MM, SS);
+        tourValueTable.addCell(timeInHHMMSS);
         tourValueTable.addCell("Distance");
         tourValueTable.addCell(tour.getDistance() + " km");
         tourValueTable.addCell("Transport Type");
@@ -179,7 +186,12 @@ public class TourServiceImpl implements TourService {
 
         for(Tour tour : tours){
             tourValueTable.addCell(tour.getName());
-            tourValueTable.addCell(tour.getAverageTime().toString() + " minutes");
+            Duration duration = Duration.ofSeconds(tour.getAverageTime());
+            long HH = duration.toHours();
+            long MM = duration.toMinutesPart();
+            long SS = duration.toSecondsPart();
+            String timeInHHMMSS = String.format("%02d:%02d:%02d", HH, MM, SS);
+            tourValueTable.addCell(timeInHHMMSS);
             tourValueTable.addCell(tour.getDistance()+" km");
             tourValueTable.addCell(tour.getAverageRating().toString());
         }
